@@ -180,17 +180,22 @@ SIMPLE_SMS_SEND_RECEIVED_ADDRESS = CanonicalTaskSpec(
     workflow_template=(
         "Follow these sub-goals:\n"
         "1. Open Simple SMS Messenger.\n"
-        "2. Open the conversation from {name2} and read the address in the most recent message.\n"
+        "2. Find the recent sender who just sent the address. The sender may appear "
+        "as the contact name '{name2}' or as a raw phone number. Open that "
+        "conversation and read the address.\n"
         "3. Start a new message to {name1}.\n"
         "4. Send that exact address as the message body."
     ),
     action_template=(
         "Follow these UI-anchored steps:\n"
         "1. Open Simple SMS Messenger.\n"
-        "2. From the conversation list, open the thread for '{name2}'.\n"
+        "2. From the conversation list, identify the sender who just sent the "
+        "address. Match either the contact name '{name2}' or the corresponding "
+        "raw phone-number thread if the name is not shown, then open it.\n"
         "3. Read the latest inbound message and note the full address text.\n"
         "4. Return to the conversation list.\n"
-        "5. Start a new message to '{name1}'.\n"
+        "5. Start a new message to '{name1}'. If the picker shows phone numbers "
+        "instead of names, select the recipient entry that matches {name1}.\n"
         "6. Type the address exactly as received.\n"
         "7. Send the message."
     ),
