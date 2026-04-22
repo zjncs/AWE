@@ -8,9 +8,6 @@ import re
 from pathlib import Path
 from typing import Any
 
-from PIL import Image
-
-
 TRACE_FORMAT_VERSION = 2
 DEFAULT_MAX_UI_ELEMENTS = 80
 DEFAULT_MAX_TEXT_CHARS = 4000
@@ -917,6 +914,13 @@ def _save_screenshot(
 ) -> str:
     if screenshot_dir is None or screenshot is None:
         return ""
+    try:
+        from PIL import Image
+    except ImportError as exc:
+        raise ImportError(
+            "Pillow is required for screenshot saving. "
+            "Install it with: pip install Pillow"
+        ) from exc
     path = Path(screenshot_dir)
     path.mkdir(parents=True, exist_ok=True)
     output_path = path / f"step_{step_number:03d}_{kind}.jpg"

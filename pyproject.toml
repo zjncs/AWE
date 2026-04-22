@@ -11,5 +11,9 @@ dependencies = [
     "openai>=1.0",
 ]
 
+[project.optional-dependencies]
+screenshot = ["Pillow>=9.0"]
+all = ["awe[screenshot]"]
+
 [project.scripts]
 awe-eval = "awe.runner:main"
