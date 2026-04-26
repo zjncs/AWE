@@ -1,7 +1,0 @@
-[evaluator] SystemWifiTurnOn: evaluating 2 checkpoints
-[evaluator] checkpoint 1/2 cp1: Wi-Fi toggle switch is set to the 'on' state in either the quick settings panel or device network settings.
-[evaluator] checkpoint 2/2 cp2: Wi-Fi functionality is active, as evidenced by visible available Wi-Fi networks or a connected network status.
-Evaluated 1 records.
-Agreement rate: 100.0%
-JSON: /Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/fullchain_5tasks_20260425_rerun_202532/eval_SystemWifiTurnOn_seed35.json
-Report: /Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/fullchain_5tasks_20260425_rerun_202532/eval_SystemWifiTurnOn_seed35.md

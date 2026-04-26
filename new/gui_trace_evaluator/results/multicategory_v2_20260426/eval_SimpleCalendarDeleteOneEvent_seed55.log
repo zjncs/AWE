@@ -1,7 +1,0 @@
-[evaluator] SimpleCalendarDeleteOneEvent: evaluating 2 checkpoints
-[evaluator] checkpoint 1/2 cp1: The calendar event titled 'Review session for Budget Planning' scheduled for 2023-10-17 at 6h is no longer present in Si
-[evaluator] checkpoint 2/2 cp2: The deletion action was initiated on the correct target event (title: 'Review session for Budget Planning', date: 2023-1
-Evaluated 1 records.
-Agreement rate: 100.0%
-JSON: /Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/multicategory_v2_20260426/eval_SimpleCalendarDeleteOneEvent_seed55.json
-Report: /Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/multicategory_v2_20260426/eval_SimpleCalendarDeleteOneEvent_seed55.md

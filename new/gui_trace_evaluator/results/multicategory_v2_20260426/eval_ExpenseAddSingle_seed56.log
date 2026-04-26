@@ -1,3 +1,0 @@
-[evaluator] ExpenseAddSingle: evaluating 4 checkpoints
-[evaluator] checkpoint 1/4 cp1: The pro expense app contains an expense entry named 'Subscriptions'.
-[evaluator] checkpoint 2/4 cp2: The 'Subscriptions' expense entry displays an amount of $438.01.

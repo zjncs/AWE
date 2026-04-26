@@ -1,7 +1,0 @@
-[evaluator] SystemWifiTurnOff: evaluating 2 checkpoints
-[evaluator] checkpoint 1/2 cp1: Wi-Fi toggle is set to the 'Off' position in the device's Settings or Quick Settings panel.
-[evaluator] checkpoint 2/2 cp2: The device does not show an active Wi-Fi connection indicator in the status bar.
-Evaluated 1 records.
-Agreement rate: 100.0%
-JSON: /Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/fullchain_5tasks_20260425_rerun_202532/eval_SystemWifiTurnOff_seed34.json
-Report: /Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/fullchain_5tasks_20260425_rerun_202532/eval_SystemWifiTurnOff_seed34.md

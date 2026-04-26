@@ -1,8 +1,0 @@
-[evaluator] SimpleSmsSend: evaluating 3 checkpoints
-[evaluator] checkpoint 1/3 cp1: The message recipient is set to the phone number +19378785700 in Simple SMS Messenger.
-[evaluator] checkpoint 2/3 cp2: The message body contains the exact text: 'Weekend plans: Hiking trip to Blue Mountain'.
-[evaluator] checkpoint 3/3 cp3: The message is marked as sent in Simple SMS Messenger's conversation thread with +19378785700.
-Evaluated 1 records.
-Agreement rate: 100.0%
-JSON: /Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/multicategory_v2_20260426/eval_SimpleSmsSend_seed53.json
-Report: /Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/multicategory_v2_20260426/eval_SimpleSmsSend_seed53.md
