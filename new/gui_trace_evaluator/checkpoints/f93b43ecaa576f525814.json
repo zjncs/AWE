@@ -1,0 +1,29 @@
+{
+  "format_version": 1,
+  "standard_id": "f93b43ecaa576f525814",
+  "goal_hash": "c82910a8f48ee191",
+  "task_name": "SimpleSmsSend",
+  "task_goal": "Send a text message using Simple SMS Messenger to +19378785700 with message: Weekend plans: Hiking trip to Blue Mountain.",
+  "task_goal_rewrite": "A text message with the content 'Weekend plans: Hiking trip to Blue Mountain' is successfully sent to the phone number +19378785700 using Simple SMS Messenger.",
+  "checkpoints": [
+    {
+      "id": "cp1",
+      "description": "The message recipient is set to the phone number +19378785700 in Simple SMS Messenger.",
+      "required": true,
+      "evidence_hint": "Screenshot showing +19378785700 as the active recipient in the compose screen or conversation thread in Simple SMS Messenger."
+    },
+    {
+      "id": "cp2",
+      "description": "The message body contains the exact text: 'Weekend plans: Hiking trip to Blue Mountain'.",
+      "required": true,
+      "evidence_hint": "Screenshot displaying the full specified message text in the compose field or in the sent message entry in Simple SMS Messenger."
+    },
+    {
+      "id": "cp3",
+      "description": "The message is marked as sent in Simple SMS Messenger's conversation thread with +19378785700.",
+      "required": true,
+      "evidence_hint": "Screenshot showing the message with a visible 'sent' status (e.g., checkmark icon, timestamp indicating successful delivery) in the conversation thread for +19378785700."
+    }
+  ],
+  "success_rule": "All three required checkpoints must be satisfied to confirm successful task completion."
+}

@@ -1,0 +1,23 @@
+{
+  "format_version": 1,
+  "standard_id": "4b27140272aeae9ff258",
+  "goal_hash": "f1c84f0635ecefb4",
+  "task_name": "ClockTimerEntry",
+  "task_goal": "Create a timer with 15 hours, 54 minutes, and 17 seconds. Do not start the timer.",
+  "task_goal_rewrite": "A timer with a duration of 15 hours, 54 minutes, and 17 seconds is created and remains in an unstarted state.",
+  "checkpoints": [
+    {
+      "id": "cp1",
+      "description": "The created timer displays an exact duration of 15 hours, 54 minutes, and 17 seconds.",
+      "required": true,
+      "evidence_hint": "Screenshot or trace showing the timer's numerical fields set to '15' (hours), '54' (minutes), and '17' (seconds)."
+    },
+    {
+      "id": "cp2",
+      "description": "The timer is in an unstarted state (not actively counting down).",
+      "required": true,
+      "evidence_hint": "Screenshot or trace showing a 'Start' button (or equivalent initiation control) is visible, with no active countdown in progress."
+    }
+  ],
+  "success_rule": "Success is achieved if both required checkpoints are satisfied: the timer has the exact specified duration and remains unstarted."
+}

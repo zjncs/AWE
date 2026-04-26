@@ -1,0 +1,23 @@
+{
+  "format_version": 1,
+  "standard_id": "d966b52b5e0a7568efc2",
+  "goal_hash": "1f0d2fd5bcb2b67d",
+  "task_name": "MarkorEditNote",
+  "task_goal": "Edit note_ens3E.md in Markor. Add to the top of the note May the Force be with you.",
+  "task_goal_rewrite": "The note file note_ens3E.md in Markor has the text 'May the Force be with you' added as the first line of its content.",
+  "checkpoints": [
+    {
+      "id": "cp1",
+      "description": "The note being edited or displayed in Markor is identified as note_ens3E.md",
+      "required": true,
+      "evidence_hint": "Screenshot showing the filename 'note_ens3E.md' clearly visible in Markor's UI (e.g., title bar, note list, or file navigation pane)"
+    },
+    {
+      "id": "cp2",
+      "description": "The text 'May the Force be with you' appears as the first line of content in the note",
+      "required": true,
+      "evidence_hint": "Screenshot showing the specified text at the very top of the note's content area, preceding any existing text from the original note"
+    }
+  ],
+  "success_rule": "Success is achieved when both required checkpoints are satisfied: the correct note (note_ens3E.md) is confirmed to be the target, and the specified text is added to its top as intended."
+}

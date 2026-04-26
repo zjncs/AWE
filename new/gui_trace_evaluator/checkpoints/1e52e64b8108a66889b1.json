@@ -1,0 +1,29 @@
+{
+  "format_version": 1,
+  "standard_id": "1e52e64b8108a66889b1",
+  "goal_hash": "d67a2b11f1110d47",
+  "task_name": "SimpleCalendarAddOneEvent",
+  "task_goal": "In Simple Calendar Pro, create a calendar event on 2023-10-19 at 14h with the title 'Appointment for Campaign' and the description 'We will explore product launch. Let's be punctual.'. The event should last for 45 mins.",
+  "task_goal_rewrite": "A calendar event titled 'Appointment for Campaign' with the description 'We will explore product launch. Let's be punctual.' exists in Simple Calendar Pro, scheduled on 2023-10-19 from 14:00 to 14:45 (45-minute duration).",
+  "checkpoints": [
+    {
+      "id": "cp1",
+      "description": "The calendar event is scheduled on 2023-10-19 with a start time of 14:00 and end time of 14:45 (45-minute duration).",
+      "required": true,
+      "evidence_hint": "Screenshot of the 2023-10-19 calendar view showing the event with the correct start/end time, or event details displaying the specified date and time range."
+    },
+    {
+      "id": "cp2",
+      "description": "The event has the exact title 'Appointment for Campaign'.",
+      "required": true,
+      "evidence_hint": "Screenshot of the calendar view or event details screen displaying the specified title."
+    },
+    {
+      "id": "cp3",
+      "description": "The event has the exact description 'We will explore product launch. Let's be punctual.'.",
+      "required": true,
+      "evidence_hint": "Screenshot of the event details screen showing the full specified description text."
+    }
+  ],
+  "success_rule": "Success is achieved when all three required checkpoints are satisfied, confirming the event exists with all specified attributes (date, time duration, title, description) in Simple Calendar Pro."
+}

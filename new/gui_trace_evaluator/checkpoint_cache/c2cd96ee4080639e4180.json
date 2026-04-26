@@ -1,0 +1,23 @@
+{
+  "format_version": 1,
+  "standard_id": "c2cd96ee4080639e4180",
+  "goal_hash": "837623c813dda107",
+  "task_name": "SystemWifiTurnOff",
+  "task_goal": "Turn wifi off.",
+  "task_goal_rewrite": "Wi-Fi on the Android device is turned off and disabled.",
+  "checkpoints": [
+    {
+      "id": "cp1",
+      "description": "Wi-Fi toggle switch is set to the 'Off' position in the device's Wi-Fi settings screen.",
+      "required": true,
+      "evidence_hint": "Screenshot or trace showing the Wi-Fi toggle in the off state within the Settings app's Wi-Fi section."
+    },
+    {
+      "id": "cp2",
+      "description": "The active Wi-Fi status icon in the device's status bar is no longer displayed (or appears grayed out/inactive).",
+      "required": true,
+      "evidence_hint": "Screenshot of the device's status bar showing no active Wi-Fi indicator, or an inactive Wi-Fi icon."
+    }
+  ],
+  "success_rule": "Both required checkpoints must be satisfied to confirm that Wi-Fi has been successfully turned off."
+}

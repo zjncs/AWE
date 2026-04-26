@@ -1,0 +1,29 @@
+{
+  "format_version": 1,
+  "standard_id": "e4d2f701bd845d0630f0",
+  "goal_hash": "5ec8709b30816bac",
+  "task_name": "FilesDeleteFile",
+  "task_goal": "Delete the file Qigo_active_house.mp3 from the Android filesystem located in the Alarms folder within the sdk_gphone_x86_64 storage area.",
+  "task_goal_rewrite": "The file Qigo_active_house.mp3 is permanently deleted from the Alarms folder within the shared external storage (canonically accessed as /sdcard) of the Android device.",
+  "checkpoints": [
+    {
+      "id": "cp1",
+      "description": "The file Qigo_active_house.mp3 is visible in the Alarms folder within the device's shared external storage (canonically /sdcard).",
+      "required": true,
+      "evidence_hint": "Screenshot or trace output showing Qigo_active_house.mp3 listed in the Alarms folder of the device's storage prior to deletion actions."
+    },
+    {
+      "id": "cp2",
+      "description": "The file Qigo_active_house.mp3 is no longer present in the Alarms folder within the device's shared external storage (canonically /sdcard).",
+      "required": true,
+      "evidence_hint": "Screenshot or trace output confirming Qigo_active_house.mp3 is not listed in the Alarms folder of the device's storage after deletion actions are completed."
+    },
+    {
+      "id": "cp3",
+      "description": "Evidence confirms the operation was applied to the exact target object/value and intended context stated in the goal.",
+      "required": true,
+      "evidence_hint": "Use screenshot/UI text/action evidence to disambiguate the target identity and location before final-state verification."
+    }
+  ],
+  "success_rule": "Success is achieved if both required checkpoints are satisfied: the target file was located in the specified Alarms folder and is no longer present there after deletion actions."
+}

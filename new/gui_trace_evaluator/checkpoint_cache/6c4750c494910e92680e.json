@@ -1,0 +1,53 @@
+{
+  "format_version": 1,
+  "standard_id": "6c4750c494910e92680e",
+  "goal_hash": "f349e3b9166e0b16",
+  "task_name": "RecipeAddSingleRecipe",
+  "task_goal": "Add the following recipes into the Broccoli app:\nRecipe: Kale and Quinoa Salad\n description: A delicious and healthy choice for any time of the day.\n servings: 8 servings\n preparationTime: 10 mins\n ingredients: to your liking\n directions: Toss chopped kale, cooked quinoa, dried cranberries, sliced almonds, and feta cheese with a lemon vinaigrette. Garnish with fresh herbs for a more vibrant taste.\n",
+  "task_goal_rewrite": "Successfully add the 'Kale and Quinoa Salad' recipe with all specified details into the Broccoli app.",
+  "checkpoints": [
+    {
+      "id": "cp1",
+      "description": "The recipe title 'Kale and Quinoa Salad' is entered into the appropriate field in the Broccoli app.",
+      "required": true,
+      "evidence_hint": "Screenshot or trace showing the exact recipe title populated in the title input field of the recipe creation form."
+    },
+    {
+      "id": "cp2",
+      "description": "The recipe description 'A delicious and healthy choice for any time of the day.' is entered into the appropriate field in the Broccoli app.",
+      "required": true,
+      "evidence_hint": "Screenshot or trace showing the exact description text populated in the description input field of the recipe creation form."
+    },
+    {
+      "id": "cp3",
+      "description": "The recipe serving size '8 servings' is entered into the appropriate field in the Broccoli app.",
+      "required": true,
+      "evidence_hint": "Screenshot or trace showing '8 servings' (or numerical value 8 paired with 'servings' unit) populated in the servings input field of the recipe creation form."
+    },
+    {
+      "id": "cp4",
+      "description": "The recipe preparation time '10 mins' is entered into the appropriate field in the Broccoli app.",
+      "required": true,
+      "evidence_hint": "Screenshot or trace showing '10 mins' (or numerical value 10 paired with 'mins'/'minutes' unit) populated in the preparation time input field of the recipe creation form."
+    },
+    {
+      "id": "cp5",
+      "description": "The ingredient note 'to your liking' is entered into the ingredients field in the Broccoli app.",
+      "required": true,
+      "evidence_hint": "Screenshot or trace showing 'to your liking' populated in the ingredients input field of the recipe creation form."
+    },
+    {
+      "id": "cp6",
+      "description": "The full direction text 'Toss chopped kale, cooked quinoa, dried cranberries, sliced almonds, and feta cheese with a lemon vinaigrette. Garnish with fresh herbs for a more vibrant taste.' is entered into the directions field in the Broccoli app.",
+      "required": true,
+      "evidence_hint": "Screenshot or trace showing the exact direction text populated in the directions input field of the recipe creation form."
+    },
+    {
+      "id": "cp7",
+      "description": "The completed recipe form is submitted and confirmed as saved in the Broccoli app.",
+      "required": true,
+      "evidence_hint": "Screenshot or trace showing a confirmation message of successful recipe save, or the recipe appearing in the app's saved recipe list."
+    }
+  ],
+  "success_rule": "All 7 required checkpoints are fully satisfied; the 'Kale and Quinoa Salad' recipe with all specified details is successfully saved and accessible in the Broccoli app."
+}

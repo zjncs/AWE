@@ -1,0 +1,41 @@
+{
+  "format_version": 1,
+  "standard_id": "1390a1c5791a8ee63f40",
+  "goal_hash": "0e551d7c6700a902",
+  "task_name": "OsmAndMarker",
+  "task_goal": "Add a location marker for Planken, Liechtenstein in the OsmAnd maps app.",
+  "task_goal_rewrite": "A location marker for Planken, Liechtenstein is successfully added and visible within the OsmAnd maps app.",
+  "checkpoints": [
+    {
+      "id": "cp1",
+      "description": "The OsmAnd maps app is opened and actively displaying its main map interface.",
+      "required": true,
+      "evidence_hint": "Screenshot/trace showing the OsmAnd app's main map screen loaded and in view."
+    },
+    {
+      "id": "cp2",
+      "description": "The search function in OsmAnd is accessed, and 'Planken, Liechtenstein' is entered as the search query.",
+      "required": true,
+      "evidence_hint": "Screenshot/trace showing the OsmAnd search bar with 'Planken, Liechtenstein' typed in, or the search results page for this query."
+    },
+    {
+      "id": "cp3",
+      "description": "The search result for Planken, Liechtenstein is selected to navigate its location on the map.",
+      "required": true,
+      "evidence_hint": "Screenshot/trace showing the map centered on Planken, Liechtenstein, with the location's details displayed (e.g., a pop-up card for Planken)."
+    },
+    {
+      "id": "cp4",
+      "description": "The marker creation function (e.g., 'Add marker' option) is initiated for the Planken, Liechtenstein location.",
+      "required": true,
+      "evidence_hint": "Screenshot/trace showing the 'Add marker' menu/option selected for the Planken location, or the marker creation form open."
+    },
+    {
+      "id": "cp5",
+      "description": "The marker for Planken, Liechtenstein is saved and visible on the OsmAnd map.",
+      "required": true,
+      "evidence_hint": "Screenshot/trace showing a persistent marker icon placed at the Planken, Liechtenstein location on the map, with confirmation that the marker was saved successfully."
+    }
+  ],
+  "success_rule": "All required checkpoints are completed, and a persistent location marker for Planken, Liechtenstein is visible and saved within the OsmAnd maps app."
+}

@@ -1,0 +1,29 @@
+{
+  "format_version": 1,
+  "standard_id": "ecc102177d3ff1805ac3",
+  "goal_hash": "3a848f7058fc4f68",
+  "task_name": "BrowserMultiply",
+  "task_goal": "Open the file task.html in Downloads in the file manager; when prompted open it with Chrome. Then click the button 5 times, remember the numbers displayed, and enter their product in the form.",
+  "task_goal_rewrite": "The task.html file located in the Downloads folder is opened in the Chrome browser, the button on the page is clicked exactly 5 times, and the product of the 5 numbers displayed after each click is entered into the page's form input field.",
+  "checkpoints": [
+    {
+      "id": "cp1",
+      "description": "The task.html file from the Downloads folder is successfully opened in the Chrome browser.",
+      "required": true,
+      "evidence_hint": "Screenshot showing Chrome displaying the task.html page with the interactive button and form input field; trace evidence of selecting Chrome as the application to open task.html from the file manager."
+    },
+    {
+      "id": "cp2",
+      "description": "The button on the task.html page is clicked exactly 5 times.",
+      "required": true,
+      "evidence_hint": "Trace log showing 5 distinct click actions on the button; if the page displays a click count, screenshot verifying the count equals 5."
+    },
+    {
+      "id": "cp3",
+      "description": "The product of the 5 numbers displayed after each button click is entered into the form input field on the task.html page.",
+      "required": true,
+      "evidence_hint": "Screenshot showing the form input field containing the correct numerical product of the 5 numbers displayed during each button click."
+    }
+  ],
+  "success_rule": "All required checkpoints are satisfied, with the product entered in the form being the accurate result of multiplying the 5 numbers displayed after each of the 5 button clicks."
+}

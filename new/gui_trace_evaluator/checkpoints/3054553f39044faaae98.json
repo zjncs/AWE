@@ -1,0 +1,35 @@
+{
+  "format_version": 1,
+  "standard_id": "3054553f39044faaae98",
+  "goal_hash": "1c1c8dc92d64cc51",
+  "task_name": "ExpenseAddSingle",
+  "task_goal": "Add the following expenses into the pro expense:\nname|amount_dollars|category_name|note\nSubscriptions|$438.01|Others|A need",
+  "task_goal_rewrite": "An expense entry with name 'Subscriptions', amount $438.01, category 'Others', and note 'A need' is present in the pro expense app.",
+  "checkpoints": [
+    {
+      "id": "cp1",
+      "description": "The pro expense app contains an expense entry named 'Subscriptions'.",
+      "required": true,
+      "evidence_hint": "Screenshot or trace showing the 'Subscriptions' expense entry visible in the app's expense list or detail view."
+    },
+    {
+      "id": "cp2",
+      "description": "The 'Subscriptions' expense entry displays an amount of $438.01.",
+      "required": true,
+      "evidence_hint": "Screenshot or trace showing the amount $438.01 associated with the 'Subscriptions' expense entry."
+    },
+    {
+      "id": "cp3",
+      "description": "The 'Subscriptions' expense entry is assigned to the 'Others' category.",
+      "required": true,
+      "evidence_hint": "Screenshot or trace showing the 'Others' category label linked to the 'Subscriptions' expense entry."
+    },
+    {
+      "id": "cp4",
+      "description": "The 'Subscriptions' expense entry includes the note text 'A need'.",
+      "required": true,
+      "evidence_hint": "Screenshot or trace showing the note 'A need' within the 'Subscriptions' expense entry's details."
+    }
+  ],
+  "success_rule": "Success is achieved if all required checkpoints are satisfied: the expense entry exists in the pro expense app with all specified details (name, amount, category, note) exactly matching the goal values."
+}
