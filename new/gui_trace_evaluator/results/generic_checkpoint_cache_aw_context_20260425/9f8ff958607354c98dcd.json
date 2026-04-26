@@ -1,0 +1,29 @@
+{
+  "format_version": 1,
+  "standard_id": "9f8ff958607354c98dcd",
+  "goal_hash": "2f35b1a1702ce8a4",
+  "task_name": "SimpleCalendarAddOneEvent",
+  "task_goal": "In Simple Calendar Pro, create a calendar event on 2023-10-15 at 15h with the title 'Appointment for Annual Report' and the description 'We will discuss annual budget.'. The event should last for 15 mins.",
+  "task_goal_rewrite": "A calendar event titled 'Appointment for Annual Report' with the description 'We will discuss annual budget.' is created in Simple Calendar Pro, scheduled for 2023-10-15 from 15:00 to 15:15 (15-minute duration).",
+  "checkpoints": [
+    {
+      "id": "cp1",
+      "description": "The calendar event has the exact title 'Appointment for Annual Report'.",
+      "required": true,
+      "evidence_hint": "Screenshot of the event detail screen displaying the title, or the calendar view showing the event listed with this title."
+    },
+    {
+      "id": "cp2",
+      "description": "The event is scheduled on 2023-10-15, starting at 15:00 and ending at 15:15 (15-minute duration).",
+      "required": true,
+      "evidence_hint": "Screenshot of the event's date and time settings showing the specified start date, start time, and end time, or the calendar view displaying the event in the correct 15-minute time slot on 2023-10-15."
+    },
+    {
+      "id": "cp3",
+      "description": "The event includes the exact description 'We will discuss annual budget.'",
+      "required": true,
+      "evidence_hint": "Screenshot of the event detail screen showing the full description text."
+    }
+  ],
+  "success_rule": "Success is achieved if all required checkpoints are satisfied: the event exists with the specified title, scheduled date/time (15-minute duration), and description as outlined in the task goal."
+}

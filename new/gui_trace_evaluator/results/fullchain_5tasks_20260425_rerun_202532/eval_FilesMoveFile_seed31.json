@@ -1,0 +1,254 @@
+{
+  "source": "/Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/fullchain_5tasks_20260425_rerun_202532/exec_FilesMoveFile_seed31/results.json",
+  "model": "doubao-seed-1-8-251228",
+  "provider": "ark",
+  "num_records": 1,
+  "evaluations": [
+    {
+      "checkpoint_results": [
+        {
+          "id": "cp1",
+          "achieved": true,
+          "confidence": 1.0,
+          "evidence": "The screenshot for step 30 (after action) shows the file sunset.jpg listed in the Pictures folder within the sdk_gphone64_arm64 storage area, which is treated as the same as the sdk_gphone_x86_64 storage area per the environment context.",
+          "missing_or_conflict": "",
+          "insufficient_trace": false,
+          "needs_fallback_verification": false,
+          "read_tool_verification": {
+            "triggered": false,
+            "requests": [],
+            "results": []
+          },
+          "evidence_steps": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            16,
+            17,
+            18,
+            19,
+            20,
+            29,
+            30
+          ],
+          "evidence_images": 2,
+          "retrieval_method": "model_step_retrieval_repair_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 0.8,
+          "retrieval_rationale": "Step 10 shows sunset.jpg present in the Alarms folder initially. Steps 13,17,18 document initiating the move action, selecting Pictures as the destination, and executing the move. Step 19 confirms the file is no longer in Alarms (indicating it was moved out). Step 30 shows the Pictures folder after the move, which does not list sunset.jpg, providing conclusive negative evidence that the file is not present in the Pictures folder as required by the checkpoint.",
+          "retrieval_fallback_reason": "",
+          "model_read_requests": [],
+          "message_strategy": "doubao_official_gui_history_with_screenshots_and_read_tools"
+        },
+        {
+          "id": "cp2",
+          "achieved": true,
+          "confidence": 1.0,
+          "evidence": "Read-only tool results (list_dir for /sdcard/Alarms, stat_path for /sdcard/Alarms/sunset.jpg) confirm sunset.jpg is absent from the Alarms folder within the shared storage (equivalent to sdk_gphone_x86_64). The final state snapshot shows sunset.jpg in the Pictures folder, and stat_path for /sdcard/Pictures/sunset.jpg confirms the file exists there, verifying the move operation completed successfully.",
+          "missing_or_conflict": "The step 24 screenshot appears to show sunset.jpg still in the Alarms folder, but this conflicts with definitive file system evidence that the file was moved to Pictures and is no longer present in Alarms. This discrepancy is attributed to an unrefreshed UI state in the screenshot.",
+          "insufficient_trace": false,
+          "needs_fallback_verification": false,
+          "read_tool_verification": {
+            "triggered": true,
+            "requests": [
+              {
+                "tool": "list_dir",
+                "path": "/sdcard/Alarms",
+                "reason": "Collect final directory listing for a file-related checkpoint.",
+                "source": "default_file_task_policy"
+              },
+              {
+                "tool": "list_dir",
+                "path": "/sdcard/Pictures",
+                "reason": "Collect final directory listing for a file-related checkpoint.",
+                "source": "default_file_task_policy"
+              },
+              {
+                "tool": "find_file",
+                "root": "/sdcard",
+                "name": "sunset.jpg",
+                "reason": "Locate the target file after execution.",
+                "source": "default_file_task_policy"
+              },
+              {
+                "tool": "stat_path",
+                "path": "/sdcard/Alarms/sunset.jpg",
+                "reason": "Check exact target path existence after execution.",
+                "source": "default_file_task_policy"
+              },
+              {
+                "tool": "stat_path",
+                "path": "/sdcard/Pictures/sunset.jpg",
+                "reason": "Check exact target path existence after execution.",
+                "source": "default_file_task_policy"
+              }
+            ],
+            "results": [
+              {
+                "type": "final_state_snapshot",
+                "index": 1,
+                "tool": "final_state_snapshot",
+                "status": "ok",
+                "request": {
+                  "tool": "final_state_snapshot",
+                  "source": "gui_demo_post_execution"
+                },
+                "command": "",
+                "output": "Final screenshot path: /Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/fullchain_5tasks_20260425_rerun_202532/exec_FilesMoveFile_seed31/trace_images/FilesMoveFile_seed31/final_state.jpg\n\nFinal UI text:\n[1] text='' desc='Show roots' class='android.widget.ImageButton' clickable=True editable=False bbox=(0,128,147,254)\n[2] text='Pictures' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(189,155,386,226)\n[3] text='' desc='New folder' class='android.widget.TextView' clickable=True editable=False bbox=(827,128,954,254)\n[4] text='' desc='More options' class='android.widget.ImageView' clickable=True editable=False bbox=(954,128,1080,254)\n[5] text='Files in Pictures' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(63,383,890,541)\n[6] text='' desc='List view' class='android.widget.TextView' clickable=True editable=False bbox=(890,399,1017,525)\n[7] text='CANCEL' desc='' class='android.widget.Button' clickable=True editable=False bbox=(37,2211,281,2337)\n[8] text='MOVE' desc='' class='android.widget.Button' clickable=True editable=False bbox=(303,2211,534,2337)\n[9] text='sunset.jpg' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(196,1038,367,1089)\n[10] text='21 B' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(196,1089,260,1132)\n[11] text='15:34' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(271,1089,351,1132)\n[12] text='sdk_gphone64_arm64' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(0,257,451,383)\n[13] text='Pictures' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(514,257,714,383)\n[14] text='15:38' desc='23:38' class='android.widget.TextView' clickable=False editable=False bbox=(50,1,148,128)\n[15] text='' desc='Phone two bars.' class='android.widget.FrameLayout' clickable=False editable=False bbox=(866,35,970,93)\n[16] text='' desc='Battery 100 percent.' class='android.widget.LinearLayout' clickable=False editable=False bbox=(986,1,1006,128)\n[17] text='' desc='No internet' class='android.widget.ImageView' clickable=False editable=False bbox=(866,43,931,85)",
+                "source": "record_post_execution_evidence",
+                "screenshot_path": "/Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/fullchain_5tasks_20260425_rerun_202532/exec_FilesMoveFile_seed31/trace_images/FilesMoveFile_seed31/final_state.jpg",
+                "final_ui": "[1] text='' desc='Show roots' class='android.widget.ImageButton' clickable=True editable=False bbox=(0,128,147,254)\n[2] text='Pictures' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(189,155,386,226)\n[3] text='' desc='New folder' class='android.widget.TextView' clickable=True editable=False bbox=(827,128,954,254)\n[4] text='' desc='More options' class='android.widget.ImageView' clickable=True editable=False bbox=(954,128,1080,254)\n[5] text='Files in Pictures' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(63,383,890,541)\n[6] text='' desc='List view' class='android.widget.TextView' clickable=True editable=False bbox=(890,399,1017,525)\n[7] text='CANCEL' desc='' class='android.widget.Button' clickable=True editable=False bbox=(37,2211,281,2337)\n[8] text='MOVE' desc='' class='android.widget.Button' clickable=True editable=False bbox=(303,2211,534,2337)\n[9] text='sunset.jpg' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(196,1038,367,1089)\n[10] text='21 B' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(196,1089,260,1132)\n[11] text='15:34' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(271,1089,351,1132)\n[12] text='sdk_gphone64_arm64' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(0,257,451,383)\n[13] text='Pictures' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(514,257,714,383)\n[14] text='15:38' desc='23:38' class='android.widget.TextView' clickable=False editable=False bbox=(50,1,148,128)\n[15] text='' desc='Phone two bars.' class='android.widget.FrameLayout' clickable=False editable=False bbox=(866,35,970,93)\n[16] text='' desc='Battery 100 percent.' class='android.widget.LinearLayout' clickable=False editable=False bbox=(986,1,1006,128)\n[17] text='' desc='No internet' class='android.widget.ImageView' clickable=False editable=False bbox=(866,43,931,85)"
+              },
+              {
+                "type": "read_tool_result",
+                "index": 2,
+                "tool": "list_dir",
+                "status": "ok",
+                "request": {
+                  "tool": "list_dir",
+                  "path": "/sdcard/Alarms",
+                  "source": "gui_demo_post_execution"
+                },
+                "command": "/Users/zjn/Library/Android/sdk/platform-tools/adb -s emulator-5554 shell 'ls -la /sdcard/Alarms'",
+                "output": "total 104\n-rw-rw---- 1 u0_a172 media_rw 21 2023-10-15 15:34 2023_02_01_early_alarm.mp3\n-rw-rw---- 1 u0_a172 media_rw 21 2023-10-15 15:34 2023_04_03_meditation_time.mp3\n-rw-rw---- 1 u0_a172 media_rw 21 2023-10-15 15:34 2023_07_26_wake_up.mp3\n-rw-rw---- 1 u0_a172 media_rw 21 2023-10-15 15:34 2023_10_02_morning_alarm.mp3\n-rw-rw---- 1 u0_a172 media_rw 21 2023-10-15 15:34 daily_reminder_2023_01_16.mp3\n-rw-rw---- 1 u0_a172 media_rw 21 2023-10-15 15:34 daily_reminder_w7nn.mp3\n-rw-rw---- 1 u0_a172 media_rw 21 2023-10-15 15:34 early_alarm_backup.mp3\n-rw-rw---- 1 u0_a172 media_rw 21 2023-10-15 15:34 early_bird_789W.mp3\n-rw-rw---- 1 u0_a172 media_rw 21 2023-10-15 15:34 fitness_reminder_2023_06_22.mp3\n-rw-rw---- 1 u0_a172 media_rw 21 2023-10-15 15:34 hmuy_weekend_alarm.mp3\n-rw-rw---- 1 u0_a172 media_rw 21 2023-10-15 15:34 mAwu_meditation_time.mp3\n-rw-rw---- 1 u0_a172 media_rw 21 2023-10-15 15:34 meditation_time_edited.mp3\n-rw-rw---- 1 u0_a172 media_rw 21 2023-10-15 15:34 morning_alarm_backup.mp3\n",
+                "source": "record_post_execution_evidence",
+                "returncode": 0
+              },
+              {
+                "type": "read_tool_result",
+                "index": 3,
+                "tool": "list_dir",
+                "status": "ok",
+                "request": {
+                  "tool": "list_dir",
+                  "path": "/sdcard/Pictures",
+                  "source": "gui_demo_post_execution"
+                },
+                "command": "/Users/zjn/Library/Android/sdk/platform-tools/adb -s emulator-5554 shell 'ls -la /sdcard/Pictures'",
+                "output": "total 16\ndrwxrws--- 2 u0_a172 media_rw 4096 2023-10-15 15:34 .thumbnails\n-rw-rw---- 1 u0_a172 media_rw   21 2023-10-15 15:34 sunset.jpg\n",
+                "source": "record_post_execution_evidence",
+                "returncode": 0
+              },
+              {
+                "type": "read_tool_result",
+                "index": 4,
+                "tool": "find_file",
+                "status": "ok",
+                "request": {
+                  "tool": "find_file",
+                  "root": "/sdcard",
+                  "name": "sunset.jpg",
+                  "source": "gui_demo_post_execution"
+                },
+                "command": "/Users/zjn/Library/Android/sdk/platform-tools/adb -s emulator-5554 shell 'find /sdcard -name sunset.jpg 2>/dev/null | head -50'",
+                "output": "",
+                "source": "record_post_execution_evidence",
+                "returncode": 0,
+                "found": false,
+                "matches": [],
+                "interpretation": "No matching files were found."
+              },
+              {
+                "type": "read_tool_result",
+                "index": 5,
+                "tool": "stat_path",
+                "status": "ok",
+                "request": {
+                  "tool": "stat_path",
+                  "path": "/sdcard/Alarms/sunset.jpg",
+                  "source": "gui_demo_post_execution"
+                },
+                "command": "/Users/zjn/Library/Android/sdk/platform-tools/adb -s emulator-5554 shell 'if [ -e /sdcard/Alarms/sunset.jpg ]; then echo __AWE_PATH_EXISTS=true__; stat /sdcard/Alarms/sunset.jpg; else echo __AWE_PATH_EXISTS=false__; fi'",
+                "output": "",
+                "source": "record_post_execution_evidence",
+                "returncode": 0,
+                "exists": false,
+                "interpretation": "The requested path does not exist."
+              },
+              {
+                "type": "read_tool_result",
+                "index": 6,
+                "tool": "stat_path",
+                "status": "ok",
+                "request": {
+                  "tool": "stat_path",
+                  "path": "/sdcard/Pictures/sunset.jpg",
+                  "source": "gui_demo_post_execution"
+                },
+                "command": "/Users/zjn/Library/Android/sdk/platform-tools/adb -s emulator-5554 shell 'if [ -e /sdcard/Pictures/sunset.jpg ]; then echo __AWE_PATH_EXISTS=true__; stat /sdcard/Pictures/sunset.jpg; else echo __AWE_PATH_EXISTS=false__; fi'",
+                "output": "  File: /sdcard/Pictures/sunset.jpg\n  Size: 21\t Blocks: 16\t IO Blocks: 512\t regular file\nDevice: 5fh/95d\t Inode: 303167\t Links: 1\t Device type: 0,0\nAccess: (0660/-rw-rw----)\tUid: (10172/ u0_a172)\tGid: ( 1023/media_rw)\nAccess: 2023-10-15 15:34:01.596000000 +0000\nModify: 2023-10-15 15:34:01.596000000 +0000\nChange: 2023-10-15 15:37:01.392000086 +0000\n",
+                "source": "record_post_execution_evidence",
+                "returncode": 0,
+                "exists": true,
+                "interpretation": "The requested path exists."
+              }
+            ],
+            "source": "record_post_execution_evidence",
+            "first_pass_result": {
+              "achieved": false,
+              "confidence": 1.0,
+              "evidence": "Step 10's screenshot confirms sunset.jpg was initially present in the Alarms folder of the sdk_gphone64_arm64 storage area (equivalent to sdk_gphone_x86_64 per context). Step 24's screenshot shows sunset.jpg is still present and selected in the same Alarms folder after the attempted move operation.",
+              "missing_or_conflict": "The agent's action history claims to have moved the file to Pictures, but the final visible state in the provided screenshot shows sunset.jpg remains in the Alarms folder, conflicting with the checkpoint requirement that the file be absent from Alarms.",
+              "insufficient_trace": false,
+              "needs_fallback_verification": false
+            }
+          },
+          "evidence_steps": [
+            10,
+            11,
+            12,
+            13,
+            14,
+            16,
+            17,
+            18,
+            19,
+            20,
+            22,
+            23,
+            24
+          ],
+          "evidence_images": 2,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 0.95,
+          "retrieval_rationale": "Step 11 confirms sunset.jpg was present in the Alarms folder (as it was selected via long press). Steps 13 and 17 show the move action was initiated and Pictures was selected as the destination. Steps 18, 19, and 23 display the Alarms folder after the move operation, providing visual evidence that sunset.jpg is no longer present in Alarms, which directly satisfies the checkpoint requirement.",
+          "retrieval_fallback_reason": "",
+          "model_read_requests": [],
+          "message_strategy": "doubao_official_gui_history_with_screenshots_and_read_tools"
+        }
+      ],
+      "success": true,
+      "completeness_score": 1.0,
+      "insufficient_trace": false,
+      "rationale": "All required checkpoints were supported.",
+      "format_version": 1,
+      "task": "FilesMoveFile",
+      "granularity": "intent",
+      "standard_id": "daa975e069f339aeb8d9",
+      "goal_hash": "f49e78a4393cced9",
+      "status": "evaluated",
+      "evaluation_mode": "doubao_official_gui_messages_v1",
+      "trace_steps": 30,
+      "official_reward": 1.0,
+      "official_success": true,
+      "agreement_with_reward": true
+    }
+  ],
+  "statistics": {
+    "total_records": 1,
+    "total_evaluated": 1,
+    "total_errors": 0,
+    "total_skipped": 0,
+    "agreement_rate": 1.0,
+    "confusion_matrix": {
+      "true_positive": 1,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 0
+    }
+  }
+}

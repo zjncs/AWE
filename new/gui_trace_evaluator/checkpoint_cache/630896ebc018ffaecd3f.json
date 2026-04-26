@@ -1,0 +1,35 @@
+{
+  "format_version": 1,
+  "standard_id": "630896ebc018ffaecd3f",
+  "goal_hash": "11d71413d67c93ce",
+  "task_name": "MarkorEditNote",
+  "task_goal": "Edit note_SiFbv.txt in Markor. Add to the top of the note Hello, World!",
+  "task_goal_rewrite": "The note_SiFbv.txt file in Markor has \"Hello, World!\" added as the first line at the top of the note.",
+  "checkpoints": [
+    {
+      "id": "cp1",
+      "description": "Markor application is opened and the note_SiFbv.txt file is successfully loaded in the editor interface.",
+      "required": true,
+      "evidence_hint": "Screenshot showing Markor open with the title/filename \"note_SiFbv.txt\" visible and the note's content displayed in the editing area."
+    },
+    {
+      "id": "cp2",
+      "description": "The cursor is positioned at the very start (top-left corner) of the note's content, before any existing text.",
+      "required": true,
+      "evidence_hint": "Screenshot showing the cursor placed at the first character position of the note, before any existing lines or text."
+    },
+    {
+      "id": "cp3",
+      "description": "The text \"Hello, World!\" is typed at the top position of the note.",
+      "required": true,
+      "evidence_hint": "Screenshot showing \"Hello, World!\" as the first line of the note, above any original content."
+    },
+    {
+      "id": "cp4",
+      "description": "The edited note_SiFbv.txt file is saved in Markor.",
+      "required": true,
+      "evidence_hint": "Screenshot showing a save confirmation indicator (e.g., saved icon, status bar message) or the file reloaded with the added \"Hello, World!\" still present at the top."
+    }
+  ],
+  "success_rule": "All required checkpoints are satisfied, and the final state of note_SiFbv.txt in Markor has \"Hello, World!\" as the first line at the top of the note with the changes saved."
+}

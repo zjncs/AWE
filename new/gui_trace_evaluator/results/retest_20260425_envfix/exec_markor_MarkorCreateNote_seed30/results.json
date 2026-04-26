@@ -1,0 +1,24 @@
+[
+  {
+    "task": "MarkorCreateNote",
+    "task_name": "MarkorCreateNote",
+    "base_goal": "MarkorCreateNote",
+    "goal": "MarkorCreateNote",
+    "goal_used": "MarkorCreateNote",
+    "granularity": "intent",
+    "seed": 30,
+    "model": "doubao-seed-1-8-251228",
+    "reward": null,
+    "success": null,
+    "agent_done": false,
+    "abort_reason": "fatal_error: Could not get a11y tree.",
+    "step_count": 0,
+    "steps": 0,
+    "elapsed_seconds": 48.780736207962036,
+    "trace": {
+      "format_version": "gui_demo_android_world_v1",
+      "steps": []
+    },
+    "post_execution_evidence": []
+  }
+]

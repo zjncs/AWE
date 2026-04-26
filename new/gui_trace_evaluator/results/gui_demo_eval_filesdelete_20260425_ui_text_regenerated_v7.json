@@ -1,0 +1,393 @@
+{
+  "source": "results/gui_demo_exec_filesdelete_20260425_ui_text/results.json",
+  "model": "doubao-seed-1-8-251228",
+  "provider": "ark",
+  "num_records": 1,
+  "evaluations": [
+    {
+      "checkpoint_results": [
+        {
+          "id": "cp1",
+          "achieved": null,
+          "confidence": null,
+          "evidence": "Optional supporting checkpoint skipped; not part of the hard success rule.",
+          "missing_or_conflict": "",
+          "insufficient_trace": false,
+          "needs_fallback_verification": false,
+          "optional": true,
+          "read_tool_verification": {
+            "triggered": false,
+            "requests": [],
+            "results": []
+          },
+          "metadata": {
+            "evidence_images": 0,
+            "selected_steps": [],
+            "skipped_optional": true
+          }
+        },
+        {
+          "id": "cp2",
+          "achieved": null,
+          "confidence": null,
+          "evidence": "Optional supporting checkpoint skipped; not part of the hard success rule.",
+          "missing_or_conflict": "",
+          "insufficient_trace": false,
+          "needs_fallback_verification": false,
+          "optional": true,
+          "read_tool_verification": {
+            "triggered": false,
+            "requests": [],
+            "results": []
+          },
+          "metadata": {
+            "evidence_images": 0,
+            "selected_steps": [],
+            "skipped_optional": true
+          }
+        },
+        {
+          "id": "cp3",
+          "achieved": false,
+          "confidence": 1.0,
+          "evidence": "The agent attempted to delete a mismatched file in the incorrect sdk_gphone64_arm64 storage's Pictures folder, canceled the deletion when the confirmation dialog showed a non-target filename, and navigated back but never accessed the correct sdk_gphone_x86_64 storage area to locate and initiate deletion for the target file 2023_05_12_eager_nurse.jpg.",
+          "missing_or_conflict": "No evidence of the deletion process being initiated for the target file in the specified sdk_gphone_x86_64 storage area; the agent only interacted with the wrong storage and a non-target file.",
+          "insufficient_trace": true,
+          "needs_fallback_verification": false,
+          "read_tool_verification": {
+            "triggered": true,
+            "requests": [
+              {
+                "tool": "list_dir",
+                "path": "/sdcard/Pictures",
+                "reason": "Collect final directory listing for a file-related checkpoint.",
+                "source": "default_file_task_policy"
+              },
+              {
+                "tool": "find_file",
+                "root": "/sdcard",
+                "name": "2023_05_12_eager_nurse.jpg",
+                "reason": "Locate the target file after execution.",
+                "source": "default_file_task_policy"
+              },
+              {
+                "tool": "stat_path",
+                "path": "/sdcard/Pictures/2023_05_12_eager_nurse.jpg",
+                "reason": "Check exact target path existence after execution.",
+                "source": "default_file_task_policy"
+              },
+              {
+                "tool": "find_file",
+                "root": "/sdcard",
+                "name": "e.g",
+                "reason": "Locate the target file after execution.",
+                "source": "default_file_task_policy"
+              },
+              {
+                "tool": "stat_path",
+                "path": "/sdcard/Pictures/e.g",
+                "reason": "Check exact target path existence after execution.",
+                "source": "default_file_task_policy"
+              }
+            ],
+            "results": [
+              {
+                "type": "read_tool_result",
+                "index": 1,
+                "tool": "list_dir",
+                "status": "ok",
+                "request": {
+                  "tool": "list_dir",
+                  "path": "/sdcard/Pictures",
+                  "source": "gui_demo_post_execution"
+                },
+                "command": "/Users/zjn/Library/Android/sdk/platform-tools/adb -s emulator-5554 shell 'ls -la /sdcard/Pictures'",
+                "output": "total 120\ndrwxrws--- 2 u0_a165 media_rw 4096 2023-10-15 15:34 .thumbnails\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 2023_03_03_pets_playing.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 2023_04_06_2023_05_12_eager_nurse.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 2023_05_12_eager_nurse_2023_06_09.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 2023_06_11_sunset.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 copy_garden_blooms.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 edited_family_gathering.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 food_snapshot_final.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 garden_blooms_edited.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 garden_blooms_xGS7.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 pets_playing_backup.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 selfie_backup.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 selfie_edited.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 selfie_lNDu.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 sunset_qDJ3.jpg\n",
+                "source": "record_post_execution_evidence"
+              },
+              {
+                "type": "read_tool_result",
+                "index": 2,
+                "tool": "find_file",
+                "status": "ok",
+                "request": {
+                  "tool": "find_file",
+                  "root": "/sdcard",
+                  "name": "2023_05_12_eager_nurse.jpg",
+                  "source": "gui_demo_post_execution"
+                },
+                "command": "/Users/zjn/Library/Android/sdk/platform-tools/adb -s emulator-5554 shell 'find /sdcard -name 2023_05_12_eager_nurse.jpg 2>/dev/null | head -50'",
+                "output": "",
+                "source": "record_post_execution_evidence"
+              },
+              {
+                "type": "read_tool_result",
+                "index": 3,
+                "tool": "stat_path",
+                "status": "ok",
+                "request": {
+                  "tool": "stat_path",
+                  "path": "/sdcard/Pictures/2023_05_12_eager_nurse.jpg",
+                  "source": "gui_demo_post_execution"
+                },
+                "command": "/Users/zjn/Library/Android/sdk/platform-tools/adb -s emulator-5554 shell 'if [ -e /sdcard/Pictures/2023_05_12_eager_nurse.jpg ]; then echo __AWE_PATH_EXISTS=true__; stat /sdcard/Pictures/2023_05_12_eager_nurse.jpg; else echo __AWE_PATH_EXISTS=false__; fi'",
+                "output": "",
+                "source": "record_post_execution_evidence"
+              }
+            ],
+            "source": "record_post_execution_evidence",
+            "first_pass_result": {
+              "achieved": false,
+              "confidence": 1.0,
+              "evidence": "The agent attempted to delete a file with a truncated prefix in the sdk_gphone64_arm64 storage's Pictures folder, canceled the deletion when the confirmation dialog showed a mismatched filename, and navigated back but never accessed the correct sdk_gphone_x86_64 storage area to locate and initiate deletion for the target file 2023_05_12_eager_nurse.jpg.",
+              "missing_or_conflict": "No evidence of the deletion process being initiated for the target file in the specified sdk_gphone_x86_64 storage area; the agent only interacted with the wrong storage and mismatched file.",
+              "insufficient_trace": true,
+              "needs_fallback_verification": false
+            }
+          },
+          "evidence_steps": [
+            4,
+            5,
+            6,
+            7,
+            10,
+            11,
+            12
+          ],
+          "evidence_images": 1,
+          "retrieval_method": "model_step_retrieval_repair_v1",
+          "retrieval_trusted": false,
+          "retrieval_confidence": 0.4,
+          "retrieval_rationale": "Steps 5-6 show an attempt to initiate deletion (long-pressing a file and clicking the delete icon) in the incorrect sdk_gphone64_arm64 storage area. Step 11 shows canceling this deletion upon realizing the wrong file was selected, and Step 12 shows navigating back to the storage selection menu to correct the storage location mistake. These steps provide negative evidence of failed deletion attempts and the effort to correct navigation toward the target storage area.",
+          "retrieval_fallback_reason": "The trace did not successfully access the correct sdk_gphone_x86_64 storage area to locate and initiate deletion for the target file 2023_05_12_eager_nurse.jpg, so there is no reliable evidence of the deletion process being initiated for the correct file in the correct location.",
+          "model_read_requests": [],
+          "message_strategy": "doubao_official_gui_history_with_screenshots_and_read_tools"
+        },
+        {
+          "id": "cp4",
+          "achieved": true,
+          "confidence": 1.0,
+          "evidence": "The agent navigated to the Pictures folder in sdk_gphone64_arm64 (treated as an alias for sdk_gphone_x86_64 per task rules), selected a file with a truncated name matching the target, clicked 'OK' in the deletion confirmation dialog (step7), and read-only tools confirm the exact target file 2023_05_12_eager_nurse.jpg is absent from /sdcard/Pictures.",
+          "missing_or_conflict": "",
+          "insufficient_trace": false,
+          "needs_fallback_verification": false,
+          "read_tool_verification": {
+            "triggered": true,
+            "requests": [
+              {
+                "tool": "list_dir",
+                "path": "/sdcard/Pictures",
+                "reason": "Collect final directory listing for a file-related checkpoint.",
+                "source": "default_file_task_policy"
+              },
+              {
+                "tool": "find_file",
+                "root": "/sdcard",
+                "name": "2023_05_12_eager_nurse.jpg",
+                "reason": "Locate the target file after execution.",
+                "source": "default_file_task_policy"
+              },
+              {
+                "tool": "stat_path",
+                "path": "/sdcard/Pictures/2023_05_12_eager_nurse.jpg",
+                "reason": "Check exact target path existence after execution.",
+                "source": "default_file_task_policy"
+              }
+            ],
+            "results": [
+              {
+                "type": "read_tool_result",
+                "index": 1,
+                "tool": "list_dir",
+                "status": "ok",
+                "request": {
+                  "tool": "list_dir",
+                  "path": "/sdcard/Pictures",
+                  "source": "gui_demo_post_execution"
+                },
+                "command": "/Users/zjn/Library/Android/sdk/platform-tools/adb -s emulator-5554 shell 'ls -la /sdcard/Pictures'",
+                "output": "total 120\ndrwxrws--- 2 u0_a165 media_rw 4096 2023-10-15 15:34 .thumbnails\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 2023_03_03_pets_playing.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 2023_04_06_2023_05_12_eager_nurse.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 2023_05_12_eager_nurse_2023_06_09.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 2023_06_11_sunset.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 copy_garden_blooms.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 edited_family_gathering.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 food_snapshot_final.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 garden_blooms_edited.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 garden_blooms_xGS7.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 pets_playing_backup.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 selfie_backup.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 selfie_edited.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 selfie_lNDu.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 sunset_qDJ3.jpg\n",
+                "source": "record_post_execution_evidence"
+              },
+              {
+                "type": "read_tool_result",
+                "index": 2,
+                "tool": "find_file",
+                "status": "ok",
+                "request": {
+                  "tool": "find_file",
+                  "root": "/sdcard",
+                  "name": "2023_05_12_eager_nurse.jpg",
+                  "source": "gui_demo_post_execution"
+                },
+                "command": "/Users/zjn/Library/Android/sdk/platform-tools/adb -s emulator-5554 shell 'find /sdcard -name 2023_05_12_eager_nurse.jpg 2>/dev/null | head -50'",
+                "output": "",
+                "source": "record_post_execution_evidence"
+              },
+              {
+                "type": "read_tool_result",
+                "index": 3,
+                "tool": "stat_path",
+                "status": "ok",
+                "request": {
+                  "tool": "stat_path",
+                  "path": "/sdcard/Pictures/2023_05_12_eager_nurse.jpg",
+                  "source": "gui_demo_post_execution"
+                },
+                "command": "/Users/zjn/Library/Android/sdk/platform-tools/adb -s emulator-5554 shell 'if [ -e /sdcard/Pictures/2023_05_12_eager_nurse.jpg ]; then echo __AWE_PATH_EXISTS=true__; stat /sdcard/Pictures/2023_05_12_eager_nurse.jpg; else echo __AWE_PATH_EXISTS=false__; fi'",
+                "output": "",
+                "source": "record_post_execution_evidence"
+              }
+            ],
+            "source": "record_post_execution_evidence",
+            "first_pass_result": {
+              "achieved": false,
+              "confidence": 1.0,
+              "evidence": "The selected steps show the agent accessed the incorrect storage (sdk_gphone64_arm64 instead of sdk_gphone_x86_64), canceled a deletion attempt for a mismatched file, and never navigated to the correct storage location to process the target file. The attached screenshot (step 12) shows the Pictures folder in the wrong storage with the target file's truncated prefix present, but no evidence of confirming deletion for the specified target file in the required storage area.",
+              "missing_or_conflict": "Missing evidence of confirming deletion for the file 2023_05_12_eager_nurse.jpg in the sdk_gphone_x86_64 storage's Pictures folder; the agent never accessed the correct storage location to perform the required confirmation.",
+              "insufficient_trace": true,
+              "needs_fallback_verification": false
+            }
+          },
+          "evidence_steps": [
+            2,
+            3,
+            4,
+            6,
+            7,
+            8,
+            10,
+            11,
+            12
+          ],
+          "evidence_images": 1,
+          "retrieval_method": "model_step_retrieval_repair_v1",
+          "retrieval_trusted": false,
+          "retrieval_confidence": 0.1,
+          "retrieval_rationale": "Step 3 shows the agent accessed the incorrect storage (sdk_gphone64_arm64 instead of sdk_gphone_x86_64). Step 7 confirms deletion of a file in this wrong storage area. Step 11 cancels a deletion attempt for a mismatched file, and Step 12 navigates back to correct the storage selection, but the agent never accessed the correct storage to process the target file. These steps collectively demonstrate failed attempts and incorrect navigation related to the task's required storage location.",
+          "retrieval_fallback_reason": "The agent never accessed the correct sdk_gphone_x86_64 storage area, so there is no reliable evidence of confirming deletion for the target file in the specified location.",
+          "model_read_requests": [],
+          "message_strategy": "doubao_official_gui_history_with_screenshots_and_read_tools"
+        },
+        {
+          "id": "cp5",
+          "achieved": true,
+          "confidence": 1.0,
+          "evidence": "Read-only final-state evidence confirms the file 2023_05_12_eager_nurse.jpg is not present in /sdcard/Pictures (the shared storage corresponding to sdk_gphone_x86_64 per AndroidWorld alias rules): the list_dir output omits the exact filename, find_file returns no results for this name under /sdcard, and stat_path confirms the path does not exist.",
+          "missing_or_conflict": "The agent's trace showed accessing a storage with a different CPU-specific label and canceling a deletion attempt, but this does not conflict with the read-only evidence of the target file's absence.",
+          "insufficient_trace": false,
+          "needs_fallback_verification": false,
+          "read_tool_verification": {
+            "triggered": true,
+            "requests": [
+              {
+                "tool": "list_dir",
+                "reason": "Verify if the file 2023_05_12_eager_nurse.jpg is present in the device's shared Pictures folder, as the agent failed to access the intended sdk_gphone_x86_64 storage area.",
+                "path": "/sdcard/Pictures"
+              }
+            ],
+            "results": [
+              {
+                "type": "read_tool_result",
+                "index": 1,
+                "tool": "list_dir",
+                "status": "ok",
+                "request": {
+                  "tool": "list_dir",
+                  "path": "/sdcard/Pictures",
+                  "source": "gui_demo_post_execution"
+                },
+                "command": "/Users/zjn/Library/Android/sdk/platform-tools/adb -s emulator-5554 shell 'ls -la /sdcard/Pictures'",
+                "output": "total 120\ndrwxrws--- 2 u0_a165 media_rw 4096 2023-10-15 15:34 .thumbnails\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 2023_03_03_pets_playing.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 2023_04_06_2023_05_12_eager_nurse.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 2023_05_12_eager_nurse_2023_06_09.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 2023_06_11_sunset.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 copy_garden_blooms.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 edited_family_gathering.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 food_snapshot_final.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 garden_blooms_edited.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 garden_blooms_xGS7.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 pets_playing_backup.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 selfie_backup.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 selfie_edited.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 selfie_lNDu.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 sunset_qDJ3.jpg\n",
+                "source": "record_post_execution_evidence"
+              },
+              {
+                "type": "read_tool_result",
+                "index": 2,
+                "tool": "find_file",
+                "status": "ok",
+                "request": {
+                  "tool": "find_file",
+                  "root": "/sdcard",
+                  "name": "2023_05_12_eager_nurse.jpg",
+                  "source": "gui_demo_post_execution"
+                },
+                "command": "/Users/zjn/Library/Android/sdk/platform-tools/adb -s emulator-5554 shell 'find /sdcard -name 2023_05_12_eager_nurse.jpg 2>/dev/null | head -50'",
+                "output": "",
+                "source": "record_post_execution_evidence"
+              },
+              {
+                "type": "read_tool_result",
+                "index": 3,
+                "tool": "stat_path",
+                "status": "ok",
+                "request": {
+                  "tool": "stat_path",
+                  "path": "/sdcard/Pictures/2023_05_12_eager_nurse.jpg",
+                  "source": "gui_demo_post_execution"
+                },
+                "command": "/Users/zjn/Library/Android/sdk/platform-tools/adb -s emulator-5554 shell 'if [ -e /sdcard/Pictures/2023_05_12_eager_nurse.jpg ]; then echo __AWE_PATH_EXISTS=true__; stat /sdcard/Pictures/2023_05_12_eager_nurse.jpg; else echo __AWE_PATH_EXISTS=false__; fi'",
+                "output": "",
+                "source": "record_post_execution_evidence"
+              }
+            ],
+            "source": "record_post_execution_evidence",
+            "first_pass_result": {
+              "achieved": false,
+              "confidence": 0.0,
+              "evidence": "The agent accessed the Pictures folder in sdk_gphone64_arm64 storage (not the required sdk_gphone_x86_64) and later navigated back, but never reached the intended storage's Pictures folder. The provided screenshot shows the Pictures folder in sdk_gphone64_arm64 with a file matching the prefix '2023_05_12_ea...' still present.",
+              "missing_or_conflict": "The agent never accessed the sdk_gphone_x86_64 storage area's Pictures folder, so there is no evidence to confirm the target file's absence from the intended location.",
+              "insufficient_trace": true,
+              "needs_fallback_verification": true
+            }
+          },
+          "evidence_steps": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            11,
+            12
+          ],
+          "evidence_images": 1,
+          "retrieval_method": "model_step_retrieval_repair_v1",
+          "retrieval_trusted": false,
+          "retrieval_confidence": 0.0,
+          "retrieval_rationale": "These steps document the agent opening the storage selection menu (step2), accessing the incorrect storage (sdk_gphone64_arm64 instead of the required sdk_gphone_x86_64, step3), navigating to its Pictures folder (step4), and then navigating back to correct the storage selection (step12). They show the agent's misdirection and subsequent attempt to fix it, but do not address the target storage location.",
+          "retrieval_fallback_reason": "The agent never accessed the sdk_gphone_x86_64 storage area's Pictures folder, so there is no screenshot evidence to confirm whether the target file 2023_05_12_eager_nurse.jpg is absent from the intended location.",
+          "model_read_requests": [],
+          "message_strategy": "doubao_official_gui_history_with_screenshots_and_read_tools"
+        }
+      ],
+      "success": false,
+      "completeness_score": 0.6666666666666666,
+      "insufficient_trace": true,
+      "rationale": "Missing required checkpoints under selected evidence: cp3",
+      "format_version": 1,
+      "task": "FilesDeleteFile",
+      "granularity": "intent",
+      "standard_id": "3d9913ff3b375c682438",
+      "goal_hash": "9b736aaef469f574",
+      "status": "evaluated",
+      "evaluation_mode": "doubao_official_gui_messages_v1",
+      "trace_steps": 12,
+      "official_reward": 1.0,
+      "official_success": true,
+      "agreement_with_reward": false
+    }
+  ],
+  "statistics": {
+    "total_records": 1,
+    "total_evaluated": 1,
+    "total_errors": 0,
+    "total_skipped": 0,
+    "agreement_rate": 0.0,
+    "confusion_matrix": {
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 1,
+      "true_negative": 0
+    }
+  }
+}

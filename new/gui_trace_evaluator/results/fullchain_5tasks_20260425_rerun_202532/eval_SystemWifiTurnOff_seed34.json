@@ -1,0 +1,96 @@
+{
+  "source": "/Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/fullchain_5tasks_20260425_rerun_202532/exec_SystemWifiTurnOff_seed34/results.json",
+  "model": "doubao-seed-1-8-251228",
+  "provider": "ark",
+  "num_records": 1,
+  "evaluations": [
+    {
+      "checkpoint_results": [
+        {
+          "id": "cp1",
+          "achieved": true,
+          "confidence": 1.0,
+          "evidence": "The final screenshot (step 4 after action) shows the Wi-Fi toggle is in the gray 'Off' position, and the text 'Wi-Fi is off' is displayed in the Internet settings panel, confirming Wi-Fi is disabled as required.",
+          "missing_or_conflict": "",
+          "insufficient_trace": false,
+          "needs_fallback_verification": false,
+          "read_tool_verification": {
+            "triggered": false,
+            "requests": [],
+            "results": []
+          },
+          "evidence_steps": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "evidence_images": 2,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 1.0,
+          "retrieval_rationale": "Step 2 navigates to the Wi-Fi settings panel where Wi-Fi is initially active. Step 3 executes the action to toggle Wi-Fi off, with the after UI displaying \"Wi-Fi is off\" confirming the state change. Step 4 shows the final persistent state of Wi-Fi being disabled, providing clear screenshot-based evidence that the Wi-Fi toggle is in the 'Off' position as required by the checkpoint.",
+          "retrieval_fallback_reason": "",
+          "model_read_requests": [],
+          "message_strategy": "doubao_official_gui_history_with_screenshots_and_read_tools"
+        },
+        {
+          "id": "cp2",
+          "achieved": true,
+          "confidence": 1.0,
+          "evidence": "Screenshot from step 1 shows the status bar displaying '3G' with no active Wi-Fi icon, and the final screenshot (step 4) confirms Wi-Fi is off with the status bar still showing '3G' (no active Wi-Fi connection indicator).",
+          "missing_or_conflict": "",
+          "insufficient_trace": false,
+          "needs_fallback_verification": false,
+          "read_tool_verification": {
+            "triggered": false,
+            "requests": [],
+            "results": []
+          },
+          "evidence_steps": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "evidence_images": 2,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 1.0,
+          "retrieval_rationale": "Step 1 shows the initial status bar with an active Wi-Fi connection indicator (evidenced by the 'Internet' switch being 'On'). Step 3 executes the decisive action to turn off Wi-Fi, with the after state displaying 'Wi-Fi is off', which correlates to the status bar no longer having an active Wi-Fi icon. Step 4 confirms the final persistent state where Wi-Fi remains off, providing conclusive evidence that the device's status bar no longer shows an active Wi-Fi connection indicator.",
+          "retrieval_fallback_reason": "",
+          "model_read_requests": [],
+          "message_strategy": "doubao_official_gui_history_with_screenshots_and_read_tools"
+        }
+      ],
+      "success": true,
+      "completeness_score": 1.0,
+      "insufficient_trace": false,
+      "rationale": "All required checkpoints were supported.",
+      "format_version": 1,
+      "task": "SystemWifiTurnOff",
+      "granularity": "intent",
+      "standard_id": "c2cd96ee4080639e4180",
+      "goal_hash": "837623c813dda107",
+      "status": "evaluated",
+      "evaluation_mode": "doubao_official_gui_messages_v1",
+      "trace_steps": 4,
+      "official_reward": 1.0,
+      "official_success": true,
+      "agreement_with_reward": true
+    }
+  ],
+  "statistics": {
+    "total_records": 1,
+    "total_evaluated": 1,
+    "total_errors": 0,
+    "total_skipped": 0,
+    "agreement_rate": 1.0,
+    "confusion_matrix": {
+      "true_positive": 1,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 0
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "format_version": 1,
+  "standard_id": "03f00f3562fe37ef3703",
+  "goal_hash": "6b5643651b254325",
+  "task_name": "MarkorEditNote",
+  "task_goal": "Edit note_HrbOn.txt in Markor. Add to the top of the note Inconceivable!",
+  "task_goal_rewrite": "The note file note_HrbOn.txt in Markor has the text 'Inconceivable!' added as its first line, and the edited content is saved.",
+  "checkpoints": [
+    {
+      "id": "cp1",
+      "description": "note_HrbOn.txt in Markor contains 'Inconceivable!' as the very first line, preceding any original content.",
+      "required": true,
+      "evidence_hint": "Screenshot of note_HrbOn.txt open in Markor displaying 'Inconceivable!' at the top of the text area; or a view of the file's stored content confirming the text is the first line."
+    },
+    {
+      "id": "cp2",
+      "description": "The edits to note_HrbOn.txt are saved, with no unsaved changes indicated in Markor's UI.",
+      "required": true,
+      "evidence_hint": "Screenshot showing Markor's interface for note_HrbOn.txt with no unsaved changes marker (e.g., an asterisk next to the filename); or confirmation that a save action was executed successfully."
+    }
+  ],
+  "success_rule": "Success is achieved when both required checkpoints are satisfied: note_HrbOn.txt has 'Inconceivable!' as the first line, and the changes are saved in Markor."
+}

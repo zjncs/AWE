@@ -1,0 +1,411 @@
+{
+  "source": "/Users/zjn/Desktop/AIR/research/android_world_clean/new/llm_trace_evaluator/results/real_doubao18_run/results.json",
+  "model": "doubao-seed-1-8-251228",
+  "provider": "openai",
+  "num_records": 3,
+  "evaluations": [
+    {
+      "checkpoint_results": [
+        {
+          "id": "cp1",
+          "achieved": true,
+          "confidence": 1.0,
+          "evidence": "Step 2 shows the contacts list with the 'Create contact' floating button, step 3's screenshot displays the 'Create contact' form with fields for first name, last name, etc., and the action history confirms the form was opened and text entry began in it.",
+          "missing_or_conflict": "",
+          "insufficient_trace": false,
+          "evidence_steps": [
+            2,
+            3
+          ],
+          "evidence_images": 2,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 1.0,
+          "retrieval_rationale": "Step 2 involves clicking the 'Create contact' button to initiate opening the contact creation form, and step 3 confirms that the contact creation form is visible (as the thought states 'The contact creation form is now visible' and the action is entering text into the form's first name field), together providing evidence that the new contact creation form was successfully opened and displayed, meeting the checkpoint requirement.",
+          "retrieval_fallback_reason": "",
+          "message_strategy": "doubao_official_gui_history_with_screenshots"
+        },
+        {
+          "id": "cp2",
+          "achieved": true,
+          "confidence": 1.0,
+          "evidence": "Step 3's screenshot shows 'Ian' correctly entered in the First name field, and step 4's screenshot shows 'Pereira' correctly entered in the Last name field, together completing the full name 'Ian Pereira' in the appropriate contact creation form fields.",
+          "missing_or_conflict": "",
+          "insufficient_trace": false,
+          "evidence_steps": [
+            3,
+            4
+          ],
+          "evidence_images": 2,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 1.0,
+          "retrieval_rationale": "Step 3 shows the first name 'Ian' successfully entered into the First name field, and step 4 shows the last name 'Pereira' successfully entered into the Last name field. Together these steps confirm the full name 'Ian Pereira' is correctly entered in the appropriate name fields of the contact creation form, matching the checkpoint requirement.",
+          "retrieval_fallback_reason": "",
+          "message_strategy": "doubao_official_gui_history_with_screenshots"
+        },
+        {
+          "id": "cp3",
+          "achieved": true,
+          "confidence": 1.0,
+          "evidence": "The screenshot for step 5 shows that '+1 909-340-6621' (the formatted version of '+19093406621') is correctly entered in the Phone field of the Create contact form, and the action history confirms the number was input into this appropriate phone number field.",
+          "missing_or_conflict": "",
+          "insufficient_trace": false,
+          "evidence_steps": [
+            5
+          ],
+          "evidence_images": 1,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 1.0,
+          "retrieval_rationale": "Step 5 directly records the action of entering '+19093406621' into the phone number field of the contact creation form, and the observation summary confirms the number was successfully input and formatted correctly, which matches the checkpoint's requirement of showing the number correctly entered in the appropriate field.",
+          "retrieval_fallback_reason": "",
+          "message_strategy": "doubao_official_gui_history_with_screenshots"
+        },
+        {
+          "id": "cp4",
+          "achieved": true,
+          "confidence": 1.0,
+          "evidence": "Step 6's screenshot shows the 'Save' button was clicked, and step 7's screenshot displays the completed contact details page for Ian Pereira with the correct phone number, confirming the save action was initiated and successfully completed.",
+          "missing_or_conflict": "",
+          "insufficient_trace": false,
+          "evidence_steps": [
+            6,
+            7
+          ],
+          "evidence_images": 2,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 1.0,
+          "retrieval_rationale": "Step 6 shows the click action on the Save button to initiate the save of the new contact, and step 7 provides system feedback (the contact details screen with Ian Pereira's information) confirming the save action was successfully triggered, which directly matches the checkpoint requirement of initiating the save action and having evidence of it.",
+          "retrieval_fallback_reason": "",
+          "message_strategy": "doubao_official_gui_history_with_screenshots"
+        },
+        {
+          "id": "cp5",
+          "achieved": true,
+          "confidence": 1.0,
+          "evidence": "Step 7's screenshot shows the contact details view for Ian Pereira, displaying the phone number +1 909-340-6621 (matching +19093406621), confirming the new contact appears in the contact details view.",
+          "missing_or_conflict": "",
+          "insufficient_trace": false,
+          "evidence_steps": [
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "evidence_images": 5,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 1.0,
+          "retrieval_rationale": "Step 3 shows the first name 'Ian' entered, step 4 shows the last name 'Pereira' entered, step 5 shows the phone number '+19093406621' entered (formatted as '+1 909-340-6621'), step 6 shows the save action initiated, and step 7 confirms the contact details page for Ian Pereira with the correct phone number is displayed, verifying the contact was successfully created and appears in the details view.",
+          "retrieval_fallback_reason": "",
+          "message_strategy": "doubao_official_gui_history_with_screenshots"
+        }
+      ],
+      "success": true,
+      "completeness_score": 1.0,
+      "insufficient_trace": false,
+      "rationale": "All required checkpoints were supported.",
+      "format_version": 1,
+      "task": "ContactsAddContact",
+      "granularity": "intent",
+      "standard_id": "b5d522a8a5c2b64902b3",
+      "goal_hash": "1aef1a7b3327e7dc",
+      "status": "evaluated",
+      "evaluation_mode": "doubao_official_gui_messages_v1",
+      "trace_steps": 7,
+      "official_reward": 1.0,
+      "official_success": true,
+      "agreement_with_reward": true
+    },
+    {
+      "checkpoint_results": [
+        {
+          "id": "cp1",
+          "achieved": true,
+          "confidence": 1.0,
+          "evidence": "The after-screenshot of step 4 shows the event title field contains the exact text 'Catch up on Annual Report', and the action history confirms the title was successfully input into the title field.",
+          "missing_or_conflict": "",
+          "insufficient_trace": false,
+          "evidence_steps": [
+            4
+          ],
+          "evidence_images": 1,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 1.0,
+          "retrieval_rationale": "Step 4 shows the action of inputting the exact title 'Catch up on Annual Report' into the event title field, and the summary confirms the title was successfully entered, which directly matches the checkpoint requirement of verifying the event title is set exactly to the specified text. The after-screenshot of this step would show the title field containing the exact text, serving as reliable evidence.",
+          "retrieval_fallback_reason": "",
+          "message_strategy": "doubao_official_gui_history_with_screenshots"
+        },
+        {
+          "id": "cp2",
+          "achieved": true,
+          "confidence": 1.0,
+          "evidence": "Step 5's after-action screenshot shows the event description field contains the exact text 'We will prepare for upcoming project milestones. Looking forward to productive discussions.', and the action history confirms the specified description was input into the field.",
+          "missing_or_conflict": "",
+          "insufficient_trace": false,
+          "evidence_steps": [
+            5
+          ],
+          "evidence_images": 1,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 1.0,
+          "retrieval_rationale": "Step 5 directly records the action of inputting the exact specified description text into the event description field, and the summary confirms the successful input of the required description, which provides direct evidence that the event description is set correctly as per the checkpoint requirement.",
+          "retrieval_fallback_reason": "",
+          "message_strategy": "doubao_official_gui_history_with_screenshots"
+        },
+        {
+          "id": "cp3",
+          "achieved": true,
+          "confidence": 1.0,
+          "evidence": "Step 8 confirms the start date as October 24 (Tue) 2023, and step 11 confirms the start time as 19:00, as shown in the event interface screenshot after step 11 where the start date and time fields display 'October 24 (Tue)' and '19:00' respectively.",
+          "missing_or_conflict": "",
+          "insufficient_trace": false,
+          "evidence_steps": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "evidence_images": 5,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 1.0,
+          "retrieval_rationale": "Step 6 opens the date picker to modify the start date. Step 7 selects October 24, 2023 as the start date. Step 8 confirms this date, returning to the event interface where the date is set to 2023-10-24. Step 9 opens the time picker to modify the start time. Step 10 sets the start hour to 19. Step 11 confirms the start time as 19:00, returning to the event interface where the start time is now set to 19:00. These steps collectively show the start date and time are set to the required values.",
+          "retrieval_fallback_reason": "",
+          "message_strategy": "doubao_official_gui_history_with_screenshots"
+        },
+        {
+          "id": "cp4",
+          "achieved": false,
+          "confidence": 0.0,
+          "evidence": "Step 11 confirms the start time is set to 19:00, which is the baseline for calculating the 15-minute duration. Steps 12,14,15 show the process of opening the end time picker, switching to clock mode, and activating minute selection to prepare to set the end time to 19:15, which is required for the 15-minute event duration.",
+          "missing_or_conflict": "The steps do not include the final selection of the 15-minute mark for the end time, nor the confirmation (clicking OK) that would finalize the end time as 19:15. There is no screenshot showing the end time is actually set to 19:15, so the checkpoint cannot be reliably verified.",
+          "insufficient_trace": true,
+          "evidence_steps": [
+            11,
+            12,
+            14,
+            15
+          ],
+          "evidence_images": 0,
+          "retrieval_method": "model_step_retrieval_repair_v1",
+          "retrieval_trusted": false,
+          "retrieval_confidence": 0.7,
+          "retrieval_rationale": "Step 11 confirms the start time is set to 19:00, which is the baseline for calculating the 15-minute duration. Steps 12,14,15 show the process of opening the end time picker, switching to clock mode, and activating minute selection to prepare to set the end time to 19:15, which is required for the 15-minute event duration.",
+          "retrieval_fallback_reason": "The steps do not include the final selection of the 15-minute mark for the end time, nor the confirmation (clicking OK) that would finalize the end time as 19:15. There is no screenshot showing the end time is actually set to 19:15, so the checkpoint cannot be reliably verified.",
+          "message_strategy": "doubao_official_gui_history_no_rule_fallback"
+        },
+        {
+          "id": "cp5",
+          "achieved": false,
+          "confidence": 0.0,
+          "evidence": "None of the provided steps include saving the event or showing the event in the calendar view for 2023-10-24, which is required to verify successful event creation.",
+          "missing_or_conflict": "The trace stops at switching to minute selection mode for the end time, with no steps showing the event being saved, a confirmation message of successful creation, or the event appearing in the 2023-10-24 calendar view. There is no evidence to confirm the event was saved successfully.",
+          "insufficient_trace": true,
+          "evidence_steps": [],
+          "evidence_images": 0,
+          "retrieval_method": "model_step_retrieval_repair_v1",
+          "retrieval_trusted": false,
+          "retrieval_confidence": 0.0,
+          "retrieval_rationale": "None of the provided steps include saving the event or showing the event in the calendar view for 2023-10-24, which is required to verify successful event creation.",
+          "retrieval_fallback_reason": "The trace stops at switching to minute selection mode for the end time, with no steps showing the event being saved, a confirmation message of successful creation, or the event appearing in the 2023-10-24 calendar view. There is no evidence to confirm the event was saved successfully.",
+          "message_strategy": "doubao_official_gui_history_no_rule_fallback"
+        }
+      ],
+      "success": false,
+      "completeness_score": 0.6,
+      "insufficient_trace": true,
+      "rationale": "Missing required checkpoints under selected evidence: cp4, cp5",
+      "format_version": 1,
+      "task": "SimpleCalendarAddOneEvent",
+      "granularity": "intent",
+      "standard_id": "32afe7ead18dc3cc2f62",
+      "goal_hash": "52069b1477cc34b3",
+      "status": "evaluated",
+      "evaluation_mode": "doubao_official_gui_messages_v1",
+      "trace_steps": 15,
+      "official_reward": 0.0,
+      "official_success": false,
+      "agreement_with_reward": true
+    },
+    {
+      "checkpoint_results": [
+        {
+          "id": "cp1",
+          "achieved": true,
+          "confidence": 1.0,
+          "evidence": "The screenshot from step 3 shows the title input field in the Broccoli app's 'New Recipe' form is populated with 'Kale and Quinoa Salad', which matches the required recipe title for the checkpoint.",
+          "missing_or_conflict": "",
+          "insufficient_trace": false,
+          "evidence_steps": [
+            3
+          ],
+          "evidence_images": 1,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 1.0,
+          "retrieval_rationale": "Step 3 explicitly records that the recipe title 'Kale and Quinoa Salad' was successfully entered into the Title input field of the recipe creation form in the Broccoli app, which directly matches the requirement of the checkpoint. The after-screenshot of this step would show the title populated in the appropriate field, providing clear evidence for the checkpoint.",
+          "retrieval_fallback_reason": "",
+          "message_strategy": "doubao_official_gui_history_with_screenshots"
+        },
+        {
+          "id": "cp2",
+          "achieved": true,
+          "confidence": 1.0,
+          "evidence": "The screenshot from step 4 shows the Description input field in the Broccoli app's New Recipe form is populated with the exact text 'A delicious and healthy choice for any time of the day.', which matches the checkpoint requirement.",
+          "missing_or_conflict": "",
+          "insufficient_trace": false,
+          "evidence_steps": [
+            4
+          ],
+          "evidence_images": 1,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 1.0,
+          "retrieval_rationale": "Step 4 directly shows the action of inputting the exact description text 'A delicious and healthy choice for any time of the day.' into the Description field of the recipe creation form, and the observation summary confirms the text was successfully populated in the field, which matches the checkpoint requirement exactly.",
+          "retrieval_fallback_reason": "",
+          "message_strategy": "doubao_official_gui_history_with_screenshots"
+        },
+        {
+          "id": "cp3",
+          "achieved": true,
+          "confidence": 1.0,
+          "evidence": "Step 5 scrolls down to reveal the Servings field, and Step 6 inputs '8 servings' into this field; the after-screenshot for Step 6 shows the Servings field in the Broccoli app's recipe creation form is populated with '8 servings', matching the checkpoint's requirement.",
+          "missing_or_conflict": "",
+          "insufficient_trace": false,
+          "evidence_steps": [
+            5,
+            6
+          ],
+          "evidence_images": 2,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 1.0,
+          "retrieval_rationale": "Step 5 scrolls down to reveal the Servings field, and Step 6 explicitly inputs '8 servings' into the Servings editable field, with the summary confirming the field now displays '8 servings', which matches the checkpoint requirement of having the serving size entered in the appropriate field.",
+          "retrieval_fallback_reason": "",
+          "message_strategy": "doubao_official_gui_history_with_screenshots"
+        },
+        {
+          "id": "cp4",
+          "achieved": true,
+          "confidence": 1.0,
+          "evidence": "Step 7's after-action screenshot shows the 'Time' field (preparation time input) populated with '10 mins', and the action summary confirms '10 mins' was successfully entered into this field.",
+          "missing_or_conflict": "",
+          "insufficient_trace": false,
+          "evidence_steps": [
+            5,
+            6,
+            7
+          ],
+          "evidence_images": 3,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 1.0,
+          "retrieval_rationale": "Step 5 scrolls down to reveal the Time (preparation time) field, Step 6 completes the servings field setting up for the preparation time entry, and Step 7 directly enters '10 mins' into the Time field, with its summary confirming the field now displays the correct value, which matches the checkpoint's requirement of showing '10 mins' populated in the preparation time input field.",
+          "retrieval_fallback_reason": "",
+          "message_strategy": "doubao_official_gui_history_with_screenshots"
+        },
+        {
+          "id": "cp5",
+          "achieved": true,
+          "confidence": 1.0,
+          "evidence": "Step 8's screenshot shows that the Ingredients field in the Broccoli app's recipe creation form is populated with 'to your liking', which matches the checkpoint's requirement.",
+          "missing_or_conflict": "",
+          "insufficient_trace": false,
+          "evidence_steps": [
+            7,
+            8
+          ],
+          "evidence_images": 2,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 1.0,
+          "retrieval_rationale": "Step 7 confirms the Ingredients field is visible and ready for input, and Step 8 shows that 'to your liking' was successfully entered into the Ingredients editable field, directly matching the checkpoint requirement of having this ingredient note populated in the field.",
+          "retrieval_fallback_reason": "",
+          "message_strategy": "doubao_official_gui_history_with_screenshots"
+        },
+        {
+          "id": "cp6",
+          "achieved": true,
+          "confidence": 1.0,
+          "evidence": "Step 10's after-action screenshot shows the Directions input field contains the exact full direction text 'Toss chopped kale, cooked quinoa, dried cranberries, sliced almonds, and feta cheese with a lemon vinaigrette. Garnish with fresh herbs for a more vibrant taste.', and the action observation confirms the text was successfully entered into the field.",
+          "missing_or_conflict": "",
+          "insufficient_trace": false,
+          "evidence_steps": [
+            9,
+            10
+          ],
+          "evidence_images": 2,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 1.0,
+          "retrieval_rationale": "Step 9 reveals the Directions input field by scrolling down, and step 10 successfully enters the full required direction text into that field, with the observation summary confirming the text is populated in the Directions input field, which directly matches the checkpoint requirement.",
+          "retrieval_fallback_reason": "",
+          "message_strategy": "doubao_official_gui_history_with_screenshots"
+        },
+        {
+          "id": "cp7",
+          "achieved": true,
+          "confidence": 1.0,
+          "evidence": "The screenshot from step 12 shows the recipe 'Kale and Quinoa Salad' displayed in the Broccoli app with all entered details (8 servings, 10 mins preparation time, description, ingredients, directions), confirming the recipe was successfully saved.",
+          "missing_or_conflict": "",
+          "insufficient_trace": false,
+          "evidence_steps": [
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "evidence_images": 5,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 1.0,
+          "retrieval_rationale": "Steps 3-10 show the full process of entering all required recipe details (title, description, servings, preparation time, ingredients, directions) into the form. Step 11 shows clicking the save button, and step 12 confirms the recipe is saved by displaying the complete recipe in the app, which matches the checkpoint's requirement of showing the recipe is saved in the Broccoli app.",
+          "retrieval_fallback_reason": "",
+          "message_strategy": "doubao_official_gui_history_with_screenshots"
+        }
+      ],
+      "success": true,
+      "completeness_score": 1.0,
+      "insufficient_trace": false,
+      "rationale": "All required checkpoints were supported.",
+      "format_version": 1,
+      "task": "RecipeAddSingleRecipe",
+      "granularity": "intent",
+      "standard_id": "6c4750c494910e92680e",
+      "goal_hash": "f349e3b9166e0b16",
+      "status": "evaluated",
+      "evaluation_mode": "doubao_official_gui_messages_v1",
+      "trace_steps": 12,
+      "official_reward": 1.0,
+      "official_success": true,
+      "agreement_with_reward": true
+    }
+  ],
+  "statistics": {
+    "total_records": 3,
+    "total_evaluated": 3,
+    "total_errors": 0,
+    "total_skipped": 0,
+    "agreement_rate": 1.0,
+    "confusion_matrix": {
+      "true_positive": 2,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1
+    }
+  }
+}

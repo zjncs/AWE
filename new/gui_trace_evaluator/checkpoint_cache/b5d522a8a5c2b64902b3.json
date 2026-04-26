@@ -1,0 +1,29 @@
+{
+  "format_version": 1,
+  "standard_id": "b5d522a8a5c2b64902b3",
+  "goal_hash": "1aef1a7b3327e7dc",
+  "task_name": "ContactsAddContact",
+  "task_goal": "Create a new contact for Ian Pereira. Their number is +19093406621.",
+  "task_goal_rewrite": "A new contact entry for Ian Pereira with the phone number +19093406621 is successfully created and present in the device's contacts list.",
+  "checkpoints": [
+    {
+      "id": "cp1",
+      "description": "The device's contacts list includes a contact entry labeled 'Ian Pereira'.",
+      "required": true,
+      "evidence_hint": "Screenshot or trace showing 'Ian Pereira' listed in the contacts list."
+    },
+    {
+      "id": "cp2",
+      "description": "The contact entry for Ian Pereira displays the phone number +19093406621.",
+      "required": true,
+      "evidence_hint": "Screenshot or trace showing the phone number +19093406621 in Ian Pereira's contact details."
+    },
+    {
+      "id": "cp3",
+      "description": "Evidence confirms the operation was applied to the exact target object/value and intended context stated in the goal.",
+      "required": true,
+      "evidence_hint": "Use screenshot/UI text/action evidence to disambiguate the target identity and location before final-state verification."
+    }
+  ],
+  "success_rule": "Success is confirmed if both required checkpoints are satisfied: the contact 'Ian Pereira' exists in the contacts list and has the exact phone number +19093406621 associated with it."
+}

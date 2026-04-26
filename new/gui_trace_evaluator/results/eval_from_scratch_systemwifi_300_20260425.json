@@ -1,0 +1,95 @@
+{
+  "source": "/Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/exec_from_scratch_systemwifi_300/results.json",
+  "model": "doubao-seed-1-8-251228",
+  "provider": "openai",
+  "num_records": 1,
+  "evaluations": [
+    {
+      "checkpoint_results": [
+        {
+          "id": "cp1",
+          "achieved": true,
+          "confidence": 1.0,
+          "evidence": "步骤3和步骤4的截图显示，Wi-Fi开关处于灰色的关闭位置，同时界面上方显示\"Wi-Fi is off\"的文字，说明WiFi toggle已处于'off'位置",
+          "missing_or_conflict": "",
+          "insufficient_trace": false,
+          "needs_fallback_verification": false,
+          "read_tool_verification": {
+            "triggered": false,
+            "requests": [],
+            "results": []
+          },
+          "evidence_steps": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "evidence_images": 4,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 1.0,
+          "retrieval_rationale": "步骤2展示了WiFi开关初始处于开启状态的界面，为关闭操作提供前置对比；步骤3是关闭WiFi的关键操作，操作后界面显示\"Wi-Fi is off\"且WiFi toggle处于关闭位置；步骤4确认任务完成，界面仍保持WiFi关闭的状态，这些步骤能够提供WiFi toggle处于'off'位置的可靠截图证据。",
+          "retrieval_fallback_reason": "",
+          "model_read_requests": [],
+          "message_strategy": "doubao_official_gui_history_with_screenshots_and_read_tools"
+        },
+        {
+          "id": "cp2",
+          "achieved": true,
+          "confidence": 1.0,
+          "evidence": "步骤3和步骤4的截图显示，WiFi设置界面明确标注'Wi-Fi is off'，Wi-Fi开关处于关闭状态，状态栏显示当前连接为3G网络，无WiFi网络连接标识，符合检查点中无WiFi网络连接的要求。",
+          "missing_or_conflict": "",
+          "insufficient_trace": false,
+          "needs_fallback_verification": false,
+          "read_tool_verification": {
+            "triggered": false,
+            "requests": [],
+            "results": []
+          },
+          "evidence_steps": [
+            2,
+            3,
+            4
+          ],
+          "evidence_images": 3,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 1.0,
+          "retrieval_rationale": "步骤3点击Wi-Fi开关后，界面显示\"Wi-Fi is off\"，步骤4确认任务完成时的界面也维持该状态，这两个步骤的截图直接体现了无WiFi网络连接的状态，符合checkpoint的要求，能够可靠证明关闭WiFi的目标已经达成。",
+          "retrieval_fallback_reason": "",
+          "model_read_requests": [],
+          "message_strategy": "doubao_official_gui_history_with_screenshots_and_read_tools"
+        }
+      ],
+      "success": true,
+      "completeness_score": 1.0,
+      "insufficient_trace": false,
+      "rationale": "All required checkpoints were supported.",
+      "format_version": 1,
+      "task": "SystemWifiTurnOff",
+      "granularity": "intent",
+      "standard_id": "c2cd96ee4080639e4180",
+      "goal_hash": "837623c813dda107",
+      "status": "evaluated",
+      "evaluation_mode": "doubao_official_gui_messages_v1",
+      "trace_steps": 4,
+      "official_reward": 0.0,
+      "official_success": false,
+      "agreement_with_reward": false
+    }
+  ],
+  "statistics": {
+    "total_records": 1,
+    "total_evaluated": 1,
+    "total_errors": 0,
+    "total_skipped": 0,
+    "agreement_rate": 0.0,
+    "confusion_matrix": {
+      "true_positive": 0,
+      "false_positive": 1,
+      "false_negative": 0,
+      "true_negative": 0
+    }
+  }
+}

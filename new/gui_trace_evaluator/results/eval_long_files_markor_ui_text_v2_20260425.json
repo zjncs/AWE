@@ -1,0 +1,212 @@
+{
+  "source": "results/exec_long_files_markor_20260424/results.json",
+  "model": "doubao-seed-1-8-251228",
+  "provider": "openai",
+  "num_records": 2,
+  "evaluations": [
+    {
+      "checkpoint_results": [
+        {
+          "id": "cp1",
+          "achieved": true,
+          "confidence": 1.0,
+          "evidence": "Step 4's screenshot confirms the file 2023_05_12_eager_nurse.jpg was present in the Pictures folder. Steps 5-7 execute the deletion workflow: selecting the file, triggering delete, and confirming via the dialog labeled 'Delete \"2023_05_12_eager_nurse.jpg\"?'. Step 9's final screenshot shows the Pictures folder contents, where the exact filename 2023_05_12_eager_nurse.jpg is no longer listed (only one truncated 2023_05_12_ea... file remains, indicating the target file was successfully removed).",
+          "missing_or_conflict": "",
+          "insufficient_trace": false,
+          "needs_fallback_verification": false,
+          "read_tool_verification": {
+            "triggered": false,
+            "requests": [],
+            "results": []
+          },
+          "evidence_steps": [
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "evidence_images": 5,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 1.0,
+          "retrieval_rationale": "Step4 confirms the target file was initially present in the Pictures folder. Steps5-7 execute the deletion workflow: selecting the file, triggering the delete action, and confirming the deletion. Step8 waits for the system to finalize the deletion and refresh the UI. Step9 provides the final visible state of the Pictures folder where the file 2023_05_12_eager_nurse.jpg is no longer listed, directly satisfying the checkpoint's requirement.",
+          "retrieval_fallback_reason": "",
+          "model_read_requests": [],
+          "message_strategy": "doubao_official_gui_history_with_screenshots_and_read_tools"
+        },
+        {
+          "id": "cp2",
+          "achieved": false,
+          "confidence": 0.0,
+          "evidence": "The read-only find_file tool confirms the file 2023_05_12_eager_nurse.jpg is not present in /sdcard/Pictures, but the trace did not perform a UI-based search for the file within the sdk_gphone64_arm64 storage area.",
+          "missing_or_conflict": "No screenshot of search results showing no entry for 2023_05_12_eager_nurse.jpg associated with the Pictures folder path was captured in the trace, which is required as evidence by the checkpoint.",
+          "insufficient_trace": true,
+          "needs_fallback_verification": false,
+          "read_tool_verification": {
+            "triggered": true,
+            "requests": [
+              {
+                "tool": "find_file",
+                "reason": "To verify that the file 2023_05_12_eager_nurse.jpg does not exist in the Pictures folder within the sdk_gphone64_arm64 storage area, which is required to meet checkpoint cp2.",
+                "root": "/sdcard/Pictures",
+                "name": "2023_05_12_eager_nurse.jpg"
+              }
+            ],
+            "results": [
+              {
+                "type": "read_tool_result",
+                "index": 1,
+                "tool": "find_file",
+                "status": "ok",
+                "request": {
+                  "tool": "find_file",
+                  "reason": "To verify that the file 2023_05_12_eager_nurse.jpg does not exist in the Pictures folder within the sdk_gphone64_arm64 storage area, which is required to meet checkpoint cp2.",
+                  "root": "/sdcard/Pictures",
+                  "name": "2023_05_12_eager_nurse.jpg"
+                },
+                "command": "/Users/zjn/Library/Android/sdk/platform-tools/adb shell 'find /sdcard/Pictures -name 2023_05_12_eager_nurse.jpg 2>/dev/null | head -50'",
+                "returncode": 0,
+                "output": "",
+                "matches": [],
+                "found": false,
+                "interpretation": "No matching files were found."
+              }
+            ],
+            "source": "live_read_tools",
+            "first_pass_result": {
+              "achieved": false,
+              "confidence": 0.0,
+              "evidence": "The final step screenshot shows the file 2023_05_12_eager_nurse.jpg is absent from the Pictures folder listing, but no search for the file within the sdk_gphone64_arm64 storage area was performed.",
+              "missing_or_conflict": "No search for '2023_05_12_eager_nurse.jpg' within the sdk_gphone64_arm64 storage area was performed in the trace, so there is no screenshot of search results confirming the file does not appear in such a search as required by the checkpoint.",
+              "insufficient_trace": true,
+              "needs_fallback_verification": true
+            }
+          },
+          "evidence_steps": [
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "evidence_images": 5,
+          "retrieval_method": "model_step_retrieval_repair_v1",
+          "retrieval_trusted": false,
+          "retrieval_confidence": 0.8,
+          "retrieval_rationale": "These steps document that the target file was present in the Pictures folder (step 4), the deletion process was initiated and confirmed (steps 7-8), and the final state shows the file is absent from the Pictures folder (step 9). This provides indirect evidence that the file was removed from its original location.",
+          "retrieval_fallback_reason": "No step in the trace includes a search for '2023_05_12_eager_nurse.jpg' within the sdk_gphone64_arm64 storage area, so there is no screenshot of search results directly confirming the file does not appear in such a search as required by the checkpoint.",
+          "model_read_requests": [],
+          "message_strategy": "doubao_official_gui_history_with_screenshots_and_read_tools"
+        }
+      ],
+      "success": false,
+      "completeness_score": 0.5,
+      "insufficient_trace": true,
+      "rationale": "Missing required checkpoints under selected evidence: cp2",
+      "format_version": 1,
+      "task": "FilesDeleteFile",
+      "granularity": "intent",
+      "standard_id": "07c2c0352f2ed8b5fd90",
+      "goal_hash": "43704891db7f2ab7",
+      "status": "evaluated",
+      "evaluation_mode": "doubao_official_gui_messages_v1",
+      "trace_steps": 9,
+      "official_reward": 1.0,
+      "official_success": true,
+      "agreement_with_reward": false
+    },
+    {
+      "checkpoint_results": [
+        {
+          "id": "cp1",
+          "achieved": true,
+          "confidence": 1.0,
+          "evidence": "Step 2's after screenshot displays Markor's editor window with the content of 'note_HrbOn.txt' (visible text: 'Beauty is in the eye of the beholder.') and the title bar labeled 'note_HrbOn', confirming the file is open in the editor interface.",
+          "missing_or_conflict": "",
+          "insufficient_trace": false,
+          "needs_fallback_verification": false,
+          "read_tool_verification": {
+            "triggered": false,
+            "requests": [],
+            "results": []
+          },
+          "evidence_steps": [
+            1,
+            2,
+            3
+          ],
+          "evidence_images": 3,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 1.0,
+          "retrieval_rationale": "Step 2 is the decisive action that clicks on 'note_HrbOn.txt' to open it in Markor's text editor interface. Its after screenshot displays the editor window with the note's content visible, which directly matches the evidence requirement for the checkpoint, confirming the file is open in the editor.",
+          "retrieval_fallback_reason": "",
+          "model_read_requests": [],
+          "message_strategy": "doubao_official_gui_history_with_screenshots_and_read_tools"
+        },
+        {
+          "id": "cp2",
+          "achieved": false,
+          "confidence": 1.0,
+          "evidence": "Screenshots from steps 3,4,5 show that in the opened 'note_HrbOn.txt', the text 'Beauty is in the eye of the beholder.' appears as the first line, with 'Inconceivable!' on the line below it, not at the top as required.",
+          "missing_or_conflict": "The text 'Inconceivable!' is placed below the original content instead of being the very first line at the top of the note, conflicting with the checkpoint requirement.",
+          "insufficient_trace": false,
+          "needs_fallback_verification": false,
+          "read_tool_verification": {
+            "triggered": false,
+            "requests": [],
+            "results": []
+          },
+          "evidence_steps": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "evidence_images": 5,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 1.0,
+          "retrieval_rationale": "Step 2 opens note_HrbOn.txt and displays its original content, establishing the baseline state. Step 3 executes the edit action of adding 'Inconceivable!' to the top of the note, with its after state confirming the text appears as the very first line followed by the original content, matching the checkpoint's evidence hint. Step 4 saves the changes, ensuring the edited state is retained and visible in the editor. These steps collectively provide the before state, decisive edit action, and post-edit/saved state needed to reliably verify the checkpoint.",
+          "retrieval_fallback_reason": "",
+          "model_read_requests": [],
+          "message_strategy": "doubao_official_gui_history_with_screenshots_and_read_tools"
+        }
+      ],
+      "success": false,
+      "completeness_score": 0.5,
+      "insufficient_trace": false,
+      "rationale": "Missing required checkpoints under selected evidence: cp2",
+      "format_version": 1,
+      "task": "MarkorEditNote",
+      "granularity": "intent",
+      "standard_id": "03f00f3562fe37ef3703",
+      "goal_hash": "6b5643651b254325",
+      "status": "evaluated",
+      "evaluation_mode": "doubao_official_gui_messages_v1",
+      "trace_steps": 5,
+      "official_reward": 0.0,
+      "official_success": false,
+      "agreement_with_reward": true
+    }
+  ],
+  "statistics": {
+    "total_records": 2,
+    "total_evaluated": 2,
+    "total_errors": 0,
+    "total_skipped": 0,
+    "agreement_rate": 0.5,
+    "confusion_matrix": {
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 1,
+      "true_negative": 1
+    }
+  }
+}

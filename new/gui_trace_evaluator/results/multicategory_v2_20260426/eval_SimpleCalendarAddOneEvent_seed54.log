@@ -1,0 +1,7 @@
+[evaluator] SimpleCalendarAddOneEvent: evaluating 3 checkpoints
+[evaluator] checkpoint 1/3 cp1: The calendar event is scheduled on 2023-10-19 with a start time of 14:00 and end time of 14:45 (45-minute duration).
+[evaluator] checkpoint 2/3 cp2: The event has the exact title 'Appointment for Campaign'.
+[evaluator] checkpoint 3/3 cp3: The event has the exact description 'We will explore product launch. Let's be punctual.'.
+Evaluated 1 records.
+JSON: /Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/multicategory_v2_20260426/eval_SimpleCalendarAddOneEvent_seed54.json
+Report: /Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/multicategory_v2_20260426/eval_SimpleCalendarAddOneEvent_seed54.md

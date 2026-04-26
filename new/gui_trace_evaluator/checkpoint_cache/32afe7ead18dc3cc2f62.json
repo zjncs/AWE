@@ -1,0 +1,41 @@
+{
+  "format_version": 1,
+  "standard_id": "32afe7ead18dc3cc2f62",
+  "goal_hash": "52069b1477cc34b3",
+  "task_name": "SimpleCalendarAddOneEvent",
+  "task_goal": "In Simple Calendar Pro, create a calendar event on 2023-10-24 at 19h with the title 'Catch up on Annual Report' and the description 'We will prepare for upcoming project milestones. Looking forward to productive discussions.'. The event should last for 15 mins.",
+  "task_goal_rewrite": "A 15-minute calendar event titled 'Catch up on Annual Report' with the specified description is created in Simple Calendar Pro, scheduled for 2023-10-24 at 19:00.",
+  "checkpoints": [
+    {
+      "id": "cp1",
+      "description": "The event title is set exactly to 'Catch up on Annual Report'",
+      "required": true,
+      "evidence_hint": "Screenshot or trace showing the event title field contains the exact specified text"
+    },
+    {
+      "id": "cp2",
+      "description": "The event description is set exactly to 'We will prepare for upcoming project milestones. Looking forward to productive discussions.'",
+      "required": true,
+      "evidence_hint": "Screenshot or trace showing the event description field contains the exact specified text"
+    },
+    {
+      "id": "cp3",
+      "description": "The event start date is set to 2023-10-24 and start time is set to 19:00",
+      "required": true,
+      "evidence_hint": "Screenshot or trace showing the event start date and time fields match the specified values"
+    },
+    {
+      "id": "cp4",
+      "description": "The event duration is set to 15 minutes, resulting in an end time of 19:15 on 2023-10-24",
+      "required": true,
+      "evidence_hint": "Screenshot or trace showing the event duration is set to 15 minutes or the end time is 19:15 on 2023-10-24"
+    },
+    {
+      "id": "cp5",
+      "description": "The event is saved successfully in Simple Calendar Pro",
+      "required": true,
+      "evidence_hint": "Screenshot or trace showing the event appears in the calendar view for 2023-10-24 or a confirmation message of successful event creation"
+    }
+  ],
+  "success_rule": "All required checkpoints are fully satisfied as verified by the corresponding evidence; the event exists in Simple Calendar Pro with all specified details exactly matching the goal."
+}

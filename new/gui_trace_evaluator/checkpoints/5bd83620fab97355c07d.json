@@ -1,0 +1,23 @@
+{
+  "format_version": 1,
+  "standard_id": "5bd83620fab97355c07d",
+  "goal_hash": "2a6d6c8673d5f741",
+  "task_name": "SimpleCalendarDeleteOneEvent",
+  "task_goal": "In Simple Calendar Pro, delete the calendar event on 2023-10-17 at 6h with the title 'Review session for Budget Planning'",
+  "task_goal_rewrite": "The calendar event titled 'Review session for Budget Planning' scheduled for 2023-10-17 at 6h is deleted from Simple Calendar Pro.",
+  "checkpoints": [
+    {
+      "id": "cp1",
+      "description": "The calendar event titled 'Review session for Budget Planning' scheduled for 2023-10-17 at 6h is no longer present in Simple Calendar Pro's calendar views.",
+      "required": true,
+      "evidence_hint": "Screenshots of the 2023-10-17 day/week/month view in Simple Calendar Pro showing no event matching the specified title, date, and time; or a system confirmation message indicating successful deletion of the event."
+    },
+    {
+      "id": "cp2",
+      "description": "The deletion action was initiated on the correct target event (title: 'Review session for Budget Planning', date: 2023-10-17, time: 6h).",
+      "required": true,
+      "evidence_hint": "Screenshot showing the event's details page with the deletion option selected; or a deletion confirmation dialog displaying the event's exact title, date, and time prior to user confirmation."
+    }
+  ],
+  "success_rule": "Success is achieved if both required checkpoints are satisfied: the correct target event was selected for deletion, and the event is no longer visible in Simple Calendar Pro's relevant calendar views."
+}

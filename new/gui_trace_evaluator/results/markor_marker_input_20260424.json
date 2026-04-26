@@ -1,0 +1,220 @@
+[
+  {
+    "task_file": "MarkorEditNote_0.pkl",
+    "goal": "Edit note_SiFbv.txt in Markor. Add to the top of the note Hello, World!",
+    "task_template": "MarkorEditNote",
+    "instance_id": 0,
+    "seed": 240351352,
+    "is_successful": 0.0,
+    "episode_length": 12,
+    "exception_info": null,
+    "agent_name": "m3a_ark",
+    "steps": [
+      {
+        "step": 0,
+        "action_reason": "Thought omitted by model; executing parsed GUI-Demo action.",
+        "action_output_json": "JSONAction(action_type='open_app', app_name='Markor')",
+        "summary": "Action selected: {\"action_type\": \"open_app\", \"app_name\": \"Markor\"}. Opened Markor app, successfully loaded its Main View with document list. Next, locate note_SiFbv.txt to edit."
+      },
+      {
+        "step": 1,
+        "action_reason": "Thought omitted by model; executing parsed GUI-Demo action.",
+        "action_output_json": "JSONAction(action_type='scroll', x=502, y=450, direction='down', coordinate_scale=1000)",
+        "summary": "Action selected: {\"action_type\": \"scroll\", \"direction\": \"down\", \"x\": 502, \"y\": 450, \"coordinate_scale\": 1000}. Tried scrolling down in the Documents list (index 3) to find note_SiFbv.txt, but the list didn’t update. Need to check if the file is visible or if further scrolling (or direction adjustment) is needed."
+      },
+      {
+        "step": 2,
+        "action_reason": "Thought omitted by model; executing parsed GUI-Demo action.",
+        "action_output_json": "JSONAction(action_type='scroll', x=500, y=500, direction='down', coordinate_scale=1000)",
+        "summary": "Action selected: {\"action_type\": \"scroll\", \"direction\": \"down\", \"x\": 500, \"y\": 500, \"coordinate_scale\": 1000}. Tried to scroll down the Documents list to find note_SiFbv.txt, but screen unchanged. Need to scroll more or check folder structure."
+      },
+      {
+        "step": 3,
+        "action_reason": "Thought omitted by model; executing parsed GUI-Demo action.",
+        "action_output_json": "JSONAction(action_type='scroll', x=500, y=450, direction='down', coordinate_scale=1000)",
+        "summary": "Action selected: {\"action_type\": \"scroll\", \"direction\": \"down\", \"x\": 500, \"y\": 450, \"coordinate_scale\": 1000}. Tried to scroll down the Documents list to find note_SiFbv.txt, but no visible change. File not in current view; next, scroll more or check folder structure."
+      },
+      {
+        "step": 4,
+        "action_reason": "Thought omitted by model; executing parsed GUI-Demo action.",
+        "action_output_json": "JSONAction(action_type='scroll', x=500, y=480, direction='down', coordinate_scale=1000)",
+        "summary": "Action selected: {\"action_type\": \"scroll\", \"direction\": \"down\", \"x\": 500, \"y\": 480, \"coordinate_scale\": 1000}. Tried scrolling down in Markor’s document list to find note_SiFbv.txt, but the list didn’t update. Maybe the note is in a folder or needs a different scroll approach. Next, check folders or adjust scrolling."
+      },
+      {
+        "step": 5,
+        "action_reason": "Thought omitted by model; executing parsed GUI-Demo action.",
+        "action_output_json": "JSONAction(action_type='click', x=908, y=938, coordinate_scale=1000)",
+        "summary": "Action selected: {\"action_type\": \"click\", \"x\": 908, \"y\": 938, \"coordinate_scale\": 1000}. Clicked bottom-right \"NEXT\" (index 1) to advance from Main View to Markor Reference page; progresses tutorial/navigation. Next: continue navigating toward note editing."
+      },
+      {
+        "step": 6,
+        "action_reason": "Thought omitted by model; executing parsed GUI-Demo action.",
+        "action_output_json": "JSONAction(action_type='click', x=264, y=263, coordinate_scale=1000)",
+        "summary": "Action selected: {\"action_type\": \"click\", \"x\": 264, \"y\": 263, \"coordinate_scale\": 1000}. Clicked at (264,263) on Markor Reference screen; no visible change. Need to locate/edit note_SiFbv.txt, so next: open Markor's notes list."
+      },
+      {
+        "step": 7,
+        "action_reason": "Thought omitted by model; executing parsed GUI-Demo action.",
+        "action_output_json": "JSONAction(action_type='click', x=264, y=263, coordinate_scale=1000)",
+        "summary": "Action selected: {\"action_type\": \"click\", \"x\": 264, \"y\": 263, \"coordinate_scale\": 1000}. Clicked at (264,263) on the Markor Reference view; screen unchanged. Next, need to access edit mode or navigate to note_SiFbv.txt."
+      },
+      {
+        "step": 8,
+        "action_reason": "Thought omitted by model; executing parsed GUI-Demo action.",
+        "action_output_json": "JSONAction(action_type='click', x=264, y=263, coordinate_scale=1000)",
+        "summary": "Action selected: {\"action_type\": \"click\", \"x\": 264, \"y\": 263, \"coordinate_scale\": 1000}. Clicked the back arrow (x264,y263) to navigate back from Markor Reference, aiming to access note_SiFbv.txt for editing. Screen unchanged, likely still loading or in reference view. Next: wait or check navigation."
+      },
+      {
+        "step": 9,
+        "action_reason": "Thought omitted by model; executing parsed GUI-Demo action.",
+        "action_output_json": "JSONAction(action_type='click', x=264, y=263, coordinate_scale=1000)",
+        "summary": "Action selected: {\"action_type\": \"click\", \"x\": 264, \"y\": 263, \"coordinate_scale\": 1000}. Clicked at (264,263) in Markor Reference view; screen unchanged. Next, navigate back to access the target note for editing."
+      },
+      {
+        "step": 10,
+        "action_reason": "Thought omitted by model; executing parsed GUI-Demo action.",
+        "action_output_json": "JSONAction(action_type='click', x=264, y=263, coordinate_scale=1000)",
+        "summary": "Action selected: {\"action_type\": \"click\", \"x\": 264, \"y\": 263, \"coordinate_scale\": 1000}. Clicked at (264,263) (likely back arrow), but screen unchanged. Next, try clicking the pencil (edit) icon at top right to enter edit mode for the note."
+      },
+      {
+        "step": 11,
+        "action_reason": "Thought omitted by model; executing parsed GUI-Demo action.",
+        "action_output_json": "JSONAction(action_type='click', x=264, y=263, coordinate_scale=1000)",
+        "summary": "Action selected: {\"action_type\": \"click\", \"x\": 264, \"y\": 263, \"coordinate_scale\": 1000}. Clicked at (264,263) on Markor Reference screen (no visible change). Next, open Markor app to access note_SiFbv.txt for editing."
+      }
+    ]
+  },
+  {
+    "task_file": "OsmAndMarker_0.pkl",
+    "goal": "Add a location marker for Planken, Liechtenstein in the OsmAnd maps app.",
+    "task_template": "OsmAndMarker",
+    "instance_id": 0,
+    "seed": 182743914,
+    "is_successful": 0.0,
+    "episode_length": 20,
+    "exception_info": null,
+    "agent_name": "m3a_ark",
+    "steps": [
+      {
+        "step": 0,
+        "action_reason": "Thought omitted by model; executing parsed GUI-Demo action.",
+        "action_output_json": "JSONAction(action_type='open_app', app_name='OsmAnd')",
+        "summary": "Action selected: {\"action_type\": \"open_app\", \"app_name\": \"OsmAnd\"}. Opened OsmAnd app; interface loaded with map controls. Next: Use search or marker tools to locate Planken, Liechtenstein."
+      },
+      {
+        "step": 1,
+        "action_reason": "Thought omitted by model; executing parsed GUI-Demo action.",
+        "action_output_json": "JSONAction(action_type='click', x=186, y=82, coordinate_scale=1000)",
+        "summary": "Action selected: {\"action_type\": \"click\", \"x\": 186, \"y\": 82, \"coordinate_scale\": 1000}. Clicked on the search area (or icon) to open the search interface in OsmAnd, preparing to input \"Planken, Liechtenstein\"."
+      },
+      {
+        "step": 2,
+        "action_reason": "Thought omitted by model; executing parsed GUI-Demo action.",
+        "action_output_json": "JSONAction(action_type='input_text', text='Planken, Liechtenstein', press_enter=False)",
+        "summary": "Action selected: {\"action_type\": \"input_text\", \"text\": \"Planken, Liechtenstein\", \"press_enter\": false}. Input \"Planken, Liechtenstein\" into the search field (index 2). Text appears in the field, but no search results found (needs radius adjustment or other action next)."
+      },
+      {
+        "step": 3,
+        "action_reason": "Thought omitted by model; executing parsed GUI-Demo action.",
+        "action_output_json": "JSONAction(action_type='click', x=500, y=338, coordinate_scale=1000)",
+        "summary": "Action selected: {\"action_type\": \"click\", \"x\": 500, \"y\": 338, \"coordinate_scale\": 1000}. Clicked \"INCREASE SEARCH RADIUS\", search now shows Liechtenstein (country); need to refine for Planken."
+      },
+      {
+        "step": 4,
+        "action_reason": "Thought omitted by model; executing parsed GUI-Demo action.",
+        "action_output_json": "JSONAction(action_type='click', x=247, y=138, coordinate_scale=1000)",
+        "summary": "Action selected: {\"action_type\": \"click\", \"x\": 247, \"y\": 138, \"coordinate_scale\": 1000}. Clicked \"SHOW ON MAP\" to view Planken, Liechtenstein on the map; map is now loading (or showing initial view), wait for it to update to the correct location."
+      },
+      {
+        "step": 5,
+        "action_reason": null,
+        "action_output_json": null,
+        "summary": "Output for action selection is not in the correct format, so no action is performed."
+      },
+      {
+        "step": 6,
+        "action_reason": "Thought omitted by model; executing parsed GUI-Demo action.",
+        "action_output_json": "JSONAction(action_type='click', x=186, y=150, coordinate_scale=1000)",
+        "summary": "Action selected: {\"action_type\": \"click\", \"x\": 186, \"y\": 150, \"coordinate_scale\": 1000}. Clicked on the \"SHOW ON MAP\" area (or relevant search trigger), which displayed search results for Planken, Liechtenstein, including Liechtenstein as a result."
+      },
+      {
+        "step": 7,
+        "action_reason": "Thought omitted by model; executing parsed GUI-Demo action.",
+        "action_output_json": "JSONAction(action_type='click', x=247, y=138, coordinate_scale=1000)",
+        "summary": "Action selected: {\"action_type\": \"click\", \"x\": 247, \"y\": 138, \"coordinate_scale\": 1000}. Clicked on \"SHOW ON MAP\" (or related area) to transition to map view for Planken, Liechtenstein; map is loading (currently shows US West Coast)."
+      },
+      {
+        "step": 8,
+        "action_reason": "Thought omitted by model; executing parsed GUI-Demo action.",
+        "action_output_json": "JSONAction(action_type='click', x=182, y=146, coordinate_scale=1000)",
+        "summary": "Action selected: {\"action_type\": \"click\", \"x\": 182, \"y\": 146, \"coordinate_scale\": 1000}. Clicked on the relevant area to trigger search, now results for \"Planken, Liechtenstein\" (showing Liechtenstein) are displayed. Next, interact with the result to proceed."
+      },
+      {
+        "step": 9,
+        "action_reason": "Thought omitted by model; executing parsed GUI-Demo action.",
+        "action_output_json": "JSONAction(action_type='click', x=247, y=138, coordinate_scale=1000)",
+        "summary": "Action selected: {\"action_type\": \"click\", \"x\": 247, \"y\": 138, \"coordinate_scale\": 1000}. Clicked \"SHOW ON MAP\" to display Planken, Liechtenstein on the map. Map is loading (currently shows US West Coast), wait for it to center on the location."
+      },
+      {
+        "step": 10,
+        "action_reason": "Thought omitted by model; executing parsed GUI-Demo action.",
+        "action_output_json": "JSONAction(action_type='click', x=182, y=150, coordinate_scale=1000)",
+        "summary": "Action selected: {\"action_type\": \"click\", \"x\": 182, \"y\": 150, \"coordinate_scale\": 1000}. Clicked to trigger search for Planken, Liechtenstein; now see \"SHOW ON MAP\" and Liechtenstein result. Next: Click \"SHOW ON MAP\" to locate on map."
+      },
+      {
+        "step": 11,
+        "action_reason": "Thought omitted by model; executing parsed GUI-Demo action.",
+        "action_output_json": "JSONAction(action_type='click', x=247, y=138, coordinate_scale=1000)",
+        "summary": "Action selected: {\"action_type\": \"click\", \"x\": 247, \"y\": 138, \"coordinate_scale\": 1000}. Clicked \"SHOW ON MAP\" to open the map for Planken, Liechtenstein; screen transitioned to map view (loading target location)."
+      },
+      {
+        "step": 12,
+        "action_reason": "Thought omitted by model; executing parsed GUI-Demo action.",
+        "action_output_json": "JSONAction(action_type='click', x=182, y=150, coordinate_scale=1000)",
+        "summary": "Action selected: {\"action_type\": \"click\", \"x\": 182, \"y\": 150, \"coordinate_scale\": 1000}. Clicked on the \"SHOW ON MAP\" area (or relevant element) to display search results for Planken, Liechtenstein; results are now visible. Next, select the location to add the marker."
+      },
+      {
+        "step": 13,
+        "action_reason": "Thought omitted by model; executing parsed GUI-Demo action.",
+        "action_output_json": "JSONAction(action_type='click', x=247, y=138, coordinate_scale=1000)",
+        "summary": "Action selected: {\"action_type\": \"click\", \"x\": 247, \"y\": 138, \"coordinate_scale\": 1000}. Clicked \"SHOW ON MAP\" to display Planken, Liechtenstein on the map; map is loading, next wait for it to center on the location."
+      },
+      {
+        "step": 14,
+        "action_reason": "Thought omitted by model; executing parsed GUI-Demo action.",
+        "action_output_json": "JSONAction(action_type='click', x=182, y=146, coordinate_scale=1000)",
+        "summary": "Action selected: {\"action_type\": \"click\", \"x\": 182, \"y\": 146, \"coordinate_scale\": 1000}. Clicked to trigger search for \"Planken, Liechtenstein\", resulting in search results (e.g., Liechtenstein) being displayed. Next, interact with the relevant result."
+      },
+      {
+        "step": 15,
+        "action_reason": "Thought omitted by model; executing parsed GUI-Demo action.",
+        "action_output_json": "JSONAction(action_type='click', x=247, y=138, coordinate_scale=1000)",
+        "summary": "Action selected: {\"action_type\": \"click\", \"x\": 247, \"y\": 138, \"coordinate_scale\": 1000}. Clicked on \"SHOW ON MAP\" to open the map view for Planken, Liechtenstein; screen transitioned to a map interface (loading target location)."
+      },
+      {
+        "step": 16,
+        "action_reason": "Thought omitted by model; executing parsed GUI-Demo action.",
+        "action_output_json": "JSONAction(action_type='click', x=182, y=150, coordinate_scale=1000)",
+        "summary": "Action selected: {\"action_type\": \"click\", \"x\": 182, \"y\": 150, \"coordinate_scale\": 1000}. Clicked on a coordinate to transition from map to search results for \"Planken, Liechtenstein\", showing relevant result. Next, interact with the result to add the marker."
+      },
+      {
+        "step": 17,
+        "action_reason": "Thought omitted by model; executing parsed GUI-Demo action.",
+        "action_output_json": "JSONAction(action_type='click', x=247, y=138, coordinate_scale=1000)",
+        "summary": "Action selected: {\"action_type\": \"click\", \"x\": 247, \"y\": 138, \"coordinate_scale\": 1000}. Clicked \"SHOW ON MAP\" to display Planken, Liechtenstein on the map; now map is loading (shows US West Coast), wait for location to load or zoom out."
+      },
+      {
+        "step": 18,
+        "action_reason": "Thought omitted by model; executing parsed GUI-Demo action.",
+        "action_output_json": "JSONAction(action_type='click', x=182, y=150, coordinate_scale=1000)",
+        "summary": "Action selected: {\"action_type\": \"click\", \"x\": 182, \"y\": 150, \"coordinate_scale\": 1000}. Clicked on a coordinate, transitioning from map view to search results for \"Planken, Liechtenstein\", showing \"SHOW ON MAP\" option. Next, interact with the result to proceed."
+      },
+      {
+        "step": 19,
+        "action_reason": "Thought omitted by model; executing parsed GUI-Demo action.",
+        "action_output_json": "JSONAction(action_type='click', x=247, y=138, coordinate_scale=1000)",
+        "summary": "Action selected: {\"action_type\": \"click\", \"x\": 247, \"y\": 138, \"coordinate_scale\": 1000}. Clicked to show Planken, Liechtenstein on the map; screen now shows a loading map (Pacific Ocean area). Wait for map to load or adjust view next."
+      }
+    ]
+  }
+]

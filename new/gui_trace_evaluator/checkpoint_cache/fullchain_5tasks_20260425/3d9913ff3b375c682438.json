@@ -1,0 +1,23 @@
+{
+  "format_version": 1,
+  "standard_id": "3d9913ff3b375c682438",
+  "goal_hash": "9b736aaef469f574",
+  "task_name": "FilesDeleteFile",
+  "task_goal": "Delete the file 2023_05_12_eager_nurse.jpg from the Android filesystem located in the Pictures folder within the sdk_gphone_x86_64 storage area.",
+  "task_goal_rewrite": "The file 2023_05_12_eager_nurse.jpg is deleted from the Pictures folder within the shared external storage (referenced as sdk_gphone_x86_64) of the Android device.",
+  "checkpoints": [
+    {
+      "id": "cp1",
+      "description": "The file \"2023_05_12_eager_nurse.jpg\" is no longer present in the Pictures folder of the Android device's shared external storage.",
+      "required": true,
+      "evidence_hint": "Screenshot or file directory list displaying the contents of the Pictures folder without the specified file name."
+    },
+    {
+      "id": "cp2",
+      "description": "The Pictures folder accessed during the task is located within the shared external storage originally labeled \"sdk_gphone_x86_64\" (UI may display an equivalent ABI-specific label such as \"sdk_gphone64_arm64\").",
+      "required": true,
+      "evidence_hint": "Screenshot showing the Pictures folder's parent storage label or path that corresponds to the referenced storage area."
+    }
+  ],
+  "success_rule": "Success is confirmed if both required checkpoints are fully satisfied."
+}

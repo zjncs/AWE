@@ -1,0 +1,315 @@
+{
+  "source": "/Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/batch_20260425_multicat/exec_files_FilesMoveFile_seed30/results.json",
+  "model": "doubao-seed-1-8-251228",
+  "provider": "openai",
+  "num_records": 1,
+  "evaluations": [
+    {
+      "checkpoint_results": [
+        {
+          "id": "cp1",
+          "achieved": false,
+          "confidence": 1.0,
+          "evidence": "Screenshot from step 13 shows the Download folder contains files named '2023_02_07_setup_exe.exe' instead of 'setup_exe.exe'; read-only tool results confirm: `list_dir /sdcard/Download` only lists the date-prefixed file, `find_file` returns no results for 'setup_exe.exe' in /sdcard, `stat_path` shows `/sdcard/Download/setup_exe.exe` does not exist, while `/sdcard/Pictures/setup_exe.exe` still exists.",
+          "missing_or_conflict": "The exact target file 'setup_exe.exe' is not present in the Download folder; instead, a date-prefixed variant was moved, and the original 'setup_exe.exe' remains in the Pictures folder, failing to meet the task's filename requirement.",
+          "insufficient_trace": false,
+          "needs_fallback_verification": false,
+          "read_tool_verification": {
+            "triggered": true,
+            "requests": [
+              {
+                "tool": "find_file",
+                "reason": "Verify if the exact filename 'setup_exe.exe' exists in the Download folder of the shared external storage to confirm the checkpoint requirement.",
+                "root": "/sdcard/Download",
+                "name": "setup_exe.exe"
+              }
+            ],
+            "results": [
+              {
+                "type": "read_tool_result",
+                "index": 1,
+                "tool": "list_dir",
+                "status": "ok",
+                "request": {
+                  "tool": "list_dir",
+                  "path": "/sdcard/Download",
+                  "source": "gui_demo_post_execution"
+                },
+                "command": "/Users/zjn/Library/Android/sdk/platform-tools/adb -s emulator-5554 shell 'ls -la /sdcard/Download'",
+                "output": "I0425 17:17:47.037721 7157283 ev_poll_posix.cc:593] FD from fork parent still in poll list: fd(4, generation: 1)\nI0425 17:17:47.037745 7157283 ev_poll_posix.cc:593] FD from fork parent still in poll list: fd(7, generation: 1)\ntotal 8\n-rw-rw---- 1 u0_a165 media_rw 21 2023-10-15 15:36 2023_02_07_setup_exe.exe\n",
+                "source": "record_post_execution_evidence"
+              },
+              {
+                "type": "read_tool_result",
+                "index": 2,
+                "tool": "list_dir",
+                "status": "ok",
+                "request": {
+                  "tool": "list_dir",
+                  "path": "/sdcard/Pictures",
+                  "source": "gui_demo_post_execution"
+                },
+                "command": "/Users/zjn/Library/Android/sdk/platform-tools/adb -s emulator-5554 shell 'ls -la /sdcard/Pictures'",
+                "output": "I0425 17:17:47.057497 7157312 ev_poll_posix.cc:593] FD from fork parent still in poll list: fd(4, generation: 1)\nI0425 17:17:47.057518 7157312 ev_poll_posix.cc:593] FD from fork parent still in poll list: fd(7, generation: 1)\ntotal 168\ndrwxrws--- 2 u0_a165 media_rw 4096 2023-10-15 15:34 .thumbnails\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 2023_03_03_pets_playing.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 2023_04_06_setup_exe.exe\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 2023_06_11_sunset.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 2023_07_28_pets_playing.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 beach_day_2023_09_28.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 copy_garden_blooms.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 edited_family_gathering.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 food_snapshot_final.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 garden_blooms_edited.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 garden_blooms_xGS7.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 pIrA_sunset.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 pets_playing_backup.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 selfie_backup.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 selfie_edited.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 selfie_lNDu.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 setup_exe.exe\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 setup_exe_2023_06_09.exe\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 setup_exe_final.exe\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 sunset_qDJ3.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 yN9C_city_night.jpg\n",
+                "source": "record_post_execution_evidence"
+              },
+              {
+                "type": "read_tool_result",
+                "index": 3,
+                "tool": "find_file",
+                "status": "ok",
+                "request": {
+                  "tool": "find_file",
+                  "root": "/sdcard",
+                  "name": "setup_exe.exe",
+                  "source": "gui_demo_post_execution"
+                },
+                "command": "/Users/zjn/Library/Android/sdk/platform-tools/adb -s emulator-5554 shell 'find /sdcard -name setup_exe.exe 2>/dev/null | head -50'",
+                "output": "I0425 17:17:47.078119 7157336 ev_poll_posix.cc:593] FD from fork parent still in poll list: fd(4, generation: 1)\nI0425 17:17:47.078158 7157336 ev_poll_posix.cc:593] FD from fork parent still in poll list: fd(7, generation: 1)\n",
+                "source": "record_post_execution_evidence"
+              },
+              {
+                "type": "read_tool_result",
+                "index": 4,
+                "tool": "stat_path",
+                "status": "ok",
+                "request": {
+                  "tool": "stat_path",
+                  "path": "/sdcard/Download/setup_exe.exe",
+                  "source": "gui_demo_post_execution"
+                },
+                "command": "/Users/zjn/Library/Android/sdk/platform-tools/adb -s emulator-5554 shell 'if [ -e /sdcard/Download/setup_exe.exe ]; then echo __AWE_PATH_EXISTS=true__; stat /sdcard/Download/setup_exe.exe; else echo __AWE_PATH_EXISTS=false__; fi'",
+                "output": "I0425 17:17:47.098350 7157362 ev_poll_posix.cc:593] FD from fork parent still in poll list: fd(4, generation: 1)\nI0425 17:17:47.098382 7157362 ev_poll_posix.cc:593] FD from fork parent still in poll list: fd(7, generation: 1)\n",
+                "source": "record_post_execution_evidence"
+              },
+              {
+                "type": "read_tool_result",
+                "index": 5,
+                "tool": "stat_path",
+                "status": "ok",
+                "request": {
+                  "tool": "stat_path",
+                  "path": "/sdcard/Pictures/setup_exe.exe",
+                  "source": "gui_demo_post_execution"
+                },
+                "command": "/Users/zjn/Library/Android/sdk/platform-tools/adb -s emulator-5554 shell 'if [ -e /sdcard/Pictures/setup_exe.exe ]; then echo __AWE_PATH_EXISTS=true__; stat /sdcard/Pictures/setup_exe.exe; else echo __AWE_PATH_EXISTS=false__; fi'",
+                "output": "I0425 17:17:47.115694 7157388 ev_poll_posix.cc:593] FD from fork parent still in poll list: fd(4, generation: 1)\nI0425 17:17:47.115715 7157388 ev_poll_posix.cc:593] FD from fork parent still in poll list: fd(7, generation: 1)\n  File: /sdcard/Pictures/setup_exe.exe\n  Size: 21\t Blocks: 16\t IO Blocks: 512\t regular file\nDevice: 5fh/95d\t Inode: 303208\t Links: 1\t Device type: 0,0\nAccess: (0660/-rw-rw----)\tUid: (10165/ u0_a165)\tGid: ( 1023/media_rw)\nAccess: 2023-10-15 15:34:01.952000000 +0000\nModify: 2023-10-15 15:34:01.956000000 +0000\nChange: 2023-10-15 15:34:01.956000000 +0000\n",
+                "source": "record_post_execution_evidence"
+              }
+            ],
+            "source": "record_post_execution_evidence",
+            "first_pass_result": {
+              "achieved": false,
+              "confidence": 1.0,
+              "evidence": "Screenshot from step 13 shows the Download folder contains files named '2023_02_07_setup_exe.exe', not the exact filename 'setup_exe.exe' specified in the checkpoint.",
+              "missing_or_conflict": "The exact target filename 'setup_exe.exe' is not present in the Download folder screenshot; instead, files with a date-prefixed variant are displayed.",
+              "insufficient_trace": false,
+              "needs_fallback_verification": true
+            }
+          },
+          "evidence_steps": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ],
+          "evidence_images": 5,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 1.0,
+          "retrieval_rationale": "步骤5进入对应存储区域，步骤6进入Pictures文件夹找到目标文件；步骤7选中目标文件；步骤9选择将文件移动到Downloads文件夹；步骤10确认执行移动操作；步骤11-12进入Downloads目录准备验证；步骤13确认Downloads文件夹中存在目标文件，完成任务，这些步骤完整覆盖了文件移动及结果验证的关键流程，足以证明setup_exe.exe已存在于Download文件夹中。",
+          "retrieval_fallback_reason": "",
+          "model_read_requests": [],
+          "message_strategy": "doubao_official_gui_history_with_screenshots_and_read_tools"
+        },
+        {
+          "id": "cp2",
+          "achieved": false,
+          "confidence": 1.0,
+          "evidence": "Read-only tool results (list_dir for /sdcard/Pictures and stat_path for /sdcard/Pictures/setup_exe.exe) show that setup_exe.exe is still present in the Pictures folder; the UI screenshot after the move operation may be unrefreshed, but the actual file system state confirms the file remains.",
+          "missing_or_conflict": "The UI state after the move operation suggests the file is gone, but the read-only tool results conflict with this, showing the file still exists in the Pictures folder.",
+          "insufficient_trace": false,
+          "needs_fallback_verification": false,
+          "read_tool_verification": {
+            "triggered": true,
+            "requests": [
+              {
+                "tool": "list_dir",
+                "reason": "Verify if setup_exe.exe is no longer present in the Pictures folder after the move operation.",
+                "path": "/sdcard/Pictures"
+              }
+            ],
+            "results": [
+              {
+                "type": "read_tool_result",
+                "index": 1,
+                "tool": "list_dir",
+                "status": "ok",
+                "request": {
+                  "tool": "list_dir",
+                  "path": "/sdcard/Download",
+                  "source": "gui_demo_post_execution"
+                },
+                "command": "/Users/zjn/Library/Android/sdk/platform-tools/adb -s emulator-5554 shell 'ls -la /sdcard/Download'",
+                "output": "I0425 17:17:47.037721 7157283 ev_poll_posix.cc:593] FD from fork parent still in poll list: fd(4, generation: 1)\nI0425 17:17:47.037745 7157283 ev_poll_posix.cc:593] FD from fork parent still in poll list: fd(7, generation: 1)\ntotal 8\n-rw-rw---- 1 u0_a165 media_rw 21 2023-10-15 15:36 2023_02_07_setup_exe.exe\n",
+                "source": "record_post_execution_evidence"
+              },
+              {
+                "type": "read_tool_result",
+                "index": 2,
+                "tool": "list_dir",
+                "status": "ok",
+                "request": {
+                  "tool": "list_dir",
+                  "path": "/sdcard/Pictures",
+                  "source": "gui_demo_post_execution"
+                },
+                "command": "/Users/zjn/Library/Android/sdk/platform-tools/adb -s emulator-5554 shell 'ls -la /sdcard/Pictures'",
+                "output": "I0425 17:17:47.057497 7157312 ev_poll_posix.cc:593] FD from fork parent still in poll list: fd(4, generation: 1)\nI0425 17:17:47.057518 7157312 ev_poll_posix.cc:593] FD from fork parent still in poll list: fd(7, generation: 1)\ntotal 168\ndrwxrws--- 2 u0_a165 media_rw 4096 2023-10-15 15:34 .thumbnails\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 2023_03_03_pets_playing.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 2023_04_06_setup_exe.exe\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 2023_06_11_sunset.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 2023_07_28_pets_playing.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 beach_day_2023_09_28.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 copy_garden_blooms.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 edited_family_gathering.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 food_snapshot_final.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 garden_blooms_edited.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 garden_blooms_xGS7.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 pIrA_sunset.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 pets_playing_backup.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 selfie_backup.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 selfie_edited.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 selfie_lNDu.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 setup_exe.exe\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 setup_exe_2023_06_09.exe\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 setup_exe_final.exe\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 sunset_qDJ3.jpg\n-rw-rw---- 1 u0_a165 media_rw   21 2023-10-15 15:34 yN9C_city_night.jpg\n",
+                "source": "record_post_execution_evidence"
+              },
+              {
+                "type": "read_tool_result",
+                "index": 3,
+                "tool": "find_file",
+                "status": "ok",
+                "request": {
+                  "tool": "find_file",
+                  "root": "/sdcard",
+                  "name": "setup_exe.exe",
+                  "source": "gui_demo_post_execution"
+                },
+                "command": "/Users/zjn/Library/Android/sdk/platform-tools/adb -s emulator-5554 shell 'find /sdcard -name setup_exe.exe 2>/dev/null | head -50'",
+                "output": "I0425 17:17:47.078119 7157336 ev_poll_posix.cc:593] FD from fork parent still in poll list: fd(4, generation: 1)\nI0425 17:17:47.078158 7157336 ev_poll_posix.cc:593] FD from fork parent still in poll list: fd(7, generation: 1)\n",
+                "source": "record_post_execution_evidence"
+              },
+              {
+                "type": "read_tool_result",
+                "index": 4,
+                "tool": "stat_path",
+                "status": "ok",
+                "request": {
+                  "tool": "stat_path",
+                  "path": "/sdcard/Download/setup_exe.exe",
+                  "source": "gui_demo_post_execution"
+                },
+                "command": "/Users/zjn/Library/Android/sdk/platform-tools/adb -s emulator-5554 shell 'if [ -e /sdcard/Download/setup_exe.exe ]; then echo __AWE_PATH_EXISTS=true__; stat /sdcard/Download/setup_exe.exe; else echo __AWE_PATH_EXISTS=false__; fi'",
+                "output": "I0425 17:17:47.098350 7157362 ev_poll_posix.cc:593] FD from fork parent still in poll list: fd(4, generation: 1)\nI0425 17:17:47.098382 7157362 ev_poll_posix.cc:593] FD from fork parent still in poll list: fd(7, generation: 1)\n",
+                "source": "record_post_execution_evidence"
+              },
+              {
+                "type": "read_tool_result",
+                "index": 5,
+                "tool": "stat_path",
+                "status": "ok",
+                "request": {
+                  "tool": "stat_path",
+                  "path": "/sdcard/Pictures/setup_exe.exe",
+                  "source": "gui_demo_post_execution"
+                },
+                "command": "/Users/zjn/Library/Android/sdk/platform-tools/adb -s emulator-5554 shell 'if [ -e /sdcard/Pictures/setup_exe.exe ]; then echo __AWE_PATH_EXISTS=true__; stat /sdcard/Pictures/setup_exe.exe; else echo __AWE_PATH_EXISTS=false__; fi'",
+                "output": "I0425 17:17:47.115694 7157388 ev_poll_posix.cc:593] FD from fork parent still in poll list: fd(4, generation: 1)\nI0425 17:17:47.115715 7157388 ev_poll_posix.cc:593] FD from fork parent still in poll list: fd(7, generation: 1)\n  File: /sdcard/Pictures/setup_exe.exe\n  Size: 21\t Blocks: 16\t IO Blocks: 512\t regular file\nDevice: 5fh/95d\t Inode: 303208\t Links: 1\t Device type: 0,0\nAccess: (0660/-rw-rw----)\tUid: (10165/ u0_a165)\tGid: ( 1023/media_rw)\nAccess: 2023-10-15 15:34:01.952000000 +0000\nModify: 2023-10-15 15:34:01.956000000 +0000\nChange: 2023-10-15 15:34:01.956000000 +0000\n",
+                "source": "record_post_execution_evidence"
+              }
+            ],
+            "source": "record_post_execution_evidence",
+            "first_pass_result": {
+              "achieved": false,
+              "confidence": 0.0,
+              "evidence": "Screenshot from step 6 shows setup_exe.exe exists in Pictures folder; screenshot from step 13 shows the file appears in Downloads folder, but there is no screenshot or directory listing showing the final state of Pictures folder after the move operation.",
+              "missing_or_conflict": "Missing evidence of the final state of Pictures folder to confirm setup_exe.exe is no longer present.",
+              "insufficient_trace": true,
+              "needs_fallback_verification": true
+            }
+          },
+          "evidence_steps": [
+            5,
+            6,
+            7,
+            9,
+            10,
+            11,
+            12,
+            13
+          ],
+          "evidence_images": 5,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 1.0,
+          "retrieval_rationale": "步骤6的界面显示Pictures文件夹中存在setup_exe.exe；步骤10执行移动操作后回到Pictures文件夹，其对应的界面显示该文件夹已无此文件；步骤12-13的界面显示Download文件夹中出现该目标文件，间接证明文件已从Pictures文件夹移动出去，能够支持检查点的判断。",
+          "retrieval_fallback_reason": "",
+          "model_read_requests": [],
+          "message_strategy": "doubao_official_gui_history_with_screenshots_and_read_tools"
+        },
+        {
+          "id": "cp3",
+          "achieved": true,
+          "confidence": 0.95,
+          "evidence": "Step 6 screenshot shows the file 2023_02_07_setup_exe.exe (containing the target filename setup_exe.exe) in the Pictures folder of sdk_gphone64_arm64, which is treated as equivalent to sdk_gphone_x86_64 per environment context. Step7 selects this file, steps9-10 confirm initiating and completing the move to Downloads. Step13 screenshot confirms the file is present in the Downloads folder, verifying the operation was applied to the correct file within the intended storage context.",
+          "missing_or_conflict": "",
+          "insufficient_trace": false,
+          "needs_fallback_verification": false,
+          "read_tool_verification": {
+            "triggered": false,
+            "requests": [],
+            "results": []
+          },
+          "evidence_steps": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ],
+          "evidence_images": 5,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 0.95,
+          "retrieval_rationale": "These steps provide evidence of the full workflow matching the goal: step5 accesses the equivalent storage area (sdk_gphone64_arm64, treated as the same as the target sdk_gphone_x86_64 per context), step6 navigates to the source Pictures folder, step7 selects the exact target file (2023_02_07_setup_exe.exe matching setup_exe.exe), steps9-10 initiate and confirm moving the file to Downloads, steps12-13 verify the file is present in the target Downloads folder, confirming the operation was applied to the correct object and context.",
+          "retrieval_fallback_reason": "",
+          "model_read_requests": [],
+          "message_strategy": "doubao_official_gui_history_with_screenshots_and_read_tools"
+        }
+      ],
+      "success": false,
+      "completeness_score": 0.3333333333333333,
+      "insufficient_trace": false,
+      "rationale": "Missing required checkpoints under selected evidence: cp1, cp2",
+      "format_version": 1,
+      "task": "FilesMoveFile",
+      "granularity": "intent",
+      "standard_id": "2a7d37f954ce9cd73e91",
+      "goal_hash": "5d712d1ea01300de",
+      "status": "evaluated",
+      "evaluation_mode": "doubao_official_gui_messages_v1",
+      "trace_steps": 13,
+      "official_reward": 0.0,
+      "official_success": false,
+      "agreement_with_reward": true
+    }
+  ],
+  "statistics": {
+    "total_records": 1,
+    "total_evaluated": 1,
+    "total_errors": 0,
+    "total_skipped": 0,
+    "agreement_rate": 1.0,
+    "confusion_matrix": {
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1
+    }
+  }
+}

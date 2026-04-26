@@ -1,0 +1,11 @@
+[evaluator] FilesMoveFile: evaluating 2 checkpoints
+[evaluator] checkpoint 1/2 cp1: The file sunset.jpg is present in the Pictures folder within the sdk_gphone64_arm64 storage area.
+[evaluator] checkpoint 2/2 cp2: The file sunset.jpg is no longer present in the Alarms folder within the sdk_gphone64_arm64 storage area.
+[evaluator] SimpleCalendarAddOneEvent: evaluating 3 checkpoints
+[evaluator] checkpoint 1/3 cp1: The calendar event has the exact title 'Appointment for Annual Report'.
+[evaluator] checkpoint 2/3 cp2: The event is scheduled on 2023-10-15, starting at 15:00 and ending at 15:15 (15-minute duration).
+[evaluator] checkpoint 3/3 cp3: The event includes the exact description 'We will discuss annual budget.'
+Evaluated 2 records.
+Agreement rate: 0.0%
+JSON: results/eval_long_move_calendar_generic_aw_context_20260425.json
+Report: results/eval_long_move_calendar_generic_aw_context_20260425.md

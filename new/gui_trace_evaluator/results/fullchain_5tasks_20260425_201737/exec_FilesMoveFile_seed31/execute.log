@@ -1,0 +1,162 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1777119709.389490 7673522 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119709.430174 7673522 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119709.457099 7673522 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119709.493478 7673654 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119709.505486 7673522 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119709.523393 7673654 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119722.928024 7673522 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119722.988948 7673522 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119723.014992 7673522 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119724.043273 7673522 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119725.406899 7673522 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119725.463922 7673522 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119725.491510 7673522 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119725.518312 7673522 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119725.543222 7673522 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119725.568070 7673522 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+/Users/zjn/.pyenv/versions/3.10.13/lib/python3.10/site-packages/pydub/utils.py:170: RuntimeWarning: Couldn't find ffmpeg or avconv - defaulting to ffmpeg, but may not work
+  warn("Couldn't find ffmpeg or avconv - defaulting to ffmpeg, but may not work", RuntimeWarning)
+I0000 00:00:1777119725.751258 7674855 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119725.798606 7674855 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+WARNING:absl:Could not get a11y tree, retrying.
+I0000 00:00:1777119726.830976 7673485 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119726.874430 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119726.894603 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119726.918660 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119726.941010 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119726.963108 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119726.981725 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119727.000297 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119727.019911 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119727.047131 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+WARNING:absl:Skipping app snapshot loading : Snapshot not found in /data/data/android_world/snapshots/com.google.android.documentsui.
+I0000 00:00:1777119727.065557 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119727.083121 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119727.104317 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119727.128457 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119727.152811 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119727.173272 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119727.192033 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119727.211470 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119727.241225 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.243594 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.272453 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.289258 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.307358 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.323645 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.342085 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.359488 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.378702 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.402269 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.427793 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.450816 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.469738 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.486577 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.505936 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.524020 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.547804 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.566502 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.587676 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.605524 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.629109 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.648021 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.666825 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.683928 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.704041 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.723063 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.746334 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.768077 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.820798 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.841938 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.861488 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.878051 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.897575 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.913347 7674944 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119728.934667 7673485 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+E0000 00:00:1777119728.971170 7676326 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777119728.976783 7676326 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119729.009920 7676326 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119729.521998 7676326 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+E0000 00:00:1777119734.375407 7676627 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777119734.425242 7676627 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119734.511376 7676627 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119734.537132 7676627 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+E0000 00:00:1777119735.990656 7676748 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777119736.621874 7676748 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+E0000 00:00:1777119737.118773 7676748 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777119737.129252 7676748 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+E0000 00:00:1777119741.290474 7677452 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777119741.303002 7677452 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119741.374079 7677452 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119741.405356 7677452 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+E0000 00:00:1777119742.494136 7677654 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777119743.011054 7677654 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+E0000 00:00:1777119743.506028 7677654 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777119743.519208 7677654 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+E0000 00:00:1777119780.043136 7681120 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777119780.056966 7681120 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+E0000 00:00:1777119782.144581 7681358 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777119782.155016 7681358 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119782.660024 7681358 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+E0000 00:00:1777119783.146606 7681358 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777119783.157139 7681358 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119783.220792 7673485 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119783.240246 7673485 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119783.261281 7673485 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119783.279024 7673485 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119783.300525 7673485 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119783.321078 7673485 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119783.339322 7673485 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119783.357729 7673485 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119783.377922 7673485 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119783.392928 7673485 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119783.428180 7673485 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+WARNING:absl:Skipping app snapshot loading : Snapshot not found in /data/data/android_world/snapshots/com.google.android.documentsui.
+I0000 00:00:1777119783.503020 7673485 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119783.539466 7673485 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119783.569468 7673485 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119783.591874 7673485 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119783.613171 7673485 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119783.637385 7673485 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119783.658696 7673485 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119783.676716 7673485 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119783.700647 7673485 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119783.722982 7673485 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119783.743607 7673485 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119783.766664 7673485 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119783.804963 7673485 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+Connecting to AndroidWorld emulator on port 5554 ...
+Task: FilesMoveFile
+Goal: Move the file sunset.jpg from Alarms within the sdk_gphone_x86_64 storage area to the Pictures within the same sdk_gphone_x86_64 storage area in the Android filesystem.
+[gui-demo] logical_screen_size (step 1 before): 1080x2400; pixel buffer: 1080x2400
+[LLM_METRICS] model=doubao-seed-1-6-vision-250815 latency_s=4.706 prompt_tokens=2356 completion_tokens=132 total_tokens=2488 images=1 attempt=1
+
+---------- step 1 (attempt 1/4)
+Action: open_app(app_name='Files')
+[LLM_METRICS] model=doubao-seed-1-6-vision-250815 latency_s=3.976 prompt_tokens=3118 completion_tokens=133 total_tokens=3251 images=2 attempt=1
+
+---------- step 2 (attempt 1/4)
+Action: click(point='<point>63 78</point>')
+[LLM_METRICS] model=doubao-seed-1-6-vision-250815 latency_s=3.834 prompt_tokens=3803 completion_tokens=162 total_tokens=3965 images=3 attempt=1
+
+---------- step 3 (attempt 1/4)
+scroll(point='<point>333 600</point>', direction='down')
+[gui-demo] step 3 attempt 1 failed: Missing Action field in response: scroll(point='<point>333 600</point>', direction='down'); retrying with the same state.
+[LLM_METRICS] model=doubao-seed-1-6-vision-250815 latency_s=6.711 prompt_tokens=3803 completion_tokens=310 total_tokens=4113 images=3 attempt=1
+
+---------- step 3 (attempt 2/4)
+scroll(point='<point>333 700</point>', direction='down')
+[gui-demo] step 3 attempt 2 failed: Missing Action field in response: scroll(point='<point>333 700</point>', direction='down'); retrying with the same state.
+[LLM_METRICS] model=doubao-seed-1-6-vision-250815 latency_s=6.152 prompt_tokens=3803 completion_tokens=277 total_tokens=4080 images=3 attempt=1
+
+---------- step 3 (attempt 3/4)
+scroll(point='<point>333 700</point>', direction='down')
+[gui-demo] step 3 attempt 3 failed: Missing Action field in response: scroll(point='<point>333 700</point>', direction='down'); retrying with the same state.
+[LLM_METRICS] model=doubao-seed-1-6-vision-250815 latency_s=8.649 prompt_tokens=3803 completion_tokens=425 total_tokens=4228 images=3 attempt=1
+
+---------- step 3 (attempt 4/4)
+scroll(point='<point>333 541</point>', direction='down')
+Abort: step 3 failed after retries: Missing Action field in response: scroll(point='<point>333 541</point>', direction='down')
+Record written: /Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/fullchain_5tasks_20260425_201737/exec_FilesMoveFile_seed31/results.json
+Success=False reward=0.0 steps=3

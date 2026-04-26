@@ -1,0 +1,23 @@
+{
+  "format_version": 1,
+  "standard_id": "3d9913ff3b375c682438",
+  "goal_hash": "9b736aaef469f574",
+  "task_name": "FilesDeleteFile",
+  "task_goal": "Delete the file 2023_05_12_eager_nurse.jpg from the Android filesystem located in the Pictures folder within the sdk_gphone_x86_64 storage area.",
+  "task_goal_rewrite": "The file 2023_05_12_eager_nurse.jpg is successfully deleted from the Pictures folder within the shared external storage (/sdcard) corresponding to the sdk_gphone_x86_64 storage area of the Android device.",
+  "checkpoints": [
+    {
+      "id": "cp1",
+      "description": "The file 2023_05_12_eager_nurse.jpg is no longer present in the Pictures folder of the Android device's shared external storage (/sdcard).",
+      "required": true,
+      "evidence_hint": "Screenshot of the Pictures folder contents showing the absence of 2023_05_12_eager_nurse.jpg, or a file manager confirmation message indicating successful deletion of the specified file."
+    },
+    {
+      "id": "cp2",
+      "description": "The storage area containing the Pictures folder is the shared external storage associated with the sdk_gphone_x86_64 label (UI label may vary, e.g., sdk_gphone64_arm64, but maps to /sdcard).",
+      "required": true,
+      "evidence_hint": "Screenshot showing the storage location label displayed in the file manager that corresponds to the device's shared external storage (/sdcard) when accessing the Pictures folder."
+    }
+  ],
+  "success_rule": "Success is confirmed when both required checkpoints are satisfied: the specified file is absent from the target Pictures folder, and the folder resides in the correct shared external storage area."
+}

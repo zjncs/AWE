@@ -1,0 +1,7 @@
+[evaluator] FilesDeleteFile: evaluating 2 checkpoints
+[evaluator] checkpoint 1/2 cp1: The file "2023_05_12_eager_nurse.jpg" is no longer present in the Pictures folder of the Android device's shared externa
+[evaluator] checkpoint 2/2 cp2: The Pictures folder accessed during the task is located within the shared external storage originally labeled "sdk_gphon
+Evaluated 1 records.
+Agreement rate: 100.0%
+JSON: /Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/fullchain_5tasks_20260425_rerun_202532/eval_FilesDeleteFile_seed30.json
+Report: /Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/fullchain_5tasks_20260425_rerun_202532/eval_FilesDeleteFile_seed30.md

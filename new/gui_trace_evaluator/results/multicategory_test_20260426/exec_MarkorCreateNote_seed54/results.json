@@ -1,0 +1,24 @@
+[
+  {
+    "task": "MarkorCreateNote",
+    "task_name": "MarkorCreateNote",
+    "base_goal": "MarkorCreateNote",
+    "goal": "MarkorCreateNote",
+    "goal_used": "MarkorCreateNote",
+    "granularity": "intent",
+    "seed": 54,
+    "model": "doubao-seed-1-6-vision-250815",
+    "reward": null,
+    "success": null,
+    "agent_done": false,
+    "abort_reason": "fatal_error: setup failed after retries: Could not get a11y tree.",
+    "step_count": 0,
+    "steps": 0,
+    "elapsed_seconds": 158.31998419761658,
+    "trace": {
+      "format_version": "gui_demo_android_world_v1",
+      "steps": []
+    },
+    "post_execution_evidence": []
+  }
+]

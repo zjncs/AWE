@@ -1,0 +1,29 @@
+{
+  "format_version": 1,
+  "standard_id": "3fda2745863a8b9d9e02",
+  "goal_hash": "7d77770786f598e6",
+  "task_name": "ContactsAddContact",
+  "task_goal": "Create a new contact for Mateo Gonzalez. Their number is +18233846878.",
+  "task_goal_rewrite": "A new contact entry for Mateo Gonzalez with the phone number +18233846878 exists in the device's contacts application.",
+  "checkpoints": [
+    {
+      "id": "cp1",
+      "description": "The contact 'Mateo Gonzalez' is visible in the contacts application's main list view.",
+      "required": true,
+      "evidence_hint": "Screenshot showing 'Mateo Gonzalez' listed in the contacts app's primary contacts list."
+    },
+    {
+      "id": "cp2",
+      "description": "The contact's full name field displays exactly 'Mateo Gonzalez' in the contact details view.",
+      "required": true,
+      "evidence_hint": "Screenshot of the contact's detailed profile page showing the name 'Mateo Gonzalez' in the name field."
+    },
+    {
+      "id": "cp3",
+      "description": "The contact's phone number field displays exactly '+18233846878' in the contact details view.",
+      "required": true,
+      "evidence_hint": "Screenshot of the contact's detailed profile page showing the phone number '+18233846878' associated with the contact."
+    }
+  ],
+  "success_rule": "Success is achieved if all three required checkpoints are satisfied, confirming the contact was created with the exact specified name and phone number."
+}

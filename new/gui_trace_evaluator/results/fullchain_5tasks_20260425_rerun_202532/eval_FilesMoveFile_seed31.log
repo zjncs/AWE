@@ -1,0 +1,7 @@
+[evaluator] FilesMoveFile: evaluating 2 checkpoints
+[evaluator] checkpoint 1/2 cp1: The file sunset.jpg is present in the Pictures folder within the sdk_gphone_x86_64 storage area.
+[evaluator] checkpoint 2/2 cp2: The file sunset.jpg is no longer present in the Alarms folder within the sdk_gphone_x86_64 storage area.
+Evaluated 1 records.
+Agreement rate: 100.0%
+JSON: /Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/fullchain_5tasks_20260425_rerun_202532/eval_FilesMoveFile_seed31.json
+Report: /Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/fullchain_5tasks_20260425_rerun_202532/eval_FilesMoveFile_seed31.md

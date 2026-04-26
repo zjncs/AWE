@@ -1,0 +1,29 @@
+{
+  "format_version": 1,
+  "standard_id": "2a7d37f954ce9cd73e91",
+  "goal_hash": "5d712d1ea01300de",
+  "task_name": "FilesMoveFile",
+  "task_goal": "Move the file setup_exe.exe from Pictures within the sdk_gphone_x86_64 storage area to the Download within the same sdk_gphone_x86_64 storage area in the Android filesystem.",
+  "task_goal_rewrite": "The file setup_exe.exe is located in the Download folder within the sdk_gphone_x86_64 (or equivalent UI-labeled) storage area of the Android filesystem, with no remaining copy in the Pictures folder of the same storage area.",
+  "checkpoints": [
+    {
+      "id": "cp1",
+      "description": "The file setup_exe.exe is selected or targeted in the Pictures folder of the sdk_gphone_x86_64 (or equivalent UI-labeled) storage area.",
+      "required": true,
+      "evidence_hint": "Screenshot showing setup_exe.exe highlighted or selected in the Pictures folder; trace log entry indicating selection of this specific file."
+    },
+    {
+      "id": "cp2",
+      "description": "The file setup_exe.exe is present in the Download folder of the sdk_gphone_x86_64 (or equivalent UI-labeled) storage area, and no longer exists in the Pictures folder of the same storage area.",
+      "required": true,
+      "evidence_hint": "Screenshots displaying setup_exe.exe in the Download folder and confirming its absence from the Pictures folder; trace logs verifying completion of the move operation to Download and removal from Pictures."
+    },
+    {
+      "id": "cp3",
+      "description": "Evidence confirms the operation was applied to the exact target object/value and intended context stated in the goal.",
+      "required": true,
+      "evidence_hint": "Use screenshot/UI text/action evidence to disambiguate the target identity and location before final-state verification."
+    }
+  ],
+  "success_rule": "Success is achieved if both required checkpoints are satisfied: the target file was correctly identified in the source Pictures folder, and it has been successfully moved to the destination Download folder with no copy left in the source folder."
+}

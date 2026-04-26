@@ -1,0 +1,104 @@
+{
+  "source": "results/exec_from_scratch_filesdelete_300/results.json",
+  "model": "doubao-seed-1-8-251228",
+  "provider": "openai",
+  "num_records": 1,
+  "evaluations": [
+    {
+      "checkpoint_results": [
+        {
+          "id": "cp1",
+          "achieved": true,
+          "confidence": 1.0,
+          "evidence": "Step 5 confirms navigation to sdk_gphone64_arm64 storage (equivalent to sdk_gphone_x86_64). Step 6 enters the Pictures folder within this storage. Step 12's deletion confirmation dialog explicitly references the file name '2023_05_12_eager_nurse.jpg', and step 7's screenshot shows a file with the matching '2023_05_12_ea...' prefix selected in the Pictures folder, confirming the file existed in the required location.",
+          "missing_or_conflict": "",
+          "insufficient_trace": false,
+          "needs_fallback_verification": false,
+          "read_tool_verification": {
+            "triggered": false,
+            "requests": [],
+            "results": []
+          },
+          "evidence_steps": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            11,
+            12,
+            13
+          ],
+          "evidence_images": 5,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 1.0,
+          "retrieval_rationale": "Step 5 confirms navigation to the sdk_gphone64_arm64 storage area (equivalent to the specified sdk_gphone_x86_64). Step 6 enters the Pictures folder within this storage. Step 7's before screenshot shows the target file 2023_05_12_eager_nurse.jpg present in the Pictures folder (as it is selected via long press). Step 12's after screenshot displays a deletion confirmation dialog explicitly referencing the file name, directly confirming its existence in the required location.",
+          "retrieval_fallback_reason": "",
+          "model_read_requests": [],
+          "message_strategy": "doubao_official_gui_history_with_screenshots_and_read_tools"
+        },
+        {
+          "id": "cp2",
+          "achieved": true,
+          "confidence": 1.0,
+          "evidence": "Step 12's screenshot shows the deletion confirmation dialog for the exact target file '2023_05_12_eager_nurse.jpg'. Step 14's screenshot of the Pictures folder shows one fewer file with the '2023_05_12_ea...' prefix compared to Step 6's screenshot, confirming the target file is no longer present.",
+          "missing_or_conflict": "",
+          "insufficient_trace": false,
+          "needs_fallback_verification": false,
+          "read_tool_verification": {
+            "triggered": false,
+            "requests": [],
+            "results": []
+          },
+          "evidence_steps": [
+            5,
+            6,
+            7,
+            8,
+            11,
+            12,
+            13,
+            14
+          ],
+          "evidence_images": 5,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 1.0,
+          "retrieval_rationale": "These steps provide sequential evidence: Step 6 shows navigation to the target Pictures folder, Step 7 confirms the target file exists and is selected, Step 12 displays the deletion confirmation dialog for the exact target filename, Step 13 executes the deletion confirmation and shows the Pictures folder after deletion, and Step 14 confirms the final state where the target file is no longer present in the Pictures folder, completing the task.",
+          "retrieval_fallback_reason": "",
+          "model_read_requests": [],
+          "message_strategy": "doubao_official_gui_history_with_screenshots_and_read_tools"
+        }
+      ],
+      "success": true,
+      "completeness_score": 1.0,
+      "insufficient_trace": false,
+      "rationale": "All required checkpoints were supported.",
+      "format_version": 1,
+      "task": "FilesDeleteFile",
+      "granularity": "intent",
+      "standard_id": "3d9913ff3b375c682438",
+      "goal_hash": "9b736aaef469f574",
+      "status": "evaluated",
+      "evaluation_mode": "doubao_official_gui_messages_v1",
+      "trace_steps": 14,
+      "official_reward": 1.0,
+      "official_success": true,
+      "agreement_with_reward": true
+    }
+  ],
+  "statistics": {
+    "total_records": 1,
+    "total_evaluated": 1,
+    "total_errors": 0,
+    "total_skipped": 0,
+    "agreement_rate": 1.0,
+    "confusion_matrix": {
+      "true_positive": 1,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 0
+    }
+  }
+}

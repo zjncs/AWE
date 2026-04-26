@@ -1,0 +1,105 @@
+[
+  {
+    "task": "SystemWifiTurnOff",
+    "task_name": "SystemWifiTurnOff",
+    "base_goal": "Turn wifi off.",
+    "goal": "Turn wifi off.",
+    "goal_used": "Turn wifi off.",
+    "granularity": "intent",
+    "seed": 34,
+    "model": "doubao-seed-1-6-vision-250815",
+    "reward": 1.0,
+    "success": true,
+    "agent_done": true,
+    "abort_reason": null,
+    "step_count": 4,
+    "steps": 4,
+    "elapsed_seconds": 45.31500577926636,
+    "trace": {
+      "format_version": "gui_demo_android_world_v1",
+      "steps": [
+        {
+          "step": 1,
+          "thinking": "",
+          "thought": "",
+          "action": "drag(start_point='<point>500 1</point>', end_point='<point>500 500</point>')",
+          "action_json": {
+            "action_type": "swipe",
+            "direction": "down"
+          },
+          "summary": "Executed drag: {\"action_type\": \"swipe\", \"direction\": \"down\"}",
+          "raw_response": "Action: drag(start_point='<point>500 1</point>', end_point='<point>500 500</point>')",
+          "before_screenshot_path": "/Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/fullchain_5tasks_20260425_rerun_202532/exec_SystemWifiTurnOff_seed34/trace_images/SystemWifiTurnOff_seed34/step_001_before.jpg",
+          "after_screenshot_path": "/Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/fullchain_5tasks_20260425_rerun_202532/exec_SystemWifiTurnOff_seed34/trace_images/SystemWifiTurnOff_seed34/step_001_after.jpg",
+          "before_ui": "[1] text='' desc='Home' class='android.view.View' clickable=False editable=False bbox=(0,128,1080,2337)\n[2] text='Phone' desc='Phone' class='android.widget.TextView' clickable=True editable=False bbox=(76,1873,249,2068)\n[3] text='Messages' desc='Messages' class='android.widget.TextView' clickable=True editable=False bbox=(328,1873,501,2068)\n[4] text='Chrome' desc='Chrome' class='android.widget.TextView' clickable=True editable=False bbox=(580,1873,753,2068)\n[5] text='Files' desc='Predicted app: Files' class='android.widget.TextView' clickable=True editable=False bbox=(832,1873,1004,2068)\n[6] text='' desc='Search' class='android.widget.FrameLayout' clickable=True editable=False bbox=(75,2125,1004,2290)\n[7] text='Sun, Oct 15' desc='Sun, Oct 15' class='android.widget.TextView' clickable=True editable=False bbox=(99,292,1023,354)\n[8] text='Gmail' desc='Gmail' class='android.widget.TextView' clickable=True editable=False bbox=(309,1479,519,1751)\n[9] text='Photos' desc='Photos' class='android.widget.TextView' clickable=True editable=False bbox=(561,1479,771,1751)\n[10] text='YouTube' desc='YouTube' class='android.widget.TextView' clickable=True editable=False bbox=(813,1479,1023,1751)\n[11] text='' desc='Google app' class='android.widget.ImageView' clickable=True editable=False bbox=(86,2144,212,2270)\n[12] text='' desc='Voice search' class='android.widget.ImageView' clickable=True editable=False bbox=(741,2125,867,2290)\n[13] text='' desc='Google Lens' class='android.widget.ImageButton' clickable=True editable=False bbox=(867,2125,993,2290)\n[14] text='15:34' desc='23:34' class='android.widget.TextView' clickable=False editable=False bbox=(50,1,148,128)\n[15] text='' desc='Phone signal full.' class='android.widget.FrameLayout' clickable=False editable=False bbox=(866,35,970,93)\n[16] text='' desc='Battery 100 percent.' class='android.widget.LinearLayout' clickable=False editable=False bbox=(986,1,1006,128)\n[17] text='' desc='No internet' class='android.widget.ImageView' clickable=False editable=False bbox=(866,43,931,85)",
+          "after_ui": "[0] text='On' desc='Internet' class='android.widget.Switch' clickable=True editable=False bbox=(42,126,529,284)\n[1] text='On' desc='Bluetooth.' class='android.widget.Switch' clickable=True editable=False bbox=(550,126,1037,284)\n[2] text='Off' desc='Flashlight' class='android.widget.Switch' clickable=True editable=False bbox=(42,305,529,463)\n[3] text='Off' desc='Do Not Disturb.' class='android.widget.Switch' clickable=True editable=False bbox=(550,305,1037,463)\n[4] text='15:34' desc='23:34' class='android.widget.TextView' clickable=False editable=False bbox=(50,0,150,126)\n[5] text='Sun, Oct 15' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(171,31,481,94)\n[6] text='' desc='Phone three bars.' class='android.widget.FrameLayout' clickable=False editable=False bbox=(784,34,888,92)\n[7] text='' desc='Battery 100 percent.' class='android.widget.LinearLayout' clickable=False editable=False bbox=(904,32,1027,95)\n[8] text='No notifications' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(42,1379,1038,1547)\n[9] text='' desc='No internet' class='android.widget.ImageView' clickable=False editable=False bbox=(784,42,849,84)"
+        },
+        {
+          "step": 2,
+          "thinking": "",
+          "thought": "",
+          "action": "click(point='<point>264 84</point>')",
+          "action_json": {
+            "action_type": "click",
+            "x": 285,
+            "y": 202
+          },
+          "summary": "Executed click: {\"action_type\": \"click\", \"x\": 285, \"y\": 202}",
+          "raw_response": "Action: click(point='<point>264 84</point>')",
+          "before_screenshot_path": "/Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/fullchain_5tasks_20260425_rerun_202532/exec_SystemWifiTurnOff_seed34/trace_images/SystemWifiTurnOff_seed34/step_002_before.jpg",
+          "after_screenshot_path": "/Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/fullchain_5tasks_20260425_rerun_202532/exec_SystemWifiTurnOff_seed34/trace_images/SystemWifiTurnOff_seed34/step_002_after.jpg",
+          "before_ui": "[0] text='On' desc='Internet' class='android.widget.Switch' clickable=True editable=False bbox=(42,126,529,284)\n[1] text='On' desc='Bluetooth.' class='android.widget.Switch' clickable=True editable=False bbox=(550,126,1037,284)\n[2] text='Off' desc='Flashlight' class='android.widget.Switch' clickable=True editable=False bbox=(42,305,529,463)\n[3] text='Off' desc='Do Not Disturb.' class='android.widget.Switch' clickable=True editable=False bbox=(550,305,1037,463)\n[4] text='15:34' desc='23:34' class='android.widget.TextView' clickable=False editable=False bbox=(50,0,150,126)\n[5] text='Sun, Oct 15' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(171,31,481,94)\n[6] text='' desc='Phone three bars.' class='android.widget.FrameLayout' clickable=False editable=False bbox=(784,34,888,92)\n[7] text='' desc='Battery 100 percent.' class='android.widget.LinearLayout' clickable=False editable=False bbox=(904,32,1027,95)\n[8] text='No notifications' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(42,1379,1038,1547)\n[9] text='' desc='No internet' class='android.widget.ImageView' clickable=False editable=False bbox=(784,42,849,84)",
+          "after_ui": "[0] text='Internet' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(432,468,648,553)\n[1] text='Tap a network to connect' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(333,564,747,615)\n[2] text='Wi‑Fi' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(142,1007,234,1064)\n[3] text='' desc='Wi‑Fi' class='android.widget.Switch' clickable=True editable=False bbox=(801,972,938,1098)\n[4] text='Done' desc='' class='android.widget.Button' clickable=True editable=False bbox=(806,1886,975,2012)\n[5] text='T-Mobile' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(247,771,407,828)\n[6] text='Connected / 3G' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(247,828,503,879)\n[7] text='' desc='Mobile data' class='android.widget.Switch' clickable=True editable=False bbox=(801,762,938,888)\n[8] text='AndroidWifi' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(242,1152,434,1203)\n[9] text='Saved / Won’t automatically connect' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(242,1203,773,1297)"
+        },
+        {
+          "step": 3,
+          "thinking": "",
+          "thought": "",
+          "action": "click(point='<point>806 437</point>')",
+          "action_json": {
+            "action_type": "click",
+            "x": 870,
+            "y": 1049
+          },
+          "summary": "Executed click: {\"action_type\": \"click\", \"x\": 870, \"y\": 1049}",
+          "raw_response": "Action: click(point='<point>806 437</point>')",
+          "before_screenshot_path": "/Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/fullchain_5tasks_20260425_rerun_202532/exec_SystemWifiTurnOff_seed34/trace_images/SystemWifiTurnOff_seed34/step_003_before.jpg",
+          "after_screenshot_path": "/Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/fullchain_5tasks_20260425_rerun_202532/exec_SystemWifiTurnOff_seed34/trace_images/SystemWifiTurnOff_seed34/step_003_after.jpg",
+          "before_ui": "[0] text='Internet' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(432,468,648,553)\n[1] text='Tap a network to connect' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(333,564,747,615)\n[2] text='Wi‑Fi' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(142,1007,234,1064)\n[3] text='' desc='Wi‑Fi' class='android.widget.Switch' clickable=True editable=False bbox=(801,972,938,1098)\n[4] text='Done' desc='' class='android.widget.Button' clickable=True editable=False bbox=(806,1886,975,2012)\n[5] text='T-Mobile' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(247,771,407,828)\n[6] text='Connected / 3G' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(247,828,503,879)\n[7] text='' desc='Mobile data' class='android.widget.Switch' clickable=True editable=False bbox=(801,762,938,888)\n[8] text='AndroidWifi' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(242,1152,434,1203)\n[9] text='Saved / Won’t automatically connect' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(242,1203,773,1297)",
+          "after_ui": "[0] text='Internet' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(432,603,648,688)\n[1] text='Wi-Fi is off' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(453,699,627,750)\n[2] text='Wi‑Fi' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(142,1142,234,1199)\n[3] text='' desc='Wi‑Fi' class='android.widget.Switch' clickable=True editable=False bbox=(801,1107,938,1233)\n[4] text='To improve device experience, apps and services can still scan for Wi‑Fi networks at any time, even when Wi‑Fi is off. You can change this in Wi‑Fi scanning settings. Change' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(142,1381,938,1624)\n[5] text='Done' desc='' class='android.widget.Button' clickable=True editable=False bbox=(806,1656,975,1782)\n[6] text='T-Mobile' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(247,906,407,963)\n[7] text='Connected / 3G' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(247,963,503,1014)\n[8] text='' desc='Mobile data' class='android.widget.Switch' clickable=True editable=False bbox=(801,897,938,1023)"
+        },
+        {
+          "step": 4,
+          "thinking": "",
+          "thought": "",
+          "action": "finished(content='complete')",
+          "action_json": {
+            "action_type": "status",
+            "goal_status": "complete"
+          },
+          "summary": "Executed finished: {\"action_type\": \"status\", \"goal_status\": \"complete\"}",
+          "raw_response": "Action: finished(content='complete')",
+          "before_screenshot_path": "/Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/fullchain_5tasks_20260425_rerun_202532/exec_SystemWifiTurnOff_seed34/trace_images/SystemWifiTurnOff_seed34/step_004_before.jpg",
+          "after_screenshot_path": "/Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/fullchain_5tasks_20260425_rerun_202532/exec_SystemWifiTurnOff_seed34/trace_images/SystemWifiTurnOff_seed34/step_004_after.jpg",
+          "before_ui": "[0] text='Internet' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(432,603,648,688)\n[1] text='Wi-Fi is off' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(453,699,627,750)\n[2] text='Wi‑Fi' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(142,1142,234,1199)\n[3] text='' desc='Wi‑Fi' class='android.widget.Switch' clickable=True editable=False bbox=(801,1107,938,1233)\n[4] text='To improve device experience, apps and services can still scan for Wi‑Fi networks at any time, even when Wi‑Fi is off. You can change this in Wi‑Fi scanning settings. Change' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(142,1381,938,1624)\n[5] text='Done' desc='' class='android.widget.Button' clickable=True editable=False bbox=(806,1656,975,1782)\n[6] text='T-Mobile' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(247,906,407,963)\n[7] text='Connected / 3G' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(247,963,503,1014)\n[8] text='' desc='Mobile data' class='android.widget.Switch' clickable=True editable=False bbox=(801,897,938,1023)",
+          "after_ui": "[0] text='Internet' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(432,603,648,688)\n[1] text='Wi-Fi is off' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(453,699,627,750)\n[2] text='Wi‑Fi' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(142,1142,234,1199)\n[3] text='' desc='Wi‑Fi' class='android.widget.Switch' clickable=True editable=False bbox=(801,1107,938,1233)\n[4] text='To improve device experience, apps and services can still scan for Wi‑Fi networks at any time, even when Wi‑Fi is off. You can change this in Wi‑Fi scanning settings. Change' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(142,1381,938,1624)\n[5] text='Done' desc='' class='android.widget.Button' clickable=True editable=False bbox=(806,1656,975,1782)\n[6] text='T-Mobile' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(247,906,407,963)\n[7] text='Connected / 3G' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(247,963,503,1014)\n[8] text='' desc='Mobile data' class='android.widget.Switch' clickable=True editable=False bbox=(801,897,938,1023)"
+        }
+      ]
+    },
+    "post_execution_evidence": [
+      {
+        "type": "final_state_snapshot",
+        "tool": "final_state_snapshot",
+        "status": "ok",
+        "request": {
+          "tool": "final_state_snapshot",
+          "source": "gui_demo_post_execution"
+        },
+        "screenshot_path": "/Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/fullchain_5tasks_20260425_rerun_202532/exec_SystemWifiTurnOff_seed34/trace_images/SystemWifiTurnOff_seed34/final_state.jpg",
+        "final_ui": "[0] text='Internet' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(432,603,648,688)\n[1] text='Wi-Fi is off' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(453,699,627,750)\n[2] text='Wi‑Fi' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(142,1142,234,1199)\n[3] text='' desc='Wi‑Fi' class='android.widget.Switch' clickable=True editable=False bbox=(801,1107,938,1233)\n[4] text='To improve device experience, apps and services can still scan for Wi‑Fi networks at any time, even when Wi‑Fi is off. You can change this in Wi‑Fi scanning settings. Change' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(142,1381,938,1624)\n[5] text='Done' desc='' class='android.widget.Button' clickable=True editable=False bbox=(806,1656,975,1782)\n[6] text='T-Mobile' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(247,906,407,963)\n[7] text='Connected / 3G' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(247,963,503,1014)\n[8] text='' desc='Mobile data' class='android.widget.Switch' clickable=True editable=False bbox=(801,897,938,1023)",
+        "output": "Final screenshot path: /Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/fullchain_5tasks_20260425_rerun_202532/exec_SystemWifiTurnOff_seed34/trace_images/SystemWifiTurnOff_seed34/final_state.jpg\n\nFinal UI text:\n[0] text='Internet' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(432,603,648,688)\n[1] text='Wi-Fi is off' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(453,699,627,750)\n[2] text='Wi‑Fi' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(142,1142,234,1199)\n[3] text='' desc='Wi‑Fi' class='android.widget.Switch' clickable=True editable=False bbox=(801,1107,938,1233)\n[4] text='To improve device experience, apps and services can still scan for Wi‑Fi networks at any time, even when Wi‑Fi is off. You can change this in Wi‑Fi scanning settings. Change' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(142,1381,938,1624)\n[5] text='Done' desc='' class='android.widget.Button' clickable=True editable=False bbox=(806,1656,975,1782)\n[6] text='T-Mobile' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(247,906,407,963)\n[7] text='Connected / 3G' desc='' class='android.widget.TextView' clickable=False editable=False bbox=(247,963,503,1014)\n[8] text='' desc='Mobile data' class='android.widget.Switch' clickable=True editable=False bbox=(801,897,938,1023)",
+        "source": "gui_demo_post_execution"
+      }
+    ]
+  }
+]

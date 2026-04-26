@@ -1,0 +1,7 @@
+[evaluator] FilesDeleteFile: evaluating 2 checkpoints
+[evaluator] checkpoint 1/2 cp1: The file 2023_05_12_eager_nurse.jpg is no longer present in the Pictures folder of the Android device's shared external 
+[evaluator] checkpoint 2/2 cp2: The storage area containing the Pictures folder is the shared external storage associated with the sdk_gphone_x86_64 lab
+Evaluated 1 records.
+Agreement rate: 100.0%
+JSON: results/gui_demo_eval_filesdelete_20260425_generic_aw_context_v1.json
+Report: results/gui_demo_eval_filesdelete_20260425_generic_aw_context_v1.md

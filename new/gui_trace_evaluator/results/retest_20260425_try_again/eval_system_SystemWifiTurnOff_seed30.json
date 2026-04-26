@@ -1,0 +1,98 @@
+{
+  "source": "/Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/retest_20260425_try_again/exec_system_SystemWifiTurnOff_seed30/results.json",
+  "model": "doubao-seed-1-8-251228",
+  "provider": "openai",
+  "num_records": 1,
+  "evaluations": [
+    {
+      "checkpoint_results": [
+        {
+          "id": "cp1",
+          "achieved": true,
+          "confidence": 1.0,
+          "evidence": "步骤3的截图显示Wi-Fi开关处于开启状态，步骤4执行点击Wi-Fi开关的操作后，步骤5、6的截图均显示Wi-Fi开关为灰色禁用状态（滑到左侧），表明Wi-Fi已被设置为Off位置，符合检查点要求。",
+          "missing_or_conflict": "",
+          "insufficient_trace": false,
+          "needs_fallback_verification": false,
+          "read_tool_verification": {
+            "triggered": false,
+            "requests": [],
+            "results": []
+          },
+          "evidence_steps": [
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "evidence_images": 5,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 1.0,
+          "retrieval_rationale": "步骤3的界面显示Wi-Fi处于开启状态，步骤4执行了点击Wi-Fi开关的关闭操作，步骤5、6的界面均显示Wi-Fi已处于关闭状态，这些步骤包含了关闭动作、动作前后的状态，能够充分证明Wi-Fi开关已被设置为Off位置。",
+          "retrieval_fallback_reason": "",
+          "model_read_requests": [],
+          "message_strategy": "doubao_official_gui_history_with_screenshots_and_read_tools"
+        },
+        {
+          "id": "cp2",
+          "achieved": true,
+          "confidence": 1.0,
+          "evidence": "步骤3的截图显示状态栏存在活跃Wi-Fi图标；步骤4及之后的截图显示状态栏无活跃Wi-Fi图标，仅显示3G网络标识，符合检查点中Wi-Fi图标不再显示的要求。",
+          "missing_or_conflict": "",
+          "insufficient_trace": false,
+          "needs_fallback_verification": false,
+          "read_tool_verification": {
+            "triggered": false,
+            "requests": [],
+            "results": []
+          },
+          "evidence_steps": [
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "evidence_images": 5,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 1.0,
+          "retrieval_rationale": "步骤3展示了关闭WiFi前状态栏显示活跃WiFi图标的初始状态；步骤4是点击关闭WiFi开关的决定性操作，操作后的界面显示WiFi已处于关闭状态；步骤5和6确认了WiFi关闭后的最终状态，这些步骤能够提供检查点所需的状态栏WiFi图标从活跃到消失/禁用的完整证据链。",
+          "retrieval_fallback_reason": "",
+          "model_read_requests": [],
+          "message_strategy": "doubao_official_gui_history_with_screenshots_and_read_tools"
+        }
+      ],
+      "success": true,
+      "completeness_score": 1.0,
+      "insufficient_trace": false,
+      "rationale": "All required checkpoints were supported.",
+      "format_version": 1,
+      "task": "SystemWifiTurnOff",
+      "granularity": "intent",
+      "standard_id": "c2cd96ee4080639e4180",
+      "goal_hash": "837623c813dda107",
+      "status": "evaluated",
+      "evaluation_mode": "doubao_official_gui_messages_v1",
+      "trace_steps": 6,
+      "official_reward": 0.0,
+      "official_success": false,
+      "agreement_with_reward": false
+    }
+  ],
+  "statistics": {
+    "total_records": 1,
+    "total_evaluated": 1,
+    "total_errors": 0,
+    "total_skipped": 0,
+    "agreement_rate": 0.0,
+    "confusion_matrix": {
+      "true_positive": 0,
+      "false_positive": 1,
+      "false_negative": 0,
+      "true_negative": 0
+    }
+  }
+}

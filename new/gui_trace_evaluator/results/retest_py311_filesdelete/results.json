@@ -1,0 +1,91 @@
+[
+  {
+    "task": "FilesDeleteFile",
+    "task_name": "FilesDeleteFile",
+    "base_goal": "Delete the file 2023_05_12_eager_nurse.jpg from the Android filesystem located in the Pictures folder within the sdk_gphone_x86_64 storage area.",
+    "goal": "Delete the file 2023_05_12_eager_nurse.jpg from the Android filesystem located in the Pictures folder within the sdk_gphone_x86_64 storage area.",
+    "goal_used": "Delete the file 2023_05_12_eager_nurse.jpg from the Android filesystem located in the Pictures folder within the sdk_gphone_x86_64 storage area.",
+    "granularity": "intent",
+    "seed": 30,
+    "model": "doubao-seed-1-8-251228",
+    "reward": 0.0,
+    "success": false,
+    "agent_done": false,
+    "abort_reason": "step 1 failed after retries: Connection error., request_id: 20260425184821zcxVA6V5pNAc4pFvGZlV",
+    "step_count": 1,
+    "steps": 1,
+    "elapsed_seconds": 150.97394108772278,
+    "trace": {
+      "format_version": "gui_demo_android_world_v1",
+      "steps": [
+        {
+          "step": 1,
+          "thinking": "",
+          "thought": "",
+          "action": "",
+          "summary": "step 1 failed after retries: Connection error., request_id: 20260425184821zcxVA6V5pNAc4pFvGZlV",
+          "raw_response": "",
+          "before_screenshot_path": "/Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/retest_py311_filesdelete/trace_images/FilesDeleteFile_seed30/step_001_before.jpg",
+          "after_screenshot_path": "/Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/retest_py311_filesdelete/trace_images/FilesDeleteFile_seed30/step_001_after.jpg",
+          "before_ui": "",
+          "after_ui": "",
+          "error": "Connection error., request_id: 20260425184821zcxVA6V5pNAc4pFvGZlV"
+        }
+      ]
+    },
+    "post_execution_evidence": [
+      {
+        "type": "read_tool_result",
+        "tool": "list_dir",
+        "status": "ok",
+        "request": {
+          "tool": "list_dir",
+          "path": "/sdcard/Pictures",
+          "source": "gui_demo_post_execution"
+        },
+        "command": "/Users/zjn/Library/Android/sdk/platform-tools/adb -s emulator-5554 shell 'ls -la /sdcard/Pictures'",
+        "returncode": 0,
+        "output": "I0425 18:48:23.681488 7486937 ev_poll_posix.cc:593] FD from fork parent still in poll list: fd(19, generation: 1)\nI0425 18:48:23.681520 7486937 ev_poll_posix.cc:593] FD from fork parent still in poll list: fd(6, generation: 1)\nI0425 18:48:23.681521 7486937 ev_poll_posix.cc:593] FD from fork parent still in poll list: fd(9, generation: 1)\ntotal 128\ndrwxrws--- 2 u0_a172 media_rw 4096 2023-10-15 15:34 .thumbnails\n-rw-rw---- 1 u0_a172 media_rw   21 2023-10-15 15:34 2023_03_03_pets_playing.jpg\n-rw-rw---- 1 u0_a172 media_rw   21 2023-10-15 15:34 2023_04_06_2023_05_12_eager_nurse.jpg\n-rw-rw---- 1 u0_a172 media_rw   21 2023-10-15 15:34 2023_05_12_eager_nurse.jpg\n-rw-rw---- 1 u0_a172 media_rw   21 2023-10-15 15:34 2023_05_12_eager_nurse_2023_06_09.jpg\n-rw-rw---- 1 u0_a172 media_rw   21 2023-10-15 15:34 2023_06_11_sunset.jpg\n-rw-rw---- 1 u0_a172 media_rw   21 2023-10-15 15:34 copy_garden_blooms.jpg\n-rw-rw---- 1 u0_a172 media_rw   21 2023-10-15 15:34 edited_family_gathering.jpg\n-rw-rw---- 1 u0_a172 media_rw   21 2023-10-15 15:34 food_snapshot_final.jpg\n-rw-rw---- 1 u0_a172 media_rw   21 2023-10-15 15:34 garden_blooms_edited.jpg\n-rw-rw---- 1 u0_a172 media_rw   21 2023-10-15 15:34 garden_blooms_xGS7.jpg\n-rw-rw---- 1 u0_a172 media_rw   21 2023-10-15 15:34 pets_playing_backup.jpg\n-rw-rw---- 1 u0_a172 media_rw   21 2023-10-15 15:34 selfie_backup.jpg\n-rw-rw---- 1 u0_a172 media_rw   21 2023-10-15 15:34 selfie_edited.jpg\n-rw-rw---- 1 u0_a172 media_rw   21 2023-10-15 15:34 selfie_lNDu.jpg\n-rw-rw---- 1 u0_a172 media_rw   21 2023-10-15 15:34 sunset_qDJ3.jpg\n",
+        "source": "gui_demo_post_execution"
+      },
+      {
+        "type": "read_tool_result",
+        "tool": "find_file",
+        "status": "ok",
+        "request": {
+          "tool": "find_file",
+          "root": "/sdcard",
+          "name": "2023_05_12_eager_nurse.jpg",
+          "source": "gui_demo_post_execution"
+        },
+        "command": "/Users/zjn/Library/Android/sdk/platform-tools/adb -s emulator-5554 shell 'find /sdcard -name 2023_05_12_eager_nurse.jpg 2>/dev/null | head -50'",
+        "returncode": 0,
+        "output": "I0425 18:48:23.706417 7486967 ev_poll_posix.cc:593] FD from fork parent still in poll list: fd(19, generation: 1)\nI0425 18:48:23.706442 7486967 ev_poll_posix.cc:593] FD from fork parent still in poll list: fd(6, generation: 1)\nI0425 18:48:23.706442 7486967 ev_poll_posix.cc:593] FD from fork parent still in poll list: fd(9, generation: 1)\n",
+        "source": "gui_demo_post_execution",
+        "matches": [
+          "I0425 18:48:23.706417 7486967 ev_poll_posix.cc:593] FD from fork parent still in poll list: fd(19, generation: 1)",
+          "I0425 18:48:23.706442 7486967 ev_poll_posix.cc:593] FD from fork parent still in poll list: fd(6, generation: 1)",
+          "I0425 18:48:23.706442 7486967 ev_poll_posix.cc:593] FD from fork parent still in poll list: fd(9, generation: 1)"
+        ],
+        "found": true,
+        "interpretation": "Matching files were found."
+      },
+      {
+        "type": "read_tool_result",
+        "tool": "stat_path",
+        "status": "ok",
+        "request": {
+          "tool": "stat_path",
+          "path": "/sdcard/Pictures/2023_05_12_eager_nurse.jpg",
+          "source": "gui_demo_post_execution"
+        },
+        "command": "/Users/zjn/Library/Android/sdk/platform-tools/adb -s emulator-5554 shell 'if [ -e /sdcard/Pictures/2023_05_12_eager_nurse.jpg ]; then echo __AWE_PATH_EXISTS=true__; stat /sdcard/Pictures/2023_05_12_eager_nurse.jpg; else echo __AWE_PATH_EXISTS=false__; fi'",
+        "returncode": 0,
+        "output": "I0425 18:48:23.725913 7486992 ev_poll_posix.cc:593] FD from fork parent still in poll list: fd(19, generation: 1)\nI0425 18:48:23.725936 7486992 ev_poll_posix.cc:593] FD from fork parent still in poll list: fd(6, generation: 1)\nI0425 18:48:23.725937 7486992 ev_poll_posix.cc:593] FD from fork parent still in poll list: fd(9, generation: 1)\n  File: /sdcard/Pictures/2023_05_12_eager_nurse.jpg\n  Size: 21\t Blocks: 16\t IO Blocks: 512\t regular file\nDevice: 28h/40d\t Inode: 303121\t Links: 1\t Device type: 0,0\nAccess: (0660/-rw-rw----)\tUid: (10172/ u0_a172)\tGid: ( 1023/media_rw)\nAccess: 2023-10-15 15:34:01.228000000 +0000\nModify: 2023-10-15 15:34:01.228000000 +0000\nChange: 2023-10-15 15:34:01.228000000 +0000\n",
+        "source": "gui_demo_post_execution",
+        "exists": true,
+        "interpretation": "The requested path exists."
+      }
+    ]
+  }
+]

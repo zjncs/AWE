@@ -1,0 +1,34 @@
+{
+  "source": "/Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/retest_20260425_more_tasks/exec_files_FilesDeleteFile_seed30/results.json",
+  "model": "doubao-seed-1-8-251228",
+  "provider": "openai",
+  "num_records": 1,
+  "evaluations": [
+    {
+      "format_version": 1,
+      "task": "FilesDeleteFile",
+      "granularity": "intent",
+      "standard_id": "c8242a731b3cfa257b1d",
+      "status": "skipped_no_trace",
+      "success": null,
+      "completeness_score": null,
+      "checkpoint_results": [],
+      "rationale": "No trace steps were found.",
+      "official_reward": null,
+      "official_success": null
+    }
+  ],
+  "statistics": {
+    "total_records": 1,
+    "total_evaluated": 0,
+    "total_errors": 0,
+    "total_skipped": 1,
+    "agreement_rate": null,
+    "confusion_matrix": {
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 0
+    }
+  }
+}

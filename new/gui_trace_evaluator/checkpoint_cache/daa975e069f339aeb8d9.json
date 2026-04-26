@@ -1,0 +1,29 @@
+{
+  "format_version": 1,
+  "standard_id": "daa975e069f339aeb8d9",
+  "goal_hash": "f49e78a4393cced9",
+  "task_name": "FilesMoveFile",
+  "task_goal": "Move the file sunset.jpg from Alarms within the sdk_gphone_x86_64 storage area to the Pictures within the same sdk_gphone_x86_64 storage area in the Android filesystem.",
+  "task_goal_rewrite": "The file sunset.jpg is moved from the Alarms folder to the Pictures folder within the sdk_gphone_x86_64 shared external storage area of the Android filesystem.",
+  "checkpoints": [
+    {
+      "id": "cp1",
+      "description": "The file sunset.jpg is present in the Pictures folder within the sdk_gphone_x86_64 storage area (or its UI-equivalent label like sdk_gphone64_arm64).",
+      "required": true,
+      "evidence_hint": "Screenshot or file system view showing sunset.jpg listed in the Pictures folder under the relevant storage area label displayed in the UI."
+    },
+    {
+      "id": "cp2",
+      "description": "The file sunset.jpg is no longer present in the Alarms folder within the sdk_gphone_x86_64 storage area (or its UI-equivalent label like sdk_gphone64_arm64).",
+      "required": true,
+      "evidence_hint": "Screenshot or file system view showing the Alarms folder under the relevant storage area label displayed in the UI does not contain sunset.jpg."
+    },
+    {
+      "id": "cp3",
+      "description": "Evidence confirms the operation was applied to the exact target object/value and intended context stated in the goal.",
+      "required": true,
+      "evidence_hint": "Use screenshot/UI text/action evidence to disambiguate the target identity and location before final-state verification."
+    }
+  ],
+  "success_rule": "Success is achieved if both required checkpoints are satisfied: sunset.jpg is confirmed present in the Pictures folder and absent from the Alarms folder within the specified storage area."
+}

@@ -1,0 +1,23 @@
+{
+  "format_version": 1,
+  "standard_id": "16f33fdb952810a0c8f8",
+  "goal_hash": "7863ed132fcd60fc",
+  "task_name": "SimpleSmsSendReceivedAddress",
+  "task_goal": "Text the address of the event to Amelia Hernandez that Martin Muller just sent me in Simple SMS Messenger",
+  "task_goal_rewrite": "An SMS containing the exact event address Martin Muller sent to the user is successfully sent to Amelia Hernandez in Simple SMS Messenger",
+  "checkpoints": [
+    {
+      "id": "cp1",
+      "description": "A user-sent message exists in the Simple SMS Messenger conversation thread with Amelia Hernandez",
+      "required": true,
+      "evidence_hint": "Screenshot showing the sent message in the conversation thread labeled 'Amelia Hernandez'"
+    },
+    {
+      "id": "cp2",
+      "description": "The sent message to Amelia Hernandez contains the exact event address that Martin Muller sent to the user",
+      "required": true,
+      "evidence_hint": "Screenshot of the sent message content alongside Martin Muller's original message confirming the event address text matches exactly"
+    }
+  ],
+  "success_rule": "Success is confirmed when both required checkpoints are fully satisfied"
+}

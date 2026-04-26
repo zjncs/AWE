@@ -1,0 +1,8 @@
+[evaluator] ContactsAddContact: evaluating 3 checkpoints
+[evaluator] checkpoint 1/3 cp1: The contact 'Mateo Gonzalez' is visible in the contacts application's main list view.
+[evaluator] checkpoint 2/3 cp2: The contact's full name field displays exactly 'Mateo Gonzalez' in the contact details view.
+[evaluator] checkpoint 3/3 cp3: The contact's phone number field displays exactly '+18233846878' in the contact details view.
+Evaluated 1 records.
+Agreement rate: 0.0%
+JSON: /Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/multicategory_v2_20260426/eval_ContactsAddContact_seed51.json
+Report: /Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/multicategory_v2_20260426/eval_ContactsAddContact_seed51.md

@@ -1,0 +1,207 @@
+{
+  "source": "/Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/fullchain_5tasks_20260425_rerun_202532/exec_MarkorEditNote_seed32/results.json",
+  "model": "doubao-seed-1-8-251228",
+  "provider": "ark",
+  "num_records": 1,
+  "evaluations": [
+    {
+      "checkpoint_results": [
+        {
+          "id": "cp1",
+          "achieved": false,
+          "confidence": 1.0,
+          "evidence": "All attempts to open Markor failed to launch the app, as shown by the screenshots (step 1 and step 35 after actions) and final state snapshot which only display the device home screen. Additionally, the find_file tool result confirms the target file note_ens3E.md does not exist in /sdcard, so there is no way the filename could be visible in Markor's UI.",
+          "missing_or_conflict": "No evidence of the filename 'note_ens3E.md' being visible in Markor's UI, as Markor was never successfully launched, and the target file does not exist in the specified storage location.",
+          "insufficient_trace": false,
+          "needs_fallback_verification": false,
+          "read_tool_verification": {
+            "triggered": true,
+            "requests": [
+              {
+                "tool": "find_file",
+                "root": "/sdcard",
+                "name": "note_ens3E.md",
+                "reason": "Locate the target file after execution.",
+                "source": "default_file_task_policy"
+              }
+            ],
+            "results": [
+              {
+                "type": "final_state_snapshot",
+                "index": 1,
+                "tool": "final_state_snapshot",
+                "status": "ok",
+                "request": {
+                  "tool": "final_state_snapshot",
+                  "source": "gui_demo_post_execution"
+                },
+                "command": "",
+                "output": "Final screenshot path: /Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/fullchain_5tasks_20260425_rerun_202532/exec_MarkorEditNote_seed32/trace_images/MarkorEditNote_seed32/final_state.jpg\n\nFinal UI text:\n[1] text='' desc='Home' class='android.view.View' clickable=False editable=False bbox=(0,128,1080,2337)\n[2] text='Phone' desc='Phone' class='android.widget.TextView' clickable=True editable=False bbox=(76,1873,249,2068)\n[3] text='Messages' desc='Messages' class='android.widget.TextView' clickable=True editable=False bbox=(328,1873,501,2068)\n[4] text='Chrome' desc='Chrome' class='android.widget.TextView' clickable=True editable=False bbox=(580,1873,753,2068)\n[5] text='Files' desc='Predicted app: Files' class='android.widget.TextView' clickable=True editable=False bbox=(832,1873,1004,2068)\n[6] text='' desc='Search' class='android.widget.FrameLayout' clickable=True editable=False bbox=(75,2125,1004,2290)\n[7] text='Sun, Oct 15' desc='Sun, Oct 15' class='android.widget.TextView' clickable=True editable=False bbox=(99,292,1023,354)\n[8] text='Gmail' desc='Gmail' class='android.widget.TextView' clickable=True editable=False bbox=(309,1479,519,1751)\n[9] text='Photos' desc='Photos' class='android.widget.TextView' clickable=True editable=False bbox=(561,1479,771,1751)\n[10] text='YouTube' desc='YouTube' class='android.widget.TextView' clickable=True editable=False bbox=(813,1479,1023,1751)\n[11] text='' desc='Google app' class='android.widget.ImageView' clickable=True editable=False bbox=(86,2144,212,2270)\n[12] text='' desc='Voice search' class='android.widget.ImageView' clickable=True editable=False bbox=(741,2125,867,2290)\n[13] text='' desc='Google Lens' class='android.widget.ImageButton' clickable=True editable=False bbox=(867,2125,993,2290)\n[14] text='15:37' desc='23:37' class='android.widget.TextView' clickable=False editable=False bbox=(50,1,148,128)\n[15] text='' desc='Phone two bars.' class='android.widget.FrameLayout' clickable=False editable=False bbox=(866,35,970,93)\n[16] text='' desc='Battery 100 percent.' class='android.widget.LinearLayout' clickable=False editable=False bbox=(986,1,1006,128)\n[17] text='' desc='No internet' class='android.widget.ImageView' clickable=False editable=False bbox=(866,43,931,85)",
+                "source": "record_post_execution_evidence",
+                "screenshot_path": "/Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/fullchain_5tasks_20260425_rerun_202532/exec_MarkorEditNote_seed32/trace_images/MarkorEditNote_seed32/final_state.jpg",
+                "final_ui": "[1] text='' desc='Home' class='android.view.View' clickable=False editable=False bbox=(0,128,1080,2337)\n[2] text='Phone' desc='Phone' class='android.widget.TextView' clickable=True editable=False bbox=(76,1873,249,2068)\n[3] text='Messages' desc='Messages' class='android.widget.TextView' clickable=True editable=False bbox=(328,1873,501,2068)\n[4] text='Chrome' desc='Chrome' class='android.widget.TextView' clickable=True editable=False bbox=(580,1873,753,2068)\n[5] text='Files' desc='Predicted app: Files' class='android.widget.TextView' clickable=True editable=False bbox=(832,1873,1004,2068)\n[6] text='' desc='Search' class='android.widget.FrameLayout' clickable=True editable=False bbox=(75,2125,1004,2290)\n[7] text='Sun, Oct 15' desc='Sun, Oct 15' class='android.widget.TextView' clickable=True editable=False bbox=(99,292,1023,354)\n[8] text='Gmail' desc='Gmail' class='android.widget.TextView' clickable=True editable=False bbox=(309,1479,519,1751)\n[9] text='Photos' desc='Photos' class='android.widget.TextView' clickable=True editable=False bbox=(561,1479,771,1751)\n[10] text='YouTube' desc='YouTube' class='android.widget.TextView' clickable=True editable=False bbox=(813,1479,1023,1751)\n[11] text='' desc='Google app' class='android.widget.ImageView' clickable=True editable=False bbox=(86,2144,212,2270)\n[12] text='' desc='Voice search' class='android.widget.ImageView' clickable=True editable=False bbox=(741,2125,867,2290)\n[13] text='' desc='Google Lens' class='android.widget.ImageButton' clickable=True editable=False bbox=(867,2125,993,2290)\n[14] text='15:37' desc='23:37' class='android.widget.TextView' clickable=False editable=False bbox=(50,1,148,128)\n[15] text='' desc='Phone two bars.' class='android.widget.FrameLayout' clickable=False editable=False bbox=(866,35,970,93)\n[16] text='' desc='Battery 100 percent.' class='android.widget.LinearLayout' clickable=False editable=False bbox=(986,1,1006,128)\n[17] text='' desc='No internet' class='android.widget.ImageView' clickable=False editable=False bbox=(866,43,931,85)"
+              },
+              {
+                "type": "read_tool_result",
+                "index": 2,
+                "tool": "find_file",
+                "status": "ok",
+                "request": {
+                  "tool": "find_file",
+                  "root": "/sdcard",
+                  "name": "note_ens3E.md",
+                  "source": "gui_demo_post_execution"
+                },
+                "command": "/Users/zjn/Library/Android/sdk/platform-tools/adb -s emulator-5554 shell 'find /sdcard -name note_ens3E.md 2>/dev/null | head -50'",
+                "output": "",
+                "source": "record_post_execution_evidence",
+                "returncode": 0,
+                "found": false,
+                "matches": [],
+                "interpretation": "No matching files were found."
+              }
+            ],
+            "source": "record_post_execution_evidence",
+            "first_pass_result": {
+              "achieved": false,
+              "confidence": 0.0,
+              "evidence": "The provided screenshots (step 1 and step 35 after actions) only display the device home screen; all attempts to open Markor failed to launch the app, so there is no visibility of the filename 'note_ens3E.md' in Markor's UI.",
+              "missing_or_conflict": "No evidence of the filename 'note_ens3E.md' being visible in Markor's UI, as Markor was never successfully opened to show its interface.",
+              "insufficient_trace": false,
+              "needs_fallback_verification": false
+            }
+          },
+          "evidence_steps": [
+            1,
+            2,
+            3,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35
+          ],
+          "evidence_images": 2,
+          "retrieval_method": "model_step_retrieval_repair_v1",
+          "retrieval_trusted": false,
+          "retrieval_confidence": 0.0,
+          "retrieval_rationale": "These steps include early and late attempts to open the Markor app, consistently showing that after each open_app action, the device UI remains on the home screen with no sign of Markor launching. This demonstrates that the app could not be accessed, so there is no way to view or interact with the target note note_ens3E.md in Markor's interface.",
+          "retrieval_fallback_reason": "All attempts to open Markor failed to load the app's interface, so there is no screenshot-based evidence showing the filename note_ens3E.md in Markor's UI to satisfy the checkpoint.",
+          "model_read_requests": [],
+          "message_strategy": "doubao_official_gui_history_with_screenshots_and_read_tools"
+        },
+        {
+          "id": "cp2",
+          "achieved": false,
+          "confidence": 0.0,
+          "evidence": "Provided screenshots only display the device home screen with no sign of the Markor app being opened. The read-only find_file tool found no note_ens3E.md in /sdcard, and there is no visual evidence of the specified text 'May the Force be with you' being added to any note.",
+          "missing_or_conflict": "Missing evidence of the Markor app being successfully opened, the target note_ens3E.md existing or being accessed, and the specified text appearing as the first line of the note. The find_file tool confirms the target note does not exist in the shared external storage.",
+          "insufficient_trace": true,
+          "needs_fallback_verification": false,
+          "read_tool_verification": {
+            "triggered": true,
+            "requests": [
+              {
+                "tool": "read_text_file",
+                "reason": "To verify if the text 'May the Force be with you' appears as the first line of the target note file.",
+                "path": "/sdcard/note_ens3E.md"
+              }
+            ],
+            "results": [
+              {
+                "type": "final_state_snapshot",
+                "index": 1,
+                "tool": "final_state_snapshot",
+                "status": "ok",
+                "request": {
+                  "tool": "final_state_snapshot",
+                  "source": "gui_demo_post_execution"
+                },
+                "command": "",
+                "output": "Final screenshot path: /Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/fullchain_5tasks_20260425_rerun_202532/exec_MarkorEditNote_seed32/trace_images/MarkorEditNote_seed32/final_state.jpg\n\nFinal UI text:\n[1] text='' desc='Home' class='android.view.View' clickable=False editable=False bbox=(0,128,1080,2337)\n[2] text='Phone' desc='Phone' class='android.widget.TextView' clickable=True editable=False bbox=(76,1873,249,2068)\n[3] text='Messages' desc='Messages' class='android.widget.TextView' clickable=True editable=False bbox=(328,1873,501,2068)\n[4] text='Chrome' desc='Chrome' class='android.widget.TextView' clickable=True editable=False bbox=(580,1873,753,2068)\n[5] text='Files' desc='Predicted app: Files' class='android.widget.TextView' clickable=True editable=False bbox=(832,1873,1004,2068)\n[6] text='' desc='Search' class='android.widget.FrameLayout' clickable=True editable=False bbox=(75,2125,1004,2290)\n[7] text='Sun, Oct 15' desc='Sun, Oct 15' class='android.widget.TextView' clickable=True editable=False bbox=(99,292,1023,354)\n[8] text='Gmail' desc='Gmail' class='android.widget.TextView' clickable=True editable=False bbox=(309,1479,519,1751)\n[9] text='Photos' desc='Photos' class='android.widget.TextView' clickable=True editable=False bbox=(561,1479,771,1751)\n[10] text='YouTube' desc='YouTube' class='android.widget.TextView' clickable=True editable=False bbox=(813,1479,1023,1751)\n[11] text='' desc='Google app' class='android.widget.ImageView' clickable=True editable=False bbox=(86,2144,212,2270)\n[12] text='' desc='Voice search' class='android.widget.ImageView' clickable=True editable=False bbox=(741,2125,867,2290)\n[13] text='' desc='Google Lens' class='android.widget.ImageButton' clickable=True editable=False bbox=(867,2125,993,2290)\n[14] text='15:37' desc='23:37' class='android.widget.TextView' clickable=False editable=False bbox=(50,1,148,128)\n[15] text='' desc='Phone two bars.' class='android.widget.FrameLayout' clickable=False editable=False bbox=(866,35,970,93)\n[16] text='' desc='Battery 100 percent.' class='android.widget.LinearLayout' clickable=False editable=False bbox=(986,1,1006,128)\n[17] text='' desc='No internet' class='android.widget.ImageView' clickable=False editable=False bbox=(866,43,931,85)",
+                "source": "record_post_execution_evidence",
+                "screenshot_path": "/Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/fullchain_5tasks_20260425_rerun_202532/exec_MarkorEditNote_seed32/trace_images/MarkorEditNote_seed32/final_state.jpg",
+                "final_ui": "[1] text='' desc='Home' class='android.view.View' clickable=False editable=False bbox=(0,128,1080,2337)\n[2] text='Phone' desc='Phone' class='android.widget.TextView' clickable=True editable=False bbox=(76,1873,249,2068)\n[3] text='Messages' desc='Messages' class='android.widget.TextView' clickable=True editable=False bbox=(328,1873,501,2068)\n[4] text='Chrome' desc='Chrome' class='android.widget.TextView' clickable=True editable=False bbox=(580,1873,753,2068)\n[5] text='Files' desc='Predicted app: Files' class='android.widget.TextView' clickable=True editable=False bbox=(832,1873,1004,2068)\n[6] text='' desc='Search' class='android.widget.FrameLayout' clickable=True editable=False bbox=(75,2125,1004,2290)\n[7] text='Sun, Oct 15' desc='Sun, Oct 15' class='android.widget.TextView' clickable=True editable=False bbox=(99,292,1023,354)\n[8] text='Gmail' desc='Gmail' class='android.widget.TextView' clickable=True editable=False bbox=(309,1479,519,1751)\n[9] text='Photos' desc='Photos' class='android.widget.TextView' clickable=True editable=False bbox=(561,1479,771,1751)\n[10] text='YouTube' desc='YouTube' class='android.widget.TextView' clickable=True editable=False bbox=(813,1479,1023,1751)\n[11] text='' desc='Google app' class='android.widget.ImageView' clickable=True editable=False bbox=(86,2144,212,2270)\n[12] text='' desc='Voice search' class='android.widget.ImageView' clickable=True editable=False bbox=(741,2125,867,2290)\n[13] text='' desc='Google Lens' class='android.widget.ImageButton' clickable=True editable=False bbox=(867,2125,993,2290)\n[14] text='15:37' desc='23:37' class='android.widget.TextView' clickable=False editable=False bbox=(50,1,148,128)\n[15] text='' desc='Phone two bars.' class='android.widget.FrameLayout' clickable=False editable=False bbox=(866,35,970,93)\n[16] text='' desc='Battery 100 percent.' class='android.widget.LinearLayout' clickable=False editable=False bbox=(986,1,1006,128)\n[17] text='' desc='No internet' class='android.widget.ImageView' clickable=False editable=False bbox=(866,43,931,85)"
+              },
+              {
+                "type": "read_tool_result",
+                "index": 2,
+                "tool": "find_file",
+                "status": "ok",
+                "request": {
+                  "tool": "find_file",
+                  "root": "/sdcard",
+                  "name": "note_ens3E.md",
+                  "source": "gui_demo_post_execution"
+                },
+                "command": "/Users/zjn/Library/Android/sdk/platform-tools/adb -s emulator-5554 shell 'find /sdcard -name note_ens3E.md 2>/dev/null | head -50'",
+                "output": "",
+                "source": "record_post_execution_evidence",
+                "returncode": 0,
+                "found": false,
+                "matches": [],
+                "interpretation": "No matching files were found."
+              }
+            ],
+            "source": "record_post_execution_evidence",
+            "first_pass_result": {
+              "achieved": false,
+              "confidence": 0.0,
+              "evidence": "The provided screenshots only display the device home screen; there is no visual indication that the Markor application was successfully opened, the target note_ens3E.md was accessed, or the specified text was added to the note.",
+              "missing_or_conflict": "Missing evidence of the Markor app being opened, the target note being edited, and the text 'May the Force be with you' appearing as the first line of the note.",
+              "insufficient_trace": true,
+              "needs_fallback_verification": true
+            }
+          },
+          "evidence_steps": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "evidence_images": 2,
+          "retrieval_method": "model_step_retrieval_repair_v1",
+          "retrieval_trusted": false,
+          "retrieval_confidence": 0.0,
+          "retrieval_rationale": "These steps represent repeated attempts to open the Markor app, which are the only actions present in the trace. None of these steps show any progress towards accessing the target note_ens3E.md, performing the required edit to add the specified text, or displaying the note's content with the text as the first line.",
+          "retrieval_fallback_reason": "The trace only contains identical open_app actions for Markor, with no steps that access the target note, execute the edit to add the required text, or show the final state of the note with the specified text as the first line. There is no evidence available to support a reliable judgment about the checkpoint.",
+          "model_read_requests": [],
+          "message_strategy": "doubao_official_gui_history_with_screenshots_and_read_tools"
+        }
+      ],
+      "success": false,
+      "completeness_score": 0.0,
+      "insufficient_trace": true,
+      "rationale": "Missing required checkpoints under selected evidence: cp1, cp2",
+      "format_version": 1,
+      "task": "MarkorEditNote",
+      "granularity": "intent",
+      "standard_id": "d966b52b5e0a7568efc2",
+      "goal_hash": "1f0d2fd5bcb2b67d",
+      "status": "evaluated",
+      "evaluation_mode": "doubao_official_gui_messages_v1",
+      "trace_steps": 35,
+      "official_reward": 0.0,
+      "official_success": false,
+      "agreement_with_reward": true
+    }
+  ],
+  "statistics": {
+    "total_records": 1,
+    "total_evaluated": 1,
+    "total_errors": 0,
+    "total_skipped": 0,
+    "agreement_rate": 1.0,
+    "confusion_matrix": {
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1
+    }
+  }
+}

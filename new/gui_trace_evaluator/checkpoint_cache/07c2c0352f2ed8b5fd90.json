@@ -1,0 +1,23 @@
+{
+  "format_version": 1,
+  "standard_id": "07c2c0352f2ed8b5fd90",
+  "goal_hash": "43704891db7f2ab7",
+  "task_name": "FilesDeleteFile",
+  "task_goal": "Delete the file 2023_05_12_eager_nurse.jpg from the Android filesystem located in the Pictures folder within the sdk_gphone64_arm64 storage area.",
+  "task_goal_rewrite": "The file 2023_05_12_eager_nurse.jpg is deleted from the Pictures folder within the sdk_gphone64_arm64 shared external storage (canonically accessible as /sdcard) of the Android filesystem.",
+  "checkpoints": [
+    {
+      "id": "cp1",
+      "description": "The file 2023_05_12_eager_nurse.jpg is not listed in the contents of the Pictures folder in the sdk_gphone64_arm64 storage area.",
+      "required": true,
+      "evidence_hint": "Screenshot or file explorer view displaying the Pictures folder's contents without the entry for 2023_05_12_eager_nurse.jpg."
+    },
+    {
+      "id": "cp2",
+      "description": "A search for '2023_05_12_eager_nurse.jpg' within the sdk_gphone64_arm64 storage area does not return the file located in the Pictures folder.",
+      "required": true,
+      "evidence_hint": "Screenshot of the search results showing no entry for 2023_05_12_eager_nurse.jpg associated with the Pictures folder path."
+    }
+  ],
+  "success_rule": "Success is confirmed if both required checkpoints are satisfied, verifying the target file has been removed from the specified location in the Android filesystem."
+}

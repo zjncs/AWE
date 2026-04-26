@@ -1,0 +1,24 @@
+[
+  {
+    "task": "SystemWifiTurnOff",
+    "task_name": "SystemWifiTurnOff",
+    "base_goal": "SystemWifiTurnOff",
+    "goal": "SystemWifiTurnOff",
+    "goal_used": "SystemWifiTurnOff",
+    "granularity": "intent",
+    "seed": 30,
+    "model": "doubao-seed-1-8-251228",
+    "reward": null,
+    "success": null,
+    "agent_done": false,
+    "abort_reason": "fatal_error: Could not get a11y tree.",
+    "step_count": 0,
+    "steps": 0,
+    "elapsed_seconds": 42.849076986312866,
+    "trace": {
+      "format_version": "gui_demo_android_world_v1",
+      "steps": []
+    },
+    "post_execution_evidence": []
+  }
+]

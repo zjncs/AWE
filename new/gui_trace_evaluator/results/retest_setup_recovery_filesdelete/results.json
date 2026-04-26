@@ -1,0 +1,24 @@
+[
+  {
+    "task": "FilesDeleteFile",
+    "task_name": "FilesDeleteFile",
+    "base_goal": "FilesDeleteFile",
+    "goal": "FilesDeleteFile",
+    "goal_used": "FilesDeleteFile",
+    "granularity": "intent",
+    "seed": 30,
+    "model": "doubao-seed-1-8-251228",
+    "reward": null,
+    "success": null,
+    "agent_done": false,
+    "abort_reason": "fatal_error: setup failed after retries: env.reset timed out after 20.0s",
+    "step_count": 0,
+    "steps": 0,
+    "elapsed_seconds": 119.42273998260498,
+    "trace": {
+      "format_version": "gui_demo_android_world_v1",
+      "steps": []
+    },
+    "post_execution_evidence": []
+  }
+]

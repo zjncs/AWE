@@ -1,0 +1,10 @@
+[evaluator] FilesDeleteFile: evaluating 2 checkpoints
+[evaluator] checkpoint 1/2 cp1: The file 2023_05_12_eager_nurse.jpg is not visible in the contents of the Pictures folder within the sdk_gphone64_arm64 
+[evaluator] checkpoint 2/2 cp2: The file explorer or filesystem UI confirms access to the Pictures folder in the sdk_gphone64_arm64 (canonical /sdcard) 
+[evaluator] MarkorEditNote: evaluating 2 checkpoints
+[evaluator] checkpoint 1/2 cp1: note_HrbOn.txt in Markor contains 'Inconceivable!' as the very first line, preceding any original content.
+[evaluator] checkpoint 2/2 cp2: The edits to note_HrbOn.txt are saved, with no unsaved changes indicated in Markor's UI.
+Evaluated 2 records.
+Agreement rate: 50.0%
+JSON: results/eval_long_files_markor_generic_aw_context_20260425.json
+Report: results/eval_long_files_markor_generic_aw_context_20260425.md

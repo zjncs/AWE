@@ -1,0 +1,23 @@
+{
+  "format_version": 1,
+  "standard_id": "2d0240733a22454fa803",
+  "goal_hash": "72f1704bb943e37b",
+  "task_name": "FilesMoveFile",
+  "task_goal": "Move the file sunset.jpg from Alarms within the sdk_gphone64_arm64 storage area to the Pictures within the same sdk_gphone64_arm64 storage area in the Android filesystem.",
+  "task_goal_rewrite": "The file sunset.jpg resides in the Pictures folder instead of the Alarms folder within the sdk_gphone64_arm64 storage area of the Android filesystem.",
+  "checkpoints": [
+    {
+      "id": "cp1",
+      "description": "The file sunset.jpg is present in the Pictures folder within the sdk_gphone64_arm64 storage area.",
+      "required": true,
+      "evidence_hint": "Screenshot or trace output showing sunset.jpg listed in the Pictures directory of the sdk_gphone64_arm64 storage."
+    },
+    {
+      "id": "cp2",
+      "description": "The file sunset.jpg is no longer present in the Alarms folder within the sdk_gphone64_arm64 storage area.",
+      "required": true,
+      "evidence_hint": "Screenshot or trace output showing the Alarms directory of the sdk_gphone64_arm64 storage does not contain sunset.jpg."
+    }
+  ],
+  "success_rule": "Success is confirmed when both required checkpoints are satisfied: sunset.jpg is located in the target Pictures folder and has been removed from the original Alarms folder within the same sdk_gphone64_arm64 storage area."
+}

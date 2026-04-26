@@ -1,0 +1,7 @@
+[evaluator] SimpleSmsSendReceivedAddress: evaluating 2 checkpoints
+[evaluator] checkpoint 1/2 cp1: A user-sent message exists in the Simple SMS Messenger conversation thread with Amelia Hernandez
+[evaluator] checkpoint 2/2 cp2: The sent message to Amelia Hernandez contains the exact event address that Martin Muller sent to the user
+Evaluated 1 records.
+Agreement rate: 100.0%
+JSON: /Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/multicategory_v2_20260426/eval_SimpleSmsSendReceivedAddress_seed52.json
+Report: /Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/multicategory_v2_20260426/eval_SimpleSmsSendReceivedAddress_seed52.md

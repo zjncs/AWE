@@ -1,0 +1,7 @@
+[evaluator] MarkorEditNote: evaluating 2 checkpoints
+[evaluator] checkpoint 1/2 cp1: The note being edited or displayed in Markor is identified as note_ens3E.md
+[evaluator] checkpoint 2/2 cp2: The text 'May the Force be with you' appears as the first line of content in the note
+Evaluated 1 records.
+Agreement rate: 100.0%
+JSON: /Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/fullchain_5tasks_20260425_rerun_202532/eval_MarkorEditNote_seed32.json
+Report: /Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/fullchain_5tasks_20260425_rerun_202532/eval_MarkorEditNote_seed32.md

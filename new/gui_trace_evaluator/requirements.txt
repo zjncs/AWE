@@ -1,0 +1,4 @@
+Pillow>=10.0.0
+openai>=1.0.0
+# Official Ark SDK path from Volcengine docs:
+# volcengine-python-sdk[ark]>=1.0.0

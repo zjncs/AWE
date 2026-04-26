@@ -1,0 +1,203 @@
+Connecting to AndroidWorld emulator on port 5554 ...
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1777119933.518768 7690685 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119933.560793 7690685 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119933.591507 7690685 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119933.662483 7690806 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119933.676171 7690685 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119947.163745 7690685 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119947.219590 7690685 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119947.250445 7690685 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119948.283270 7690685 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119949.342929 7690685 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119949.408876 7690685 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119949.440525 7690685 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119949.470771 7690685 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119949.497926 7690685 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119949.525326 7690685 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+/Users/zjn/.pyenv/versions/3.10.13/lib/python3.10/site-packages/pydub/utils.py:170: RuntimeWarning: Couldn't find ffmpeg or avconv - defaulting to ffmpeg, but may not work
+  warn("Couldn't find ffmpeg or avconv - defaulting to ffmpeg, but may not work", RuntimeWarning)
+I0000 00:00:1777119949.711788 7691512 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+E0000 00:00:1777119949.749080 7691512 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777119949.782659 7690666 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119949.804970 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119949.823906 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119949.867180 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119949.888702 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119949.907214 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119949.925259 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119949.944537 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119949.970415 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+WARNING:absl:Skipping app snapshot loading : Snapshot not found in /data/data/android_world/snapshots/com.google.android.documentsui.
+I0000 00:00:1777119949.988619 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119950.007396 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119950.031053 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119950.055705 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119950.078144 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119950.099833 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119950.139182 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119950.174670 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119951.176059 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119951.207037 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119951.225561 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119951.245317 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119951.262844 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119951.303429 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119951.323061 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119951.340454 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119951.359846 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119951.377900 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119951.398577 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119951.418057 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119951.438653 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119951.473133 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119951.497426 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119951.519368 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119951.539762 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119951.560289 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119951.578583 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119951.596246 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119951.616592 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119951.639526 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119951.658223 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119951.676318 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119951.724184 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119951.761694 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119951.788685 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119951.842029 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119951.871866 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119951.892664 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119951.913923 7691591 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+Task: FilesDeleteFile
+Goal: Delete the file 2023_05_12_eager_nurse.jpg from the Android filesystem located in the Pictures folder within the sdk_gphone_x86_64 storage area.
+I0000 00:00:1777119951.944832 7690666 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+E0000 00:00:1777119951.982731 7693022 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777119951.987616 7693022 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119952.026080 7693022 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119952.542369 7693022 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+[gui-demo] logical_screen_size (step 1 before): 1080x2400; pixel buffer: 1080x2400
+[LLM_METRICS] model=doubao-seed-1-6-vision-250815 latency_s=3.474 prompt_tokens=2354 completion_tokens=137 total_tokens=2491 images=1 attempt=1
+
+---------- step 1 (attempt 1/4)
+Action: open_app(app_name='Files')
+E0000 00:00:1777119956.154074 7693174 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777119956.166611 7693174 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119956.204209 7693174 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119956.234584 7693174 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119957.703324 7693281 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+E0000 00:00:1777119958.195280 7693281 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777119958.717115 7693281 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+E0000 00:00:1777119959.196857 7693281 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777119959.209215 7693281 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+[LLM_METRICS] model=doubao-seed-1-6-vision-250815 latency_s=3.959 prompt_tokens=3116 completion_tokens=159 total_tokens=3275 images=2 attempt=1
+
+---------- step 2 (attempt 1/4)
+Action: click(point='<point>63 82</point>')
+E0000 00:00:1777119963.305114 7693499 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777119963.318018 7693499 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119963.358365 7693499 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119963.390305 7693499 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+E0000 00:00:1777119964.446082 7693596 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777119964.462667 7693596 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119964.967189 7693596 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+E0000 00:00:1777119965.450435 7693596 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777119965.465123 7693596 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+[LLM_METRICS] model=doubao-seed-1-6-vision-250815 latency_s=4.487 prompt_tokens=3801 completion_tokens=156 total_tokens=3957 images=3 attempt=1
+
+---------- step 3 (attempt 1/4)
+Action: click(point='<point>320 547</point>')
+E0000 00:00:1777119970.125505 7693821 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777119970.137544 7693821 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119970.176288 7693821 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119970.207217 7693821 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+E0000 00:00:1777119971.255411 7693931 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777119971.777073 7693931 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+E0000 00:00:1777119972.267491 7693931 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777119972.281534 7693931 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+[LLM_METRICS] model=doubao-seed-1-6-vision-250815 latency_s=3.580 prompt_tokens=5380 completion_tokens=143 total_tokens=5523 images=4 attempt=1
+
+---------- step 4 (attempt 1/4)
+Action: click(point='<point>726 562</point>')
+E0000 00:00:1777119976.047639 7694098 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777119976.061719 7694098 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119976.103787 7694098 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119976.134411 7694098 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+E0000 00:00:1777119977.186475 7694205 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777119977.204494 7694205 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119977.714509 7694205 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+E0000 00:00:1777119978.192722 7694205 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+[LLM_METRICS] model=doubao-seed-1-6-vision-250815 latency_s=17.970 prompt_tokens=6319 completion_tokens=897 total_tokens=7216 images=5 attempt=1
+
+---------- step 5 (attempt 1/4)
+Action: long_press(point='<point>735 650</point>')
+E0000 00:00:1777119996.588188 7694633 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777119996.605167 7694633 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119996.652223 7694633 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119996.683432 7694633 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+E0000 00:00:1777119998.739213 7694741 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777119998.757330 7694741 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777119999.258041 7694741 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+E0000 00:00:1777119999.751038 7694741 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777119999.764440 7694741 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+[LLM_METRICS] model=doubao-seed-1-6-vision-250815 latency_s=6.350 prompt_tokens=6372 completion_tokens=246 total_tokens=6618 images=5 attempt=1
+
+---------- step 6 (attempt 1/4)
+Action: click(point='<point>823 78</point>')
+I0000 00:00:1777120006.334696 7694942 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777120006.378238 7694942 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777120006.408988 7694942 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+E0000 00:00:1777120007.453510 7695079 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777120007.467973 7695079 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+E0000 00:00:1777120008.462425 7695079 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777120008.477884 7695079 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+[LLM_METRICS] model=doubao-seed-1-6-vision-250815 latency_s=4.277 prompt_tokens=5326 completion_tokens=171 total_tokens=5497 images=5 attempt=1
+
+---------- step 7 (attempt 1/4)
+Action: click(point='<point>823 543</point>')
+E0000 00:00:1777120012.953839 7695288 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777120012.969251 7695288 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777120013.041596 7695288 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777120013.073467 7695288 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+E0000 00:00:1777120014.121614 7695381 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777120014.134198 7695381 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777120014.651878 7695381 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+E0000 00:00:1777120015.133583 7695381 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777120015.149492 7695381 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+[LLM_METRICS] model=doubao-seed-1-6-vision-250815 latency_s=5.718 prompt_tokens=6378 completion_tokens=257 total_tokens=6635 images=5 attempt=1
+
+---------- step 8 (attempt 1/4)
+Action: finished(content='complete')
+E0000 00:00:1777120022.070405 7695619 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+E0000 00:00:1777120025.168931 7695619 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777120025.176479 7695619 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777120025.686088 7695619 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777120025.765047 7695747 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777120025.787615 7695747 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+Agent marked task complete (done gate passed).
+E0000 00:00:1777120027.838806 7695832 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777120027.857910 7695832 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777120028.354529 7695832 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777120028.440284 7690666 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777120028.462751 7690666 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777120028.490198 7690666 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777120028.517439 7690666 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777120028.542853 7690666 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777120028.564411 7690666 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777120028.611595 7690666 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+WARNING:absl:Skipping app snapshot loading : Snapshot not found in /data/data/android_world/snapshots/com.google.android.documentsui.
+I0000 00:00:1777120028.644864 7690666 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777120028.674732 7690666 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777120028.706816 7690666 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777120028.734392 7690666 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777120028.759790 7690666 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777120028.787892 7690666 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777120028.810380 7690666 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777120028.834585 7690666 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777120028.855295 7690666 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777120028.877119 7690666 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777120028.901844 7690666 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777120028.925247 7690666 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777120028.949729 7690666 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777120028.985304 7690666 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+Record written: /Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/fullchain_5tasks_20260425_rerun_202532/exec_FilesDeleteFile_seed30/results.json
+Success=True reward=1.0 steps=8

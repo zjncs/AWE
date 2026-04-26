@@ -1,0 +1,233 @@
+{
+  "source": "results/exec_long_files_markor_20260424/results.json",
+  "model": "doubao-seed-1-8-251228",
+  "provider": "ark",
+  "num_records": 2,
+  "evaluations": [
+    {
+      "checkpoint_results": [
+        {
+          "id": "cp1",
+          "achieved": false,
+          "confidence": 0.0,
+          "evidence": "The final step 9 screenshot shows a file with truncated name '2023_05_12_ea...' in the Pictures folder, which shares the target file's size (21 B) and timestamp (15:34), matching the prefix of '2023_05_12_eager_nurse.jpg'.",
+          "missing_or_conflict": "The agent's claim of successful deletion conflicts with the presence of a file with a matching prefix, size, and timestamp in the final screenshot; the truncated filename prevents definitive confirmation that the exact target file was removed, and read-only tools were disabled so verification is not possible.",
+          "insufficient_trace": false,
+          "needs_fallback_verification": true,
+          "read_tool_verification": {
+            "triggered": true,
+            "requests": [
+              {
+                "tool": "find_file",
+                "reason": "Verify the exact presence of the target file in the Pictures folder, as the truncated UI filename cannot confirm if the deletion succeeded.",
+                "root": "/sdcard/Pictures",
+                "name": "2023_05_12_eager_nurse.jpg"
+              }
+            ],
+            "results": [
+              {
+                "type": "read_tool_result",
+                "status": "skipped",
+                "error": "Read tools are disabled.",
+                "request": {
+                  "tool": "find_file",
+                  "reason": "Verify the exact presence of the target file in the Pictures folder, as the truncated UI filename cannot confirm if the deletion succeeded.",
+                  "root": "/sdcard/Pictures",
+                  "name": "2023_05_12_eager_nurse.jpg"
+                }
+              }
+            ],
+            "source": "live_read_tools",
+            "first_pass_result": {
+              "achieved": false,
+              "confidence": 0.0,
+              "evidence": "The final screenshot (step 9 after action) shows a file with the truncated name '2023_05_12_ea...' in the Pictures folder, which matches the prefix of the target filename '2023_05_12_eager_nurse.jpg' and shares the original file's size (21 B) and timestamp (15:34).",
+              "missing_or_conflict": "The agent's claim of successful deletion conflicts with the presence of a file with a matching prefix, size, and timestamp in the final screenshot; the truncated filename prevents definitive confirmation that the exact target file was removed.",
+              "insufficient_trace": false,
+              "needs_fallback_verification": true
+            }
+          },
+          "evidence_steps": [
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "evidence_images": 2,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 1.0,
+          "retrieval_rationale": "Step 4 confirms the target file was present in the Pictures folder initially. Steps 5-7 document the actions to select, initiate, and confirm deletion of the file. Step 8 waits for the system to process the deletion and refresh the UI. Step 9 provides the final visible state where the file is no longer present in the Pictures folder, directly fulfilling the checkpoint's requirement of the file being absent from the folder.",
+          "retrieval_fallback_reason": "",
+          "model_read_requests": [],
+          "message_strategy": "doubao_official_gui_history_with_screenshots_and_read_tools"
+        },
+        {
+          "id": "cp2",
+          "achieved": true,
+          "confidence": 1.0,
+          "evidence": "The screenshot from step 5 (after action) clearly displays the path bar with 'sdk_gphone64_arm64 > Pictures', confirming access to the Pictures folder within the specified storage area, and shows the contents of the Pictures folder including the target file.",
+          "missing_or_conflict": "",
+          "insufficient_trace": false,
+          "needs_fallback_verification": false,
+          "read_tool_verification": {
+            "triggered": false,
+            "requests": [],
+            "results": []
+          },
+          "evidence_steps": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "evidence_images": 2,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 1.0,
+          "retrieval_rationale": "Step 3 demonstrates successful navigation into the sdk_gphone64_arm64 storage area, with its after-screenshot showing the storage's root directory that includes the Pictures folder, confirming the storage label and presence of the target folder. Step 4 shows entering the Pictures folder within this storage, with its after-screenshot displaying the folder's contents (including the target file), directly verifying access to the Pictures folder in the specified storage area as required by the checkpoint.",
+          "retrieval_fallback_reason": "",
+          "model_read_requests": [],
+          "message_strategy": "doubao_official_gui_history_with_screenshots_and_read_tools"
+        }
+      ],
+      "success": false,
+      "completeness_score": 0.5,
+      "insufficient_trace": false,
+      "rationale": "Missing required checkpoints under selected evidence: cp1",
+      "format_version": 1,
+      "task": "FilesDeleteFile",
+      "granularity": "intent",
+      "standard_id": "07c2c0352f2ed8b5fd90",
+      "goal_hash": "43704891db7f2ab7",
+      "status": "evaluated",
+      "evaluation_mode": "doubao_official_gui_messages_v1",
+      "trace_steps": 9,
+      "official_reward": 1.0,
+      "official_success": true,
+      "agreement_with_reward": false
+    },
+    {
+      "checkpoint_results": [
+        {
+          "id": "cp1",
+          "achieved": false,
+          "confidence": 1.0,
+          "evidence": "Step 5's screenshot of note_HrbOn.txt open in Markor shows 'Beauty is in the eye of the beholder.' as the first line, with 'Inconceivable!' appearing below it.",
+          "missing_or_conflict": "The required placement of 'Inconceivable!' as the very first line (preceding original content) is not met; the screenshot shows it is placed after the original first line, conflicting with the task goal.",
+          "insufficient_trace": false,
+          "needs_fallback_verification": false,
+          "read_tool_verification": {
+            "triggered": false,
+            "requests": [],
+            "results": []
+          },
+          "evidence_steps": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "evidence_images": 2,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 1.0,
+          "retrieval_rationale": "Step 2 opens the original note_HrbOn.txt to show its initial content. Step 3 provides direct evidence that 'Inconceivable!' was added as the first line of the note, with the after screenshot confirming the text precedes the original content. Step 4 saves the edited note, ensuring the change is persisted. Step 5 confirms the task is complete, validating the final state meets the checkpoint requirement.",
+          "retrieval_fallback_reason": "",
+          "model_read_requests": [],
+          "message_strategy": "doubao_official_gui_history_with_screenshots_and_read_tools"
+        },
+        {
+          "id": "cp2",
+          "achieved": false,
+          "confidence": 1.0,
+          "evidence": "The final screenshot (step 5) shows 'Inconceivable!' is positioned below the original note content ('Beauty is in the eye of the beholder.') instead of at the top, failing the task's placement requirement. The filename 'note_HrbOn' has no unsaved changes marker, but the saved content does not match the required edit.",
+          "missing_or_conflict": "The action history claims the text was added to the top, but the screenshot confirms it's positioned below, creating a direct conflict. The required edit (text at the top of the note) was not successfully implemented, so the correct edits were not saved as required.",
+          "insufficient_trace": false,
+          "needs_fallback_verification": false,
+          "read_tool_verification": {
+            "triggered": true,
+            "requests": [
+              {
+                "tool": "find_file",
+                "root": "/sdcard",
+                "name": "note_HrbOn.txt",
+                "reason": "Locate the target file after execution.",
+                "source": "default_file_task_policy"
+              }
+            ],
+            "results": [
+              {
+                "type": "read_tool_result",
+                "status": "skipped",
+                "error": "Read tools are disabled.",
+                "request": {
+                  "tool": "find_file",
+                  "root": "/sdcard",
+                  "name": "note_HrbOn.txt",
+                  "reason": "Locate the target file after execution.",
+                  "source": "default_file_task_policy"
+                }
+              }
+            ],
+            "source": "live_read_tools",
+            "first_pass_result": {
+              "achieved": false,
+              "confidence": 1.0,
+              "evidence": "The final screenshot (step 5 after action) shows \"Inconceivable!\" is placed below the original note content ('Beauty is in the eye of the beholder.') instead of at the top, which fails the task's placement requirement. The filename 'note_HrbOn' has no unsaved changes marker, but the saved content does not match the required edit.",
+              "missing_or_conflict": "The action history claims the text was added to the top, but the screenshot confirms it's positioned below, creating a direct conflict. The required edit (text at the top of the note) was not successfully implemented, so the correct edits were not saved as required.",
+              "insufficient_trace": false,
+              "needs_fallback_verification": false
+            }
+          },
+          "evidence_steps": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "evidence_images": 2,
+          "retrieval_method": "model_step_retrieval_v1",
+          "retrieval_trusted": true,
+          "retrieval_confidence": 1.0,
+          "retrieval_rationale": "Step 3 confirms the required edit (adding \"Inconceivable!\" to the top of note_HrbOn.txt) was successfully made, providing the content that needs saving. Step 4 shows the save action was executed successfully, with the Save button becoming disabled, which indicates the edits are saved and no unsaved changes remain in Markor's UI, directly satisfying the checkpoint's requirements.",
+          "retrieval_fallback_reason": "",
+          "model_read_requests": [],
+          "message_strategy": "doubao_official_gui_history_with_screenshots_and_read_tools"
+        }
+      ],
+      "success": false,
+      "completeness_score": 0.0,
+      "insufficient_trace": false,
+      "rationale": "Missing required checkpoints under selected evidence: cp1, cp2",
+      "format_version": 1,
+      "task": "MarkorEditNote",
+      "granularity": "intent",
+      "standard_id": "03f00f3562fe37ef3703",
+      "goal_hash": "6b5643651b254325",
+      "status": "evaluated",
+      "evaluation_mode": "doubao_official_gui_messages_v1",
+      "trace_steps": 5,
+      "official_reward": 0.0,
+      "official_success": false,
+      "agreement_with_reward": true
+    }
+  ],
+  "statistics": {
+    "total_records": 2,
+    "total_evaluated": 2,
+    "total_errors": 0,
+    "total_skipped": 0,
+    "agreement_rate": 0.5,
+    "confusion_matrix": {
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 1,
+      "true_negative": 1
+    }
+  }
+}

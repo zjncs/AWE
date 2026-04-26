@@ -1,0 +1,154 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1777188784.304475 9256611 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188784.388229 9256611 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188799.533617 9256611 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188799.651645 9256611 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188799.745585 9256611 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188800.866493 9256611 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188802.078975 9256611 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188804.690823 9256611 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188804.808152 9256611 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188805.056013 9256611 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188805.180929 9256611 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188805.318155 9256611 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188806.129174 9257780 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188806.450284 9257780 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+WARNING:absl:Could not get a11y tree, retrying.
+WARNING:absl:Could not get a11y tree, retrying.
+WARNING:absl:Could not get a11y tree, retrying.
+WARNING:absl:Could not get a11y tree, retrying.
+WARNING:absl:Could not get a11y tree, retrying.
+I0000 00:00:1777188811.639676 9257780 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188812.067582 9257780 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188812.147709 9257780 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188812.218035 9257780 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188812.289015 9258083 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188812.362520 9257780 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188812.440501 9258083 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188823.447673 9257780 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188826.512900 9257780 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188826.575875 9257780 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+E0000 00:00:1777188826.643930 9257780 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777188826.654818 9257780 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188826.706659 9257780 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188827.819727 9257780 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188828.903397 9257780 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188829.003699 9257780 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+WARNING:absl:Could not get a11y tree, retrying.
+WARNING:absl:Could not get a11y tree, retrying.
+WARNING:absl:Could not get a11y tree, retrying.
+WARNING:absl:Could not get a11y tree, retrying.
+WARNING:absl:Could not get a11y tree, retrying.
+I0000 00:00:1777188834.106210 9256544 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188834.214544 9256544 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188837.360392 9256544 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188839.449040 9259253 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188839.984974 9259253 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188840.827062 9259253 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188841.206946 9259253 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188841.601090 9259422 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188841.654845 9259253 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188841.732344 9259422 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188856.349088 9259253 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188859.452476 9259253 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188859.557614 9259253 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+E0000 00:00:1777188859.871145 9259253 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777188860.101874 9259253 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188860.522551 9259253 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188862.159982 9259253 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188863.416962 9259253 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188863.798863 9259253 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188864.141243 9259253 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188864.988770 9259253 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188865.212298 9259253 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188865.621575 9259253 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188865.832723 9260505 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+E0000 00:00:1777188866.229600 9260505 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777188866.478375 9260505 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+WARNING:absl:Could not get a11y tree, retrying.
+WARNING:absl:Could not get a11y tree, retrying.
+WARNING:absl:Could not get a11y tree, retrying.
+WARNING:absl:Could not get a11y tree, retrying.
+WARNING:absl:Could not get a11y tree, retrying.
+I0000 00:00:1777188871.720830 9260505 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188872.227146 9260505 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188872.769952 9260505 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188873.221405 9260505 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188873.688496 9260867 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188873.751901 9260505 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188873.859216 9260867 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188889.313411 9260505 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188892.420568 9260505 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188892.513964 9260505 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+E0000 00:00:1777188892.652241 9260505 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777188892.675380 9260505 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188892.747156 9260505 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188893.813320 9260505 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188894.871441 9260505 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188894.949103 9260505 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+WARNING:absl:Could not get a11y tree, retrying.
+WARNING:absl:Could not get a11y tree, retrying.
+WARNING:absl:Could not get a11y tree, retrying.
+WARNING:absl:Could not get a11y tree, retrying.
+WARNING:absl:Could not get a11y tree, retrying.
+I0000 00:00:1777188900.043671 9256544 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188900.075407 9256544 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188903.127371 9256544 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188905.174840 9262565 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188905.607619 9262565 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188905.709691 9262565 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188905.850267 9262565 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188906.037827 9262693 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188906.601983 9262565 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188908.186649 9262693 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188933.967472 9262565 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188937.055601 9262565 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188937.443070 9262565 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188937.843247 9262565 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188938.215364 9262565 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188939.635041 9262565 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188940.782793 9262565 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188940.931239 9262565 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188941.118504 9262565 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188941.367055 9262565 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188941.591163 9262565 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188942.082950 9262565 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188942.318623 9264133 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+E0000 00:00:1777188942.749640 9264133 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777188942.926401 9264133 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+WARNING:absl:Could not get a11y tree, retrying.
+WARNING:absl:Could not get a11y tree, retrying.
+WARNING:absl:Could not get a11y tree, retrying.
+WARNING:absl:Could not get a11y tree, retrying.
+WARNING:absl:Could not get a11y tree, retrying.
+I0000 00:00:1777188948.873113 9264133 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188949.339054 9264133 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188949.766662 9264133 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188949.921285 9264133 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188950.250506 9264519 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188950.318780 9264133 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188950.473981 9264519 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188965.182079 9264133 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188968.491825 9264133 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188968.792670 9264133 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+E0000 00:00:1777188969.535799 9264133 tcp_posix.cc:595] recvmsg encountered uncommon error: Message too long
+I0000 00:00:1777188969.624483 9264133 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188969.741922 9264133 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188971.025715 9264133 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188972.147503 9264133 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+I0000 00:00:1777188972.205873 9264133 fork_posix.cc:71] Other threads are currently calling into gRPC, skipping fork() handlers
+WARNING:absl:Could not get a11y tree, retrying.
+WARNING:absl:Could not get a11y tree, retrying.
+WARNING:absl:Could not get a11y tree, retrying.
+WARNING:absl:Could not get a11y tree, retrying.
+WARNING:absl:Could not get a11y tree, retrying.
+Connecting to AndroidWorld emulator on port 5554 ...
+Could not get a11y tree. Reconnecting to Android, reinitializing AndroidEnv, and restarting a11y forwarding.
+[gui-demo] setup attempt 1/3 failed: Could not get a11y tree.
+Could not get a11y tree. Reconnecting to Android, reinitializing AndroidEnv, and restarting a11y forwarding.
+[gui-demo] setup attempt 2/3 failed: Could not get a11y tree.
+Could not get a11y tree. Reconnecting to Android, reinitializing AndroidEnv, and restarting a11y forwarding.
+[gui-demo] setup attempt 3/3 failed: Could not get a11y tree.
+fatal_error: setup failed after retries: Could not get a11y tree.
+Record written: /Users/zjn/Desktop/AIR/research/android_world_clean/new/gui_trace_evaluator/results/multicategory_test_20260426/exec_SimpleDrawProCreateDrawing_seed55/results.json
+Success=None reward=None steps=0

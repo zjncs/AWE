@@ -1,0 +1,24 @@
+[
+  {
+    "task": "PhoneMakeCall",
+    "task_name": "PhoneMakeCall",
+    "base_goal": "PhoneMakeCall",
+    "goal": "PhoneMakeCall",
+    "goal_used": "PhoneMakeCall",
+    "granularity": "intent",
+    "seed": 52,
+    "model": "doubao-seed-1-6-vision-250815",
+    "reward": null,
+    "success": null,
+    "agent_done": false,
+    "abort_reason": "fatal_error: setup failed after retries: Task PhoneMakeCall not found in AndroidWorld registry.",
+    "step_count": 0,
+    "steps": 0,
+    "elapsed_seconds": 76.12410497665405,
+    "trace": {
+      "format_version": "gui_demo_android_world_v1",
+      "steps": []
+    },
+    "post_execution_evidence": []
+  }
+]
