@@ -31,13 +31,12 @@ Rules:
 - Mark checkpoints required unless genuinely optional.
 - The same task goal should produce the same standard across runs.
 - Prefer outcome/final-state checkpoints over low-level process checkpoints.
-- Required checkpoints should describe user-visible task effects: created/changed/deleted content, submitted values, final placement/order, selected setting, sent message, saved file, completed transaction, or other observable end state.
-- Do not make pure setup/navigation steps required checkpoints unless the task explicitly asks for navigation itself.
-- Do not require extra verification actions such as reopening, reinspecting, or confirming after completion unless the task explicitly asks for verification.
-- If an intermediate action is only supporting evidence for a final outcome, mention it in evidence_hint instead of making it a separate required checkpoint.
-- If the final state alone cannot prove correctness, add one required checkpoint for the critical target/context, but keep it tied to the user goal rather than app mechanics.
-- For multi-step content tasks (create/edit/move/delete/send/schedule), always include one final-outcome checkpoint.
-  Add a separate target-identification checkpoint only when final-outcome evidence is ambiguous without it.
+- Keep checkpoints generic and reusable across apps with similar goals.
+- Avoid brittle app-specific UI mechanics or route details.
+- Do not make pure setup/navigation steps required unless explicitly asked in the goal.
+- Focus on final outcome first; add intermediate checkpoints only when needed for reliable verification.
+- Each checkpoint must include a checkpoint_type from: outcome, consistency, supporting.
+- Assign a relative weight (0.1 to 1.0) for each checkpoint importance.
 
 
 Respond with JSON only.
@@ -54,7 +53,9 @@ Required schema:
       "id": "cp1",
       "description": "observable requirement",
       "required": true,
-      "evidence_hint": "what trace/screenshot evidence would satisfy it"
+      "evidence_hint": "what trace/screenshot evidence would satisfy it",
+      "checkpoint_type": "outcome",
+      "weight": 1.0
     }}
   ],
   "success_rule": "how final success is decided"
@@ -154,12 +155,13 @@ Available read-only tools:
 Only request tools when they are necessary for final-state verification. Tool requests are evidence requests, not the final answer.
 """
     else:
+        compact_read_results = _compact_read_tool_results(read_tool_results)
         tool_text = f"""
 READ_TOOL_RESULTS
 The following read-only tool results were collected after execution. They are additional final-state evidence, not rule-based labels.
 Combine them with screenshots and action history to make the final checkpoint judgment. Do not request more tools in this pass.
 First-pass judgment before tool results: {json.dumps(first_pass_result or {}, ensure_ascii=False, indent=2)}
-Read-only tool results: {json.dumps(read_tool_results, ensure_ascii=False, indent=2)}
+Read-only tool results: {json.dumps(compact_read_results, ensure_ascii=False, indent=2)}
 """
     return f"""CHECKPOINT_EVALUATION
 Judge only the checkpoint below from the selected Thought/Action history and attached screenshots.
@@ -174,6 +176,9 @@ If UI text is truncated, hidden, or duplicated by prefix, do not infer the full 
 If a goal outcome is already unambiguous from the final state, do not fail a checkpoint only because an intermediate "proof step" is missing (for example, contact details page proving creation even if list page is not shown; target file absent at exact path even if full filename was truncated earlier).
 For file/save tasks, a clicked save action is not enough by itself. Require visible final-state evidence or clearly explain why persistence is still uncertain.
 For persistent-state tasks, stale or unrefreshed UI can conflict with the real final state. If final state cannot be determined from screenshots, set needs_fallback_verification=true and request read-only tools.
+Return both achieved and score:
+- score in [0, 1], where 1.0 means fully satisfied, 0.5 means partially satisfied with meaningful progress, 0.0 means not satisfied.
+- achieved=true only when score >= 0.8 with clear evidence.
 {tool_text}
 
 Task: {record.task}
@@ -188,6 +193,7 @@ Respond with JSON only:
 {{
   "id": "{checkpoint.get("id", "cp1")}",
   "achieved": false,
+  "score": 0.0,
   "confidence": 0.0,
   "evidence": "short evidence grounded in selected steps/screenshots",
   "missing_or_conflict": "missing or conflicting evidence, empty if none",
@@ -196,3 +202,37 @@ Respond with JSON only:
   "read_requests": []
 }}
 """
+
+
+def _compact_read_tool_results(read_tool_results: list[dict[str, Any]] | None) -> list[dict[str, Any]]:
+    """Summarize read-tool evidence to reduce prompt token usage."""
+    if not read_tool_results:
+        return []
+    compacted: list[dict[str, Any]] = []
+    for item in read_tool_results:
+        if not isinstance(item, dict):
+            continue
+        compact: dict[str, Any] = {
+            "type": item.get("type"),
+            "tool": item.get("tool"),
+            "status": item.get("status"),
+            "request": item.get("request", {}),
+            "source": item.get("source"),
+        }
+        for key in ("exists", "found", "matches", "interpretation", "returncode", "screenshot_path"):
+            if key in item:
+                compact[key] = item.get(key)
+        output = str(item.get("output") or "").strip()
+        if output:
+            compact["output_preview"] = _trim_text(output, max_chars=280)
+        final_ui = str(item.get("final_ui") or "").strip()
+        if final_ui:
+            compact["final_ui_preview"] = _trim_text(final_ui, max_chars=280)
+        compacted.append(compact)
+    return compacted
+
+
+def _trim_text(text: str, *, max_chars: int) -> str:
+    if len(text) <= max_chars:
+        return text
+    return text[: max_chars - 15].rstrip() + "...[truncated]"

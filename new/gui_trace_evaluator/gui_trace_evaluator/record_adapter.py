@@ -298,7 +298,7 @@ def _normalize_ui_text(value: Any) -> str:
     return str(value).strip()
 
 
-def _compact_ui_text(value: str, *, max_lines: int = 200, max_chars: int = 15000) -> str:
+def _compact_ui_text(value: str, *, max_lines: int = 60, max_chars: int = 4000) -> str:
     text = (value or "").strip()
     if not text:
         return ""

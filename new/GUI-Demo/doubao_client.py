@@ -60,6 +60,89 @@ def _message_content_to_str(content: Any) -> str:
     return str(content)
 
 
+def _field(obj: Any, name: str) -> Any:
+    """Read one field from either an SDK object or a plain dict."""
+    if isinstance(obj, dict):
+        return obj.get(name)
+    return getattr(obj, name, None)
+
+
+def _reasoning_to_str(value: Any) -> str:
+    """Normalize possible Ark/OpenAI reasoning/thinking payload shapes."""
+    if value is None:
+        return ""
+    if isinstance(value, str):
+        return value.strip()
+    if isinstance(value, list):
+        parts = [_reasoning_to_str(item) for item in value]
+        return "\n".join(part for part in parts if part).strip()
+    if isinstance(value, dict):
+        for key in (
+            "text",
+            "content",
+            "reasoning_content",
+            "reasoning",
+            "thinking",
+            "summary",
+        ):
+            text = _reasoning_to_str(value.get(key))
+            if text:
+                return text
+        try:
+            return json.dumps(value, ensure_ascii=False)
+        except TypeError:
+            return str(value)
+    return str(value).strip()
+
+
+def _message_to_text_parts(message: Any) -> tuple[str, str]:
+    """Return (content, reasoning) from SDK message objects.
+
+    Doubao/Ark may put the visible answer in `content` and model thinking in
+    provider-specific fields such as `reasoning_content`. Some SDK versions
+    expose those as object attributes, while others expose dict-like payloads.
+    """
+    content = _message_content_to_str(_field(message, "content")).strip()
+    reasoning_fields = (
+        "reasoning_content",
+        "reasoning",
+        "thinking",
+        "reasoning_details",
+    )
+    for name in reasoning_fields:
+        reasoning = _reasoning_to_str(_field(message, name))
+        if reasoning:
+            return content, reasoning
+
+    dump = None
+    for dump_method in ("model_dump", "to_dict"):
+        method = getattr(message, dump_method, None)
+        if callable(method):
+            try:
+                dump = method()
+                break
+            except Exception:  # pylint: disable=broad-exception-caught
+                pass
+    if isinstance(dump, dict):
+        for name in reasoning_fields:
+            reasoning = _reasoning_to_str(dump.get(name))
+            if reasoning:
+                return content, reasoning
+    return content, ""
+
+
+def _compose_gui_completion(content: str, reasoning: str) -> str:
+    """Prefer visible content, but preserve provider reasoning for trace thought."""
+    content = content.strip()
+    reasoning = reasoning.strip()
+    if content:
+        has_thought = "thought" in content.lower()
+        if reasoning and not has_thought:
+            return f"Thought: {reasoning}\n{content}"
+        return content
+    return reasoning
+
+
 class DoubaoClient:
     """Small wrapper around the official Volcengine Ark SDK."""
 
@@ -122,8 +205,8 @@ class DoubaoClient:
                     f"images={image_count} "
                     f"attempt={attempt}"
                 )
-                raw = response.choices[0].message.content
-                text = _message_content_to_str(raw)
+                content, reasoning = _message_to_text_parts(response.choices[0].message)
+                text = _compose_gui_completion(content, reasoning)
                 if text.strip():
                     return text
                 raise RuntimeError("Model returned empty or unparseable content.")

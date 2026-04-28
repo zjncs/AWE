@@ -6,6 +6,7 @@ import argparse
 import concurrent.futures
 import json
 import os
+import itertools
 import subprocess
 import time
 from pathlib import Path
@@ -91,7 +92,12 @@ def main() -> None:
             before_state=before_state, screen_size=screen_size, label="(step 1 before)"
         )
 
-        for step_index in range(1, args.max_steps + 1):
+        step_indices = (
+            itertools.count(1)
+            if args.max_steps == 0
+            else range(1, args.max_steps + 1)
+        )
+        for step_index in step_indices:
             before_path = screenshot_dir / f"step_{step_index:03d}_before.jpg"
             save_state_screenshot(before_state, before_path)
 
@@ -393,7 +399,7 @@ def _initialize_with_recovery(*, args: argparse.Namespace, adb_path: str) -> tup
                 lambda: load_env(
                     console_port=args.console_port,
                     adb_path=adb_path,
-                    perform_emulator_setup=args.perform_emulator_setup,
+                    perform_emulator_setup=False,
                 ),
                 timeout_seconds=args.setup_timeout_seconds,
                 label="load_env",
@@ -403,6 +409,16 @@ def _initialize_with_recovery(*, args: argparse.Namespace, adb_path: str) -> tup
                 lambda: create_task(args.task, seed=args.seed),
                 timeout_seconds=args.setup_timeout_seconds,
                 label="create_task",
+            )
+            _call_with_timeout(
+                lambda: _setup_task_required_apps(
+                    env=env,
+                    task=task,
+                    adb_path=adb_path,
+                    console_port=args.console_port,
+                ),
+                timeout_seconds=max(args.setup_timeout_seconds, 150.0),
+                label="setup_task_required_apps",
             )
             _call_with_timeout(
                 lambda: env.reset(go_home=True),
@@ -432,25 +448,234 @@ def _initialize_with_recovery(*, args: argparse.Namespace, adb_path: str) -> tup
                     adb_path=adb_path,
                     console_port=args.console_port,
                     wait_seconds=args.recovery_wait_seconds,
+                    boot_timeout_seconds=args.recovery_boot_timeout_seconds,
+                    reconnect_retries=args.recovery_retries,
                 )
     raise RuntimeError(f"setup failed after retries: {last_error}") from last_error
 
 
-def _recover_adb_connection(*, adb_path: str, console_port: int, wait_seconds: float) -> None:
+def _setup_task_required_apps(
+    *,
+    env: Any,
+    task: Any,
+    adb_path: str,
+    console_port: int,
+) -> None:
+    """Install/setup required task apps and verify they are launchable."""
+    prepare_android_world_imports()
+    from android_world.env.setup_device import setup as device_setup  # pylint: disable=import-outside-toplevel
+    from android_world.env import adb_utils  # pylint: disable=import-outside-toplevel
+
+    app_names = [str(name) for name in (getattr(task, "app_names", []) or [])]
+    app_classes = []
+    for app_name in app_names:
+        app_class = device_setup.get_app_mapping(app_name)
+        if app_class is not None:
+            app_classes.append(app_class)
+    if not app_classes:
+        return
+    deduped_classes = tuple(dict.fromkeys(app_classes))
+    for app_class in deduped_classes:
+        app_label = str(getattr(app_class, "app_name", "unknown"))
+        _ensure_app_ready(
+            env=env,
+            app_class=app_class,
+            app_label=app_label,
+            adb_path=adb_path,
+            console_port=console_port,
+        )
+
+    # Run a lightweight end-to-end health check after app setup.
+    serial = f"emulator-{console_port}"
+    if not _adb_shell_ok(adb_path=adb_path, serial=serial):
+        raise RuntimeError("preflight failed: adb shell is not healthy after app setup")
+    try:
+        _safe_get_state(env, wait_to_stabilize=False, timeout_seconds=12.0)
+    except Exception as exc:  # pylint: disable=broad-exception-caught
+        raise RuntimeError(f"preflight failed: env.get_state unhealthy: {exc}") from exc
+
+    # Optional launchability check for mapped app names.
+    for app_name in app_names:
+        activity = adb_utils.get_adb_activity(app_name)
+        if not activity:
+            continue
+        package = str(activity).split("/", maxsplit=1)[0]
+        if not _adb_package_installed(adb_path=adb_path, serial=serial, package=package):
+            raise RuntimeError(f"preflight failed: package missing after setup: {package}")
+
+
+def _ensure_app_ready(
+    *,
+    env: Any,
+    app_class: Any,
+    app_label: str,
+    adb_path: str,
+    console_port: int,
+) -> None:
+    """Retry install/setup for one app with recovery gates."""
+    prepare_android_world_imports()
+    from android_world.env.setup_device import setup as device_setup  # pylint: disable=import-outside-toplevel
+    from android_world.env import adb_utils  # pylint: disable=import-outside-toplevel
+
+    serial = f"emulator-{console_port}"
+    max_attempts = 3
+    last_error: Exception | None = None
+    for attempt in range(1, max_attempts + 1):
+        try:
+            device_setup.maybe_install_app(app_class, env)
+            device_setup.setup_app(app_class, env)
+            activity = adb_utils.get_adb_activity(app_label)
+            if activity:
+                package = str(activity).split("/", maxsplit=1)[0]
+                if not _adb_package_installed(adb_path=adb_path, serial=serial, package=package):
+                    raise RuntimeError(f"package not installed: {package}")
+            return
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            last_error = exc
+            if attempt < max_attempts:
+                _recover_adb_connection(
+                    adb_path=adb_path,
+                    console_port=console_port,
+                    wait_seconds=2.0,
+                    boot_timeout_seconds=90.0,
+                    reconnect_retries=1,
+                )
+    raise RuntimeError(f"app setup failed for {app_label}: {last_error}") from last_error
+
+
+def _adb_shell_ok(*, adb_path: str, serial: str) -> bool:
+    try:
+        proc = subprocess.run(
+            [adb_path, "-s", serial, "shell", "echo", "ok"],
+            check=False,
+            timeout=10,
+            capture_output=True,
+            text=True,
+        )
+    except Exception:  # pylint: disable=broad-exception-caught
+        return False
+    return proc.returncode == 0 and "ok" in (proc.stdout or "").lower()
+
+
+def _adb_package_installed(*, adb_path: str, serial: str, package: str) -> bool:
+    try:
+        proc = subprocess.run(
+            [adb_path, "-s", serial, "shell", "pm", "list", "packages", package],
+            check=False,
+            timeout=8,
+            capture_output=True,
+            text=True,
+        )
+    except Exception:  # pylint: disable=broad-exception-caught
+        return False
+    text = (proc.stdout or "").strip()
+    return proc.returncode == 0 and package in text
+
+
+def _recover_adb_connection(
+    *,
+    adb_path: str,
+    console_port: int,
+    wait_seconds: float,
+    boot_timeout_seconds: float = 90.0,
+    reconnect_retries: int = 2,
+) -> None:
     """Best-effort ADB recovery for transient env/a11y reset hangs."""
     serial = f"emulator-{console_port}"
-    cmds = [
-        [adb_path, "kill-server"],
-        [adb_path, "start-server"],
-        [adb_path, "-s", serial, "wait-for-device"],
-    ]
-    for cmd in cmds:
+    for attempt in range(1, reconnect_retries + 1):
+        cmds = [
+            [adb_path, "kill-server"],
+            [adb_path, "start-server"],
+            [adb_path, "reconnect", "offline"],
+            [adb_path, "-s", serial, "reconnect"],
+            [adb_path, "-s", serial, "wait-for-device"],
+        ]
+        for cmd in cmds:
+            try:
+                subprocess.run(cmd, check=False, timeout=25, capture_output=True, text=True)
+            except Exception:
+                pass
+
+        if _adb_device_ready(
+            adb_path=adb_path,
+            serial=serial,
+            boot_timeout_seconds=boot_timeout_seconds,
+        ):
+            if wait_seconds > 0:
+                time.sleep(wait_seconds)
+            return
+
         try:
-            subprocess.run(cmd, check=False, timeout=20, capture_output=True, text=True)
+            subprocess.run(
+                [adb_path, "-s", serial, "reboot"],
+                check=False,
+                timeout=20,
+                capture_output=True,
+                text=True,
+            )
         except Exception:
             pass
+
+        if _adb_device_ready(
+            adb_path=adb_path,
+            serial=serial,
+            boot_timeout_seconds=boot_timeout_seconds,
+        ):
+            if wait_seconds > 0:
+                time.sleep(wait_seconds)
+            return
+
+        if attempt < reconnect_retries and wait_seconds > 0:
+            time.sleep(wait_seconds)
+
     if wait_seconds > 0:
         time.sleep(wait_seconds)
+
+
+def _adb_device_ready(*, adb_path: str, serial: str, boot_timeout_seconds: float) -> bool:
+    """Check device online state and boot completion."""
+    state = _run_adb_capture(
+        adb_path=adb_path,
+        serial=serial,
+        args=["get-state"],
+        timeout=15,
+    ).strip()
+    if state != "device":
+        return False
+    deadline = time.time() + max(5.0, boot_timeout_seconds)
+    while time.time() < deadline:
+        boot = _run_adb_capture(
+            adb_path=adb_path,
+            serial=serial,
+            args=["shell", "getprop", "sys.boot_completed"],
+            timeout=15,
+        ).strip()
+        if boot == "1":
+            return True
+        time.sleep(2.0)
+    return False
+
+
+def _run_adb_capture(
+    *,
+    adb_path: str,
+    serial: str,
+    args: list[str],
+    timeout: float,
+) -> str:
+    """Run adb command and return stdout; swallow transient failures."""
+    cmd = [adb_path, "-s", serial, *args]
+    try:
+        proc = subprocess.run(
+            cmd,
+            check=False,
+            timeout=timeout,
+            capture_output=True,
+            text=True,
+        )
+    except Exception:
+        return ""
+    return (proc.stdout or "").strip()
 
 
 def _log_screen_alignment_once(
@@ -480,7 +705,12 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--task", default="FilesDeleteFile")
     parser.add_argument("--seed", type=int, default=30)
-    parser.add_argument("--max_steps", type=int, default=300)
+    parser.add_argument(
+        "--max_steps",
+        type=int,
+        default=300,
+        help="Maximum action steps. Use 0 to keep running until done or abort.",
+    )
     parser.add_argument("--output_dir", default="results/gui_demo_android_world")
     parser.add_argument("--console_port", type=int, default=5554)
     parser.add_argument("--adb_path", default=None)
@@ -517,6 +747,18 @@ def parse_args() -> argparse.Namespace:
         type=float,
         default=2.0,
         help="Sleep after ADB recovery before next setup attempt.",
+    )
+    parser.add_argument(
+        "--recovery_boot_timeout_seconds",
+        type=float,
+        default=90.0,
+        help="Timeout for waiting Android boot completion during ADB recovery.",
+    )
+    parser.add_argument(
+        "--recovery_retries",
+        type=int,
+        default=2,
+        help="How many reconnect+reboot recovery rounds before next setup retry.",
     )
     parser.add_argument(
         "--action_timeout_seconds",

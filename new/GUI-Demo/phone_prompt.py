@@ -53,6 +53,8 @@ def _system_prompt(*, goal: str, language: str) -> str:
     base = PHONE_USE_DOUBAO.format(instruction=goal.strip(), language=language)
     extras = (
         "\n## Additional Rules (AndroidWorld bridge)\n"
+        "- For every step, ALWAYS output two lines in this order: "
+        "Thought: <brief reasoning> and Action: <one valid action call>.\n"
         "- The <point>x y</point> coordinates are normalized 0..1000 relative to the screenshot.\n"
         "- Do not treat a truncated filename prefix as proof of identity; confirm the full target name.\n"
         "- If the target is not visible, prefer navigate/search/scroll/wait over guessing.\n"

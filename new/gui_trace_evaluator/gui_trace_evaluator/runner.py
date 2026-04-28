@@ -62,6 +62,7 @@ def evaluate_records_file(
         regenerate_checkpoints=model_args.regenerate_checkpoints,
         max_selected_steps=model_args.max_selected_steps,
         max_screenshot_turns=model_args.max_screenshot_turns,
+        max_retrieval_trace_steps=model_args.max_retrieval_trace_steps,
         retrieval_min_confidence=model_args.retrieval_min_confidence,
         fallback_confidence_threshold=model_args.fallback_confidence_threshold,
         read_tool_config=ReadToolConfig(
@@ -111,8 +112,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max_tokens", type=int, default=2000)
     parser.add_argument("--timeout_seconds", type=int, default=180)
     parser.add_argument("--extra_body_json", default=None)
-    parser.add_argument("--max_selected_steps", type=int, default=30)
-    parser.add_argument("--max_screenshot_turns", type=int, default=10)
+    parser.add_argument("--max_selected_steps", type=int, default=12)
+    parser.add_argument("--max_screenshot_turns", type=int, default=5)
+    parser.add_argument("--max_retrieval_trace_steps", type=int, default=40)
     parser.add_argument("--retrieval_min_confidence", type=float, default=0.55)
     parser.add_argument("--fallback_confidence_threshold", type=float, default=0.7)
     parser.add_argument("--disable_read_tools", action="store_true")
@@ -131,6 +133,7 @@ def _build_model(args: argparse.Namespace, api_key: str):
             temperature=args.temperature,
             max_tokens=args.max_tokens,
             timeout_seconds=args.timeout_seconds,
+            extra_body=json.loads(args.extra_body_json) if args.extra_body_json else None,
         )
     return OpenAICompatibleChatModel(
         model_name=args.model,
