@@ -23,6 +23,8 @@ class FakeModel:
                             "description": "The item is saved.",
                             "required": True,
                             "evidence_hint": "Look for the save action and final screenshot.",
+                            "checkpoint_type": "outcome",
+                            "weight": 1.0,
                         }
                     ],
                     "success_rule": "cp1 must pass.",
@@ -120,6 +122,8 @@ class UntrustedRepairModel(FakeModel):
                             "description": "The item is saved.",
                             "required": True,
                             "evidence_hint": "Look for the save action and final screenshot.",
+                            "checkpoint_type": "outcome",
+                            "weight": 1.0,
                         }
                     ],
                     "success_rule": "cp1 must pass.",
@@ -201,6 +205,8 @@ class ToolCallingModel(FakeModel):
                             "description": "demo.txt is in Pictures and not in Alarms.",
                             "required": True,
                             "evidence_hint": "Use final state evidence.",
+                            "checkpoint_type": "outcome",
+                            "weight": 1.0,
                         }
                     ],
                     "success_rule": "cp1 must pass.",
@@ -347,3 +353,41 @@ def test_stored_final_snapshot_does_not_suppress_requested_read_tools(tmp_path: 
     assert tool_runner.requests
     assert verification["source"] == "record_post_execution_evidence+live_read_tools"
     assert [item["tool"] for item in verification["results"]] == ["final_state_snapshot", "list_dir"]
+
+
+class MissingWeightModel(FakeModel):
+    def complete(self, messages):
+        joined = "\n".join(str(message.get("content")) for message in messages)
+        if "CHECKPOINT_GENERATION" in joined:
+            return json.dumps(
+                {
+                    "task_goal_rewrite": "Save the demo item.",
+                    "checkpoints": [
+                        {
+                            "id": "cp1",
+                            "description": "The item is saved.",
+                            "required": True,
+                            "evidence_hint": "Look for final evidence.",
+                            "checkpoint_type": "outcome",
+                        }
+                    ],
+                    "success_rule": "cp1 must pass.",
+                }
+            )
+        raise AssertionError(joined)
+
+
+def test_checkpoint_generation_requires_explicit_weight(tmp_path: Path):
+    record = {
+        "task": "DemoTask",
+        "goal": "Save a demo item.",
+        "success": True,
+        "trace": {"steps": [{"step": 1, "action": "noop"}]},
+    }
+
+    evaluator = TraceEvaluator(MissingWeightModel(), checkpoint_dir=tmp_path / "cache")
+
+    result = evaluator.evaluate_record(record)
+
+    assert result["status"] == "evaluation_error"
+    assert "explicit numeric weight" in result["rationale"]

@@ -37,7 +37,10 @@ Rules:
 - Do not make pure setup/navigation steps required unless explicitly asked in the goal.
 - Focus on final outcome first; add intermediate checkpoints only when needed for reliable verification.
 - Each checkpoint must include a checkpoint_type from: outcome, consistency, supporting.
-- Assign a relative weight (0.1 to 1.0) for each checkpoint importance.
+- Each checkpoint must include an explicit numeric weight in [0.1, 1.0].
+- Weight is part of the evaluation standard: assign it from the task goal importance, not from the checkpoint_type alone.
+- Hard constraints that would make the task fail if violated should receive high weight even when they are consistency checks.
+- The checkpoint weights should sum to approximately 1.0 across the rubric.
 
 
 Respond with JSON only.

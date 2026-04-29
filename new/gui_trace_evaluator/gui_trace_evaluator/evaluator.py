@@ -196,12 +196,21 @@ class TraceEvaluator:
         path = self.checkpoint_dir / f"{standard_id}.json"
         if path.exists() and not self.regenerate_checkpoints:
             standard = json.loads(path.read_text(encoding="utf-8"))
-            _validate_checkpoint_review_state(
-                standard,
-                path=path,
-                require_reviewed=self.require_reviewed_checkpoints,
-            )
-            return standard
+            try:
+                _validate_checkpoint_weights(standard, path=path)
+            except ValueError:
+                if standard.get("reviewed") is True or self.require_reviewed_checkpoints:
+                    raise
+                _progress(
+                    f"[evaluator] {record.task}: cached checkpoint standard lacks explicit weights; regenerating"
+                )
+            else:
+                _validate_checkpoint_review_state(
+                    standard,
+                    path=path,
+                    require_reviewed=self.require_reviewed_checkpoints,
+                )
+                return standard
 
         raw = self.model.complete(checkpoint_generation_request(record))
         parsed = parse_json_object(raw)
@@ -395,6 +404,7 @@ def _normalize_standard(parsed: dict[str, Any], *, task: str, goal: str) -> dict
     for index, checkpoint in enumerate(checkpoints, start=1):
         if not isinstance(checkpoint, dict):
             continue
+        weight = _required_weight(checkpoint.get("weight"), checkpoint_id=str(checkpoint.get("id") or f"cp{index}"))
         normalized.append(
             {
                 "id": str(checkpoint.get("id") or f"cp{index}"),
@@ -402,7 +412,7 @@ def _normalize_standard(parsed: dict[str, Any], *, task: str, goal: str) -> dict
                 "required": bool(checkpoint.get("required", True)),
                 "evidence_hint": str(checkpoint.get("evidence_hint") or ""),
                 "checkpoint_type": _normalize_checkpoint_type(checkpoint.get("checkpoint_type")),
-                "weight": _normalize_weight(checkpoint.get("weight")),
+                "weight": weight,
             }
         )
     if not normalized:
@@ -445,6 +455,22 @@ def _validate_checkpoint_review_state(
         "Checkpoint standard has not been reviewed. "
         f"Set reviewed=true in {path} or rerun without --require_reviewed_checkpoints."
     )
+
+
+def _validate_checkpoint_weights(standard: dict[str, Any], *, path: Path) -> None:
+    checkpoints = standard.get("checkpoints")
+    if not isinstance(checkpoints, list):
+        raise ValueError(f"Checkpoint standard has no checkpoints list: {path}")
+    for index, checkpoint in enumerate(checkpoints, start=1):
+        if not isinstance(checkpoint, dict):
+            continue
+        checkpoint_id = str(checkpoint.get("id") or f"cp{index}")
+        try:
+            _required_weight(checkpoint.get("weight"), checkpoint_id=checkpoint_id)
+        except ValueError as exc:
+            raise ValueError(
+                f"Checkpoint standard {path} contains checkpoint without explicit valid weight: {checkpoint_id}"
+            ) from exc
 
 
 def _normalize_retrieval(parsed: dict[str, Any]) -> dict[str, Any]:
@@ -788,10 +814,7 @@ def _aggregate_checkpoint_results(
     required_results = [by_id.get(checkpoint_id) for checkpoint_id in required_ids]
     type_by_id = {str(cp.get("id")): str(cp.get("checkpoint_type") or "supporting") for cp in checkpoints}
     weight_by_id = {
-        str(cp.get("id")): _effective_weight(
-            _normalize_weight(cp.get("weight")),
-            str(cp.get("checkpoint_type") or "supporting"),
-        )
+        str(cp.get("id")): _required_weight(cp.get("weight"), checkpoint_id=str(cp.get("id")))
         for cp in checkpoints
     }
     weighted_total = 0.0
@@ -911,15 +934,14 @@ def _normalize_weight(value: Any) -> float:
     return max(0.0, min(1.0, parsed))
 
 
-def _effective_weight(weight: float, checkpoint_type: str) -> float:
-    if weight > 0:
-        return weight
-    defaults = {
-        "outcome": 1.0,
-        "consistency": 0.7,
-        "supporting": 0.4,
-    }
-    return defaults.get(checkpoint_type, 0.4)
+def _required_weight(value: Any, *, checkpoint_id: str) -> float:
+    try:
+        parsed = float(value)
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"Checkpoint {checkpoint_id} is missing an explicit numeric weight.") from exc
+    if not 0.0 < parsed <= 1.0:
+        raise ValueError(f"Checkpoint {checkpoint_id} weight must be in (0, 1], got {value!r}.")
+    return parsed
 
 
 def _predicted_reward_from_score(score: float, *, outcome_gate_passed: bool) -> float:
