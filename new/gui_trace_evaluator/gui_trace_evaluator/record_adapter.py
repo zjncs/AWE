@@ -23,6 +23,7 @@ class NormalizedStep:
     after_screenshot_path: str
     before_ui: str = ""
     after_ui: str = ""
+    action_target_ui: str = ""
 
     @property
     def evidence_screenshot_path(self) -> str:
@@ -92,18 +93,27 @@ def normalize_record(
     )
 
 
-def step_to_prompt_dict(step: NormalizedStep) -> dict[str, Any]:
+def step_to_prompt_dict(
+    step: NormalizedStep,
+    *,
+    include_ui: bool = True,
+) -> dict[str, Any]:
     """Return the fields allowed to be sent to retrieval/judge prompts."""
-    return {
+    payload = {
         "step": step.step,
         "thinking": step.thinking,
         "action": step.action,
         "summary": step.summary,
+        "action_target_ui": step.action_target_ui,
         "before_ui_text": _compact_ui_text(step.before_ui),
         "after_ui_text": _compact_ui_text(step.after_ui),
         "has_before_screenshot": bool(step.before_screenshot_path),
         "has_after_screenshot": bool(step.after_screenshot_path),
     }
+    if not include_ui:
+        payload.pop("before_ui_text")
+        payload.pop("after_ui_text")
+    return payload
 
 
 def _extract_steps(record: dict[str, Any]) -> list[dict[str, Any]]:
@@ -175,6 +185,9 @@ def _normalize_step(
                 step_data.get("ui_text_after"),
             )
         ),
+        action_target_ui=_normalize_ui_text(
+            _first_value(step_data.get("action_target_ui"))
+        ),
     )
 
 
@@ -211,7 +224,7 @@ def _resolve_path(
             return str(path)
         rebased = _rebase_missing_path(path, base_dir=base_dir, image_root=image_root)
         return str(rebased) if rebased else value
-    candidates = []
+    candidates = [path]
     if image_root:
         candidates.append(image_root / path)
     if base_dir:
@@ -298,7 +311,7 @@ def _normalize_ui_text(value: Any) -> str:
     return str(value).strip()
 
 
-def _compact_ui_text(value: str, *, max_lines: int = 200, max_chars: int = 15000) -> str:
+def _compact_ui_text(value: str, *, max_lines: int = 60, max_chars: int = 4000) -> str:
     text = (value or "").strip()
     if not text:
         return ""

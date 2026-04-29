@@ -5,7 +5,9 @@ from __future__ import annotations
 import os
 import re
 import shlex
+import sqlite3
 import subprocess
+import tempfile
 from dataclasses import dataclass
 from pathlib import PurePosixPath
 from typing import Any
@@ -16,6 +18,12 @@ from gui_trace_evaluator.record_adapter import NormalizedRecord
 DEFAULT_ALLOWED_ROOTS = (
     "/sdcard",
     "/storage/emulated/0",
+)
+DEFAULT_ALLOWED_APP_PACKAGES = (
+    "com.flauschcode.broccoli",
+    "com.simplemobiletools.calendar.pro",
+    "com.expensemanager",
+    "net.gsantner.markor",
 )
 COMMON_ANDROID_DIRS = (
     "Alarms",
@@ -39,6 +47,7 @@ class ReadToolConfig:
     timeout_seconds: int = 10
     max_output_chars: int = 6000
     allowed_roots: tuple[str, ...] = DEFAULT_ALLOWED_ROOTS
+    allowed_app_packages: tuple[str, ...] = DEFAULT_ALLOWED_APP_PACKAGES
 
 
 class ReadToolRunner:
@@ -120,6 +129,8 @@ class ReadToolRunner:
                     index=index,
                     command=f"sed -n '1,200p' {_quote_allowed_path(path, self.config.allowed_roots)}",
                 )
+            if tool == "query_app_sqlite":
+                return self._query_app_sqlite(request, index=index)
             return {
                 "type": "read_tool_result",
                 "index": index,
@@ -135,6 +146,74 @@ class ReadToolRunner:
                 "tool": tool or "unknown",
                 "status": "error",
                 "request": request,
+                "error": str(exc),
+            }
+
+    def _query_app_sqlite(self, request: dict[str, Any], *, index: int) -> dict[str, Any]:
+        package = str(request.get("package") or "").strip()
+        db_path = str(request.get("db_path") or "").strip()
+        query = str(request.get("query") or "").strip()
+        limit = _request_limit(request)
+        if package not in self.config.allowed_app_packages:
+            raise ValueError(f"Package is outside allowed app packages: {package}")
+        if not db_path.startswith(f"/data/data/{package}/"):
+            raise ValueError(f"DB path is outside package data dir: {db_path}")
+        if not _is_safe_select_query(query):
+            raise ValueError("query_app_sqlite only supports a single read-only SELECT query.")
+
+        adb = self._adb_path()
+        adb_command = [adb]
+        if self.config.adb_serial:
+            adb_command.extend(["-s", self.config.adb_serial])
+        adb_command.extend(["exec-out", "run-as", package, "cat", db_path])
+        try:
+            completed = subprocess.run(
+                adb_command,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                timeout=self.config.timeout_seconds,
+                check=False,
+            )
+            if completed.returncode != 0:
+                return {
+                    "type": "read_tool_result",
+                    "index": index,
+                    "tool": request.get("tool"),
+                    "status": "command_error",
+                    "request": request,
+                    "command": " ".join(shlex.quote(part) for part in adb_command),
+                    "returncode": completed.returncode,
+                    "error": _trim_output(
+                        completed.stderr.decode("utf-8", errors="replace"),
+                        self.config.max_output_chars,
+                    ),
+                }
+            with tempfile.NamedTemporaryFile(suffix=".sqlite") as tmp:
+                tmp.write(completed.stdout)
+                tmp.flush()
+                rows = _run_local_select(tmp.name, query=query, limit=limit)
+            output = _trim_output(
+                "\n".join(_format_sqlite_row(row) for row in rows),
+                self.config.max_output_chars,
+            )
+            return {
+                "type": "read_tool_result",
+                "index": index,
+                "tool": request.get("tool"),
+                "status": "ok",
+                "request": request,
+                "command": " ".join(shlex.quote(part) for part in adb_command),
+                "row_count": len(rows),
+                "output": output,
+            }
+        except subprocess.TimeoutExpired as exc:
+            return {
+                "type": "read_tool_result",
+                "index": index,
+                "tool": request.get("tool"),
+                "status": "timeout",
+                "request": request,
+                "command": " ".join(shlex.quote(part) for part in adb_command),
                 "error": str(exc),
             }
 
@@ -198,9 +277,25 @@ class ReadToolRunner:
 def default_read_requests(record: NormalizedRecord, checkpoint: dict[str, Any]) -> list[dict[str, Any]]:
     """Build conservative final-state evidence requests when the model asks for fallback but omits tools."""
     task_goal = f"{record.task}\n{record.goal}\n{checkpoint.get('description', '')}"
-    if not _looks_like_file_task(task_goal):
-        return []
     requests: list[dict[str, Any]] = []
+    if _looks_like_recipe_task(task_goal):
+        requests.append(
+            {
+                "tool": "query_app_sqlite",
+                "package": "com.flauschcode.broccoli",
+                "db_path": "/data/data/com.flauschcode.broccoli/databases/broccoli",
+                "query": (
+                    "SELECT recipeId, title, description, servings, preparationTime, "
+                    "source, ingredients, directions, favorite, imageName "
+                    "FROM recipes ORDER BY recipeId"
+                ),
+                "limit": 200,
+                "reason": "Collect final Broccoli recipe database rows for global-state verification.",
+                "source": "default_recipe_task_policy",
+            }
+        )
+    if not _looks_like_file_task(task_goal):
+        return _dedupe_requests(requests)
     dirs = _mentioned_android_dirs(task_goal)
     filenames = _mentioned_filenames(task_goal)
     for directory in dirs:
@@ -239,6 +334,11 @@ def _looks_like_file_task(text: str) -> bool:
     return any(word in lowered for word in ("file", "folder", "directory", "note", "move", "delete", "copy"))
 
 
+def _looks_like_recipe_task(text: str) -> bool:
+    lowered = text.lower()
+    return any(word in lowered for word in ("recipe", "broccoli"))
+
+
 def _mentioned_android_dirs(text: str) -> list[str]:
     found = [directory for directory in COMMON_ANDROID_DIRS if re.search(rf"\b{re.escape(directory)}\b", text)]
     return list(dict.fromkeys(found))
@@ -258,6 +358,9 @@ def _dedupe_requests(requests: list[dict[str, Any]]) -> list[dict[str, Any]]:
             request.get("path"),
             request.get("root"),
             request.get("name"),
+            request.get("package"),
+            request.get("db_path"),
+            request.get("query"),
         )
         if key not in seen:
             deduped.append(request)
@@ -270,6 +373,36 @@ def _request_path(request: dict[str, Any]) -> str:
     if not path:
         raise ValueError(f"{request.get('tool')} requires path.")
     return path
+
+
+def _request_limit(request: dict[str, Any]) -> int:
+    try:
+        return max(1, min(500, int(request.get("limit") or 100)))
+    except (TypeError, ValueError):
+        return 100
+
+
+def _is_safe_select_query(query: str) -> bool:
+    lowered = query.strip().lower()
+    if not lowered.startswith("select "):
+        return False
+    forbidden = (";", " attach ", " detach ", " pragma ", " insert ", " update ", " delete ", " drop ", " alter ", " create ")
+    return not any(token in f" {lowered} " for token in forbidden)
+
+
+def _run_local_select(db_path: str, *, query: str, limit: int) -> list[dict[str, Any]]:
+    conn = sqlite3.connect(db_path)
+    conn.row_factory = sqlite3.Row
+    try:
+        cursor = conn.execute(query)
+        rows = cursor.fetchmany(limit)
+        return [dict(row) for row in rows]
+    finally:
+        conn.close()
+
+
+def _format_sqlite_row(row: dict[str, Any]) -> str:
+    return " | ".join(f"{key}={value}" for key, value in row.items())
 
 
 def _quote_allowed_path(path: str, allowed_roots: tuple[str, ...]) -> str:
@@ -317,9 +450,14 @@ def _annotate_find_result(result: dict[str, Any]) -> None:
     ]
     result["matches"] = matches
     result["found"] = bool(matches)
-    result["interpretation"] = (
-        "Matching files were found." if matches else "No matching files were found."
-    )
+    if matches:
+        result["status"] = "ok"
+        result["output"] = "\n".join(matches)
+        result["interpretation"] = "Matching files were found."
+    else:
+        result["status"] = "not_found"
+        result["output"] = ""
+        result["interpretation"] = "No matching files were found."
 
 
 def _looks_like_android_path_line(line: str) -> bool:

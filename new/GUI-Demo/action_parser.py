@@ -38,16 +38,17 @@ def parse_doubao_response(response: str) -> ParsedAction:
 
     action_name = match.group(1).strip()
     args = match.group(2)
+    kwargs = _parse_call_kwargs(action_text)
     return ParsedAction(
         thought=thought,
         action_text=action_text,
         action_name=action_name,
-        point=_extract_point_arg(args, "point"),
-        start_point=_extract_point_arg(args, "start_point"),
-        end_point=_extract_point_arg(args, "end_point"),
-        content=_extract_string_arg(args, "content"),
-        direction=_extract_string_arg(args, "direction"),
-        app_name=_extract_string_arg(args, "app_name"),
+        point=_extract_point_arg(args, "point", kwargs),
+        start_point=_extract_point_arg(args, "start_point", kwargs),
+        end_point=_extract_point_arg(args, "end_point", kwargs),
+        content=_extract_string_arg(args, "content", kwargs),
+        direction=_extract_string_arg(args, "direction", kwargs),
+        app_name=_extract_string_arg(args, "app_name", kwargs),
     )
 
 
@@ -106,8 +107,32 @@ def _first_raw_point(text: str) -> str | None:
     return f"<point>{match.group(1)} {match.group(2)}</point>"
 
 
-def _extract_string_arg(args: str, name: str) -> str | None:
-    match = re.search(rf"\b{re.escape(name)}\s*=\s*(['\"])(.*?)\1", args, re.S)
+def _parse_call_kwargs(action_text: str) -> dict[str, object]:
+    """Parse keyword arguments without regex truncating escaped quotes."""
+    try:
+        tree = ast.parse(action_text, mode="eval")
+    except SyntaxError:
+        return {}
+    call = tree.body
+    if not isinstance(call, ast.Call):
+        return {}
+
+    kwargs: dict[str, object] = {}
+    for keyword in call.keywords:
+        if keyword.arg is None:
+            continue
+        try:
+            kwargs[keyword.arg] = ast.literal_eval(keyword.value)
+        except (SyntaxError, ValueError):
+            continue
+    return kwargs
+
+
+def _extract_string_arg(args: str, name: str, kwargs: dict[str, object] | None = None) -> str | None:
+    if kwargs and name in kwargs:
+        value = kwargs[name]
+        return str(value) if value is not None else None
+    match = re.search(rf"\b{re.escape(name)}\s*=\s*(['\"])((?:\\.|(?!\1).)*)\1", args, re.S)
     if not match:
         return None
     literal = match.group(0).split("=", 1)[1].strip()
@@ -117,8 +142,12 @@ def _extract_string_arg(args: str, name: str) -> str | None:
         return match.group(2)
 
 
-def _extract_point_arg(args: str, name: str) -> tuple[float, float] | None:
-    value = _extract_string_arg(args, name)
+def _extract_point_arg(
+    args: str,
+    name: str,
+    kwargs: dict[str, object] | None = None,
+) -> tuple[float, float] | None:
+    value = _extract_string_arg(args, name, kwargs)
     if not value:
         return None
     match = POINT_RE.search(value)

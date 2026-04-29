@@ -23,6 +23,45 @@ COMMON_ANDROID_DIRS = (
     "Ringtones",
 )
 
+UI_ELEMENT_FIELDS: tuple[tuple[str, str], ...] = (
+    ("idx", "index"),
+    ("text", "text"),
+    ("desc", "content_description"),
+    ("hint", "hint_text"),
+    ("class", "class_name"),
+    ("enabled", "is_enabled"),
+    ("visible", "is_visible"),
+    ("clickable", "is_clickable"),
+    ("long_clickable", "is_long_clickable"),
+    ("editable", "is_editable"),
+    ("checkable", "is_checkable"),
+    ("checked", "is_checked"),
+    ("selected", "is_selected"),
+    ("focusable", "is_focusable"),
+    ("focused", "is_focused"),
+    ("scrollable", "is_scrollable"),
+    ("resource", "resource_name"),
+    ("package", "package_name"),
+    ("bbox", "bbox_pixels"),
+    ("center", "bbox_center"),
+)
+
+UI_COMPACT_FIELDS = (
+    "idx",
+    "text",
+    "desc",
+    "hint",
+    "class",
+    "enabled",
+    "visible",
+    "clickable",
+    "editable",
+    "scrollable",
+    "resource",
+    "bbox",
+    "center",
+)
+
 
 def step_record(
     *,
@@ -37,12 +76,16 @@ def step_record(
     summary: str,
 ) -> dict[str, Any]:
     """Build one evaluator-compatible trace step."""
+    action_json = _json_action_dict(json_action)
+    action_target = _action_target(parsed_action, action_json, before_state)
     return {
         "step": step,
         "thinking": parsed_action.thought,
         "thought": parsed_action.thought,
         "action": parsed_action.action_text,
-        "action_json": _json_action_dict(json_action),
+        "action_json": action_json,
+        "action_target": action_target,
+        "action_target_ui": _action_target_to_text(action_target),
         "summary": summary,
         "raw_response": raw_response,
         "before_screenshot_path": before_screenshot_path,
@@ -56,6 +99,7 @@ def build_record(
     *,
     task_name: str,
     goal: str,
+    task_params: dict[str, Any] | None = None,
     seed: int,
     steps: list[dict[str, Any]],
     reward: float | int | None,
@@ -65,6 +109,7 @@ def build_record(
     elapsed_seconds: float,
     post_execution_evidence: list[dict[str, Any]],
     model: str,
+    llm_usage: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Build one top-level record consumed by gui_trace_evaluator."""
     return {
@@ -73,6 +118,7 @@ def build_record(
         "base_goal": goal,
         "goal": goal,
         "goal_used": goal,
+        "task_params": _json_safe(task_params or {}),
         "granularity": "intent",
         "seed": seed,
         "model": model,
@@ -89,6 +135,7 @@ def build_record(
             "steps": steps,
         },
         "post_execution_evidence": post_execution_evidence,
+        "llm_usage": llm_usage or {},
     }
 
 
@@ -99,26 +146,206 @@ def write_records(records: list[dict[str, Any]], path: str | Path) -> Path:
     return output_path
 
 
-def ui_to_text(state: Any, *, max_elements: int = 80) -> str:
-    """Serialize visible UI elements into compact text for trace inspection."""
+def _json_safe(value: Any) -> Any:
+    if value is None or isinstance(value, (str, int, float, bool)):
+        return value
+    if isinstance(value, dict):
+        return {str(key): _json_safe(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_json_safe(item) for item in value]
+    return str(value)
+
+
+def ui_to_text(state: Any, *, max_elements: int = 120) -> str:
+    """Serialize UI elements as compact key-value lines for trace inspection."""
     elements = getattr(state, "ui_elements", []) or []
-    lines = []
-    for index, element in enumerate(elements[:max_elements]):
-        text = getattr(element, "text", None) or ""
-        desc = getattr(element, "content_description", None) or ""
-        cls = getattr(element, "class_name", None) or ""
-        clickable = getattr(element, "is_clickable", None)
-        editable = getattr(element, "is_editable", None)
-        bbox = getattr(element, "bbox_pixels", None)
-        bbox_text = ""
-        if bbox is not None:
-            bbox_text = f" bbox=({int(bbox.x_min)},{int(bbox.y_min)},{int(bbox.x_max)},{int(bbox.y_max)})"
-        if text or desc or clickable or editable:
-            lines.append(
-                f"[{index}] text={text!r} desc={desc!r} class={cls!r} "
-                f"clickable={clickable} editable={editable}{bbox_text}"
-            )
+    rows = [_ui_element_row(index, element) for index, element in enumerate(elements[:max_elements])]
+    if not rows:
+        return ""
+    lines = [_format_ui_line(row) for row in rows]
+    if len(elements) > max_elements:
+        lines.append(f"... truncated {len(elements) - max_elements} UI elements")
     return "\n".join(lines)
+
+
+def _ui_element_row(index: int, element: Any) -> dict[str, str]:
+    row: dict[str, str] = {}
+    for name, attr in UI_ELEMENT_FIELDS:
+        if attr == "index":
+            value = index
+        elif attr == "bbox_center":
+            value = _bbox_center(getattr(element, "bbox_pixels", None))
+        elif attr == "bbox_pixels":
+            value = _bbox_text(getattr(element, "bbox_pixels", None))
+        else:
+            value = getattr(element, attr, None)
+        row[name] = _cell_text(value)
+    return row
+
+
+def _bbox_text(bbox: Any | None) -> str:
+    if bbox is None:
+        return ""
+    return f"{int(bbox.x_min)},{int(bbox.y_min)},{int(bbox.x_max)},{int(bbox.y_max)}"
+
+
+def _bbox_center(bbox: Any | None) -> str:
+    if bbox is None:
+        return ""
+    x = (float(bbox.x_min) + float(bbox.x_max)) / 2
+    y = (float(bbox.y_min) + float(bbox.y_max)) / 2
+    return f"{int(round(x))},{int(round(y))}"
+
+
+def _cell_text(value: Any) -> str:
+    if value is None:
+        return ""
+    if isinstance(value, bool):
+        return "T" if value else "F"
+    text = str(value).replace("\n", "\\n").strip()
+    if len(text) > 80:
+        text = text[:77].rstrip() + "..."
+    return text
+
+
+def _format_ui_line(row: dict[str, str], *, fields: tuple[str, ...] = UI_COMPACT_FIELDS) -> str:
+    parts = []
+    for field in fields:
+        value = row.get(field, "")
+        if field not in {"idx", "enabled", "visible", "clickable", "editable", "scrollable"} and not value:
+            continue
+        parts.append(f"{field}={json.dumps(value, ensure_ascii=False)}")
+    return " ".join(parts)
+
+
+def _action_target(parsed_action: Any, action_json: dict[str, Any], before_state: Any) -> dict[str, Any]:
+    action_type = str(action_json.get("action_type") or parsed_action.action_name or "")
+    target: dict[str, Any] = {
+        "action_type": action_type,
+        "raw_action": getattr(parsed_action, "action_text", ""),
+        "is_pointer_action": action_type in {"click", "long_press", "double_tap", "input_text"},
+        "point": None,
+        "hit": False,
+        "ui_index": None,
+        "ui": None,
+    }
+
+    x = action_json.get("x")
+    y = action_json.get("y")
+    if x is not None and y is not None:
+        try:
+            point = (int(round(float(x))), int(round(float(y))))
+        except (TypeError, ValueError):
+            point = None
+        if point is not None:
+            target["point"] = {"x": point[0], "y": point[1]}
+            match = _find_smallest_element_at(before_state, point[0], point[1])
+            if match is not None:
+                index, element = match
+                row = _ui_element_row(index, element)
+                target.update(
+                    {
+                        "hit": True,
+                        "ui_index": index,
+                        "ui": row,
+                        "enabled": getattr(element, "is_enabled", None),
+                        "clickable": getattr(element, "is_clickable", None),
+                        "editable": getattr(element, "is_editable", None),
+                        "scrollable": getattr(element, "is_scrollable", None),
+                    }
+                )
+            return target
+
+    index = action_json.get("index")
+    if index is not None:
+        try:
+            element = (getattr(before_state, "ui_elements", []) or [])[int(index)]
+        except (TypeError, ValueError, IndexError):
+            return target
+        row = _ui_element_row(int(index), element)
+        target.update(
+            {
+                "hit": True,
+                "ui_index": int(index),
+                "ui": row,
+                "enabled": getattr(element, "is_enabled", None),
+                "clickable": getattr(element, "is_clickable", None),
+                "editable": getattr(element, "is_editable", None),
+                "scrollable": getattr(element, "is_scrollable", None),
+            }
+        )
+    return target
+
+
+def _find_smallest_element_at(state: Any, x: int, y: int) -> tuple[int, Any] | None:
+    elements = getattr(state, "ui_elements", []) or []
+    best: tuple[int, int, Any] | None = None
+    for index, element in enumerate(elements):
+        bbox = getattr(element, "bbox_pixels", None)
+        if bbox is None:
+            continue
+        try:
+            x_min = int(bbox.x_min)
+            y_min = int(bbox.y_min)
+            x_max = int(bbox.x_max)
+            y_max = int(bbox.y_max)
+        except Exception:  # pylint: disable=broad-exception-caught
+            continue
+        if x_max <= x_min or y_max <= y_min:
+            continue
+        if not (x_min <= x <= x_max and y_min <= y <= y_max):
+            continue
+        area = (x_max - x_min) * (y_max - y_min)
+        if best is None or area < best[0]:
+            best = (area, index, element)
+    if best is None:
+        return None
+    return best[1], best[2]
+
+
+def _action_target_to_text(action_target: dict[str, Any]) -> str:
+    ui = action_target.get("ui")
+    if not isinstance(ui, dict):
+        point = action_target.get("point") or {}
+        if point:
+            return (
+                f"action_type={action_target.get('action_type')} "
+                f"point=({point.get('x')},{point.get('y')}) hit=False"
+            )
+        return f"action_type={action_target.get('action_type')} hit=False"
+
+    columns = [
+        "action_type",
+        "point",
+        "hit",
+        "idx",
+        "text",
+        "desc",
+        "class",
+        "enabled",
+        "clickable",
+        "editable",
+        "scrollable",
+        "bbox",
+        "center",
+    ]
+    point = action_target.get("point") or {}
+    row = {
+        "action_type": _cell_text(action_target.get("action_type")),
+        "point": _cell_text(f"{point.get('x')},{point.get('y')}" if point else ""),
+        "hit": _cell_text(action_target.get("hit")),
+        "idx": _cell_text(ui.get("idx")),
+        "text": _cell_text(ui.get("text")),
+        "desc": _cell_text(ui.get("desc")),
+        "class": _cell_text(ui.get("class")),
+        "enabled": _cell_text(ui.get("enabled")),
+        "clickable": _cell_text(ui.get("clickable")),
+        "editable": _cell_text(ui.get("editable")),
+        "scrollable": _cell_text(ui.get("scrollable")),
+        "bbox": _cell_text(ui.get("bbox")),
+        "center": _cell_text(ui.get("center")),
+    }
+    return _format_ui_line(row, fields=tuple(columns))
 
 
 def action_summary(parsed_action: Any, json_action: Any) -> str:
@@ -186,9 +413,16 @@ def collect_post_execution_evidence(
             },
             shell_command=f"find /sdcard -name {shlex.quote(filename)} 2>/dev/null | head -50",
         )
-        matches = [line.strip() for line in str(find_result.get("output") or "").splitlines() if line.strip()]
+        matches = [
+            line.strip()
+            for line in str(find_result.get("output") or "").splitlines()
+            if _looks_like_android_path(line.strip())
+        ]
         find_result["matches"] = matches
         find_result["found"] = bool(matches)
+        if not matches:
+            find_result["status"] = "not_found"
+            find_result["output"] = ""
         find_result["interpretation"] = (
             "Matching files were found." if matches else "No matching files were found."
         )
@@ -304,3 +538,7 @@ def _mentioned_android_dirs(text: str) -> list[str]:
 def _mentioned_filenames(text: str) -> list[str]:
     matches = re.findall(r"\b[\w.-]+\.[A-Za-z0-9]{1,8}\b", text)
     return list(dict.fromkeys(matches))
+
+
+def _looks_like_android_path(line: str) -> bool:
+    return line.startswith(("/sdcard/", "/storage/", "/mnt/sdcard/"))

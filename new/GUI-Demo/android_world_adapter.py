@@ -9,6 +9,7 @@ import time
 import urllib.request
 import importlib
 import importlib.util
+import subprocess
 from pathlib import Path
 from typing import Any
 
@@ -151,6 +152,56 @@ def load_env(*, console_port: int, adb_path: str, perform_emulator_setup: bool =
     )
 
 
+def ensure_a11y_forwarder_ready(*, env: Any, adb_path: str, console_port: int) -> None:
+    """Force AndroidEnv's accessibility forwarder into a usable state.
+
+    Some AndroidEnv builds only call A11yGrpcWrapper._configure_grpc() when the
+    underlying emulator relaunch count changes. When reusing an already-running
+    AVD, that can leave the forwarder installed but without a gRPC port, which
+    makes AndroidWorld fail to read the UI tree.
+    """
+    serial = f"emulator-{console_port}"
+    _run_adb_best_effort(
+        adb_path,
+        serial,
+        [
+            "shell",
+            "settings",
+            "put",
+            "secure",
+            "enabled_accessibility_services",
+            (
+                "com.google.androidenv.accessibilityforwarder/"
+                "com.google.androidenv.accessibilityforwarder.AccessibilityForwarder"
+            ),
+        ],
+    )
+    _run_adb_best_effort(
+        adb_path,
+        serial,
+        ["shell", "settings", "put", "secure", "accessibility_enabled", "1"],
+    )
+
+    wrapper = _find_a11y_wrapper(env)
+    if wrapper is None:
+        return
+    try:
+        wrapper._enable_a11y_tree_logs()  # pylint: disable=protected-access
+    except Exception:
+        pass
+    try:
+        wrapper._configure_grpc()  # pylint: disable=protected-access
+    except Exception:
+        pass
+    # Reassert these after the wrapper's networking setup, which can be slow.
+    _run_adb_best_effort(
+        adb_path,
+        serial,
+        ["shell", "settings", "put", "secure", "accessibility_enabled", "1"],
+    )
+    time.sleep(1.0)
+
+
 def create_task(task_name: str, *, seed: int) -> Any:
     prepare_android_world_imports()
     from android_world import registry
@@ -163,6 +214,30 @@ def create_task(task_name: str, *, seed: int) -> Any:
     task_type = aw_registry[task_name]
     params = task_type.generate_random_params()
     return task_type(params)
+
+
+def _find_a11y_wrapper(env: Any) -> Any | None:
+    current = env
+    seen: set[int] = set()
+    while current is not None and id(current) not in seen:
+        seen.add(id(current))
+        if hasattr(current, "_configure_grpc") and hasattr(current, "_enable_a11y_tree_logs"):
+            return current
+        current = getattr(current, "_env", None)
+    return None
+
+
+def _run_adb_best_effort(adb_path: str, serial: str, args: list[str]) -> None:
+    try:
+        subprocess.run(
+            [adb_path, "-s", serial, *args],
+            check=False,
+            timeout=20,
+            capture_output=True,
+            text=True,
+        )
+    except Exception:
+        pass
 
 
 def _download_checked_bytes(url: str) -> bytes:

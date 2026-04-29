@@ -9,7 +9,11 @@ from typing import Any
 
 from gui_trace_evaluator.json_utils import parse_json_object
 from gui_trace_evaluator.models import ChatModel
-from gui_trace_evaluator.official_messages import build_trace_messages
+from gui_trace_evaluator.official_messages import (
+    build_retrieval_messages,
+    build_trace_messages,
+    configure_image_encoding,
+)
 from gui_trace_evaluator.prompts import (
     checkpoint_generation_request,
     checkpoint_judge_final_request,
@@ -43,10 +47,14 @@ class TraceEvaluator:
         checkpoint_dir: str | Path,
         image_root: str | Path | None = None,
         regenerate_checkpoints: bool = False,
+        require_reviewed_checkpoints: bool = False,
         max_selected_steps: int = 30,
-        max_screenshot_turns: int = 10,
+        max_screenshot_turns: int = 5,
+        max_retrieval_trace_steps: int = 40,
         retrieval_min_confidence: float = 0.55,
         fallback_confidence_threshold: float = 0.7,
+        image_resize_scale: float | None = None,
+        image_jpeg_quality: int | None = None,
         read_tool_runner: ReadToolRunner | None = None,
         read_tool_config: ReadToolConfig | None = None,
     ) -> None:
@@ -54,10 +62,16 @@ class TraceEvaluator:
         self.checkpoint_dir = Path(checkpoint_dir)
         self.image_root = Path(image_root).resolve() if image_root else None
         self.regenerate_checkpoints = regenerate_checkpoints
+        self.require_reviewed_checkpoints = require_reviewed_checkpoints
         self.max_selected_steps = max_selected_steps
         self.max_screenshot_turns = max_screenshot_turns
+        self.max_retrieval_trace_steps = max_retrieval_trace_steps
         self.retrieval_min_confidence = retrieval_min_confidence
         self.fallback_confidence_threshold = fallback_confidence_threshold
+        configure_image_encoding(
+            resize_scale=image_resize_scale,
+            jpeg_quality=image_jpeg_quality,
+        )
         self.read_tool_runner = read_tool_runner or ReadToolRunner(read_tool_config)
         self.checkpoint_dir.mkdir(parents=True, exist_ok=True)
 
@@ -94,36 +108,34 @@ class TraceEvaluator:
 
         try:
             standard = self.load_or_create_standard(record)
-            checkpoints = standard.get("checkpoints", [])
-            _progress(f"[evaluator] {record.task}: evaluating {len(checkpoints)} checkpoints")
-            checkpoint_results = []
-            for index, checkpoint in enumerate(checkpoints, start=1):
-                _progress(
-                    f"[evaluator] checkpoint {index}/{len(checkpoints)} "
-                    f"{checkpoint.get('id', '')}: {checkpoint.get('description', '')[:120]}"
-                )
-                checkpoint_results.append(self._evaluate_checkpoint(record, checkpoint))
-            evaluation = _aggregate_checkpoint_results(checkpoint_results, standard)
-            evaluation.update(
-                {
-                    "format_version": EVALUATION_FORMAT_VERSION,
-                    "task": record.task,
-                    "granularity": record.granularity,
-                    "standard_id": standard["standard_id"],
-                    "goal_hash": standard["goal_hash"],
-                    "status": "evaluated",
-                    "evaluation_mode": "doubao_official_gui_messages_v1",
-                    "trace_steps": len(record.steps),
-                    "official_reward": record.official_reward,
-                    "official_success": record.official_success,
-                    "agreement_with_reward": _agreement_with_reward(
-                        evaluation.get("success"),
-                        record.official_success,
-                    ),
-                }
-            )
-            return evaluation
+            return self._evaluate_with_standard(record, standard)
         except Exception as exc:  # pylint: disable=broad-exception-caught
+            if _is_token_limit_error(exc):
+                _progress(
+                    f"[evaluator] {record.task}: token limit hit, retrying with compact context"
+                )
+                original_steps = self.max_selected_steps
+                original_turns = self.max_screenshot_turns
+                original_retrieval_steps = self.max_retrieval_trace_steps
+                self.max_selected_steps = min(self.max_selected_steps, 8)
+                self.max_screenshot_turns = min(self.max_screenshot_turns, 3)
+                self.max_retrieval_trace_steps = min(self.max_retrieval_trace_steps, 20)
+                try:
+                    standard = self.load_or_create_standard(record)
+                    retried = self._evaluate_with_standard(record, standard)
+                    retried["evaluation_mode"] = "doubao_official_gui_messages_v1_compact_retry"
+                    retried["compact_retry_used"] = True
+                    retried["compact_retry_config"] = {
+                        "max_selected_steps": self.max_selected_steps,
+                        "max_screenshot_turns": self.max_screenshot_turns,
+                    }
+                    return retried
+                except Exception as retry_exc:  # pylint: disable=broad-exception-caught
+                    exc = retry_exc
+                finally:
+                    self.max_selected_steps = original_steps
+                    self.max_screenshot_turns = original_turns
+                    self.max_retrieval_trace_steps = original_retrieval_steps
             return {
                 "format_version": EVALUATION_FORMAT_VERSION,
                 "task": record.task,
@@ -139,11 +151,57 @@ class TraceEvaluator:
                 "agreement_with_reward": None,
             }
 
+    def _evaluate_with_standard(
+        self,
+        record: NormalizedRecord,
+        standard: dict[str, Any],
+    ) -> dict[str, Any]:
+        checkpoints = standard.get("checkpoints", [])
+        _progress(f"[evaluator] {record.task}: evaluating {len(checkpoints)} checkpoints")
+        checkpoint_results = []
+        for index, checkpoint in enumerate(checkpoints, start=1):
+            _progress(
+                f"[evaluator] checkpoint {index}/{len(checkpoints)} "
+                f"{checkpoint.get('id', '')}: {checkpoint.get('description', '')[:120]}"
+            )
+            checkpoint_results.append(self._evaluate_checkpoint(record, checkpoint))
+        evaluation = _aggregate_checkpoint_results(checkpoint_results, standard)
+        evaluation.update(
+            {
+                "format_version": EVALUATION_FORMAT_VERSION,
+                "task": record.task,
+                "granularity": record.granularity,
+                "standard_id": standard["standard_id"],
+                "goal_hash": standard["goal_hash"],
+                "status": "evaluated",
+                "evaluation_mode": "doubao_official_gui_messages_v1",
+                "trace_steps": len(record.steps),
+                "seed": record.raw.get("seed"),
+                "official_reward": record.official_reward,
+                "official_success": record.official_success,
+                "agreement_with_reward": _agreement_with_reward(
+                    evaluation.get("success"),
+                    record.official_success,
+                ),
+                "agreement_with_reward_band": _agreement_with_reward_band(
+                    evaluation.get("predicted_reward"),
+                    record.official_reward,
+                ),
+            }
+        )
+        return evaluation
+
     def load_or_create_standard(self, record: NormalizedRecord) -> dict[str, Any]:
         standard_id = build_standard_id(record.task, record.goal)
         path = self.checkpoint_dir / f"{standard_id}.json"
         if path.exists() and not self.regenerate_checkpoints:
-            return json.loads(path.read_text(encoding="utf-8"))
+            standard = json.loads(path.read_text(encoding="utf-8"))
+            _validate_checkpoint_review_state(
+                standard,
+                path=path,
+                require_reviewed=self.require_reviewed_checkpoints,
+            )
+            return standard
 
         raw = self.model.complete(checkpoint_generation_request(record))
         parsed = parse_json_object(raw)
@@ -163,7 +221,11 @@ class TraceEvaluator:
 
         selected_steps = _steps_by_number(
             record.steps,
-            _with_neighbor_context(retrieval.get("selected_steps") or [], record.steps),
+            _with_neighbor_context(
+                retrieval.get("selected_steps") or [],
+                record.steps,
+                max_steps=self.max_selected_steps,
+            ),
         )
         result, manifest, parsed = self._judge_checkpoint(
             record=record,
@@ -172,15 +234,32 @@ class TraceEvaluator:
             retrieval=retrieval,
         )
         read_requests = _normalize_read_requests(parsed)
-        if _should_run_read_tools(
+        should_run_tools = _should_run_read_tools(
             result,
             record=record,
             checkpoint=checkpoint,
             fallback_confidence_threshold=self.fallback_confidence_threshold,
-        ):
+        )
+        if read_requests or should_run_tools:
             first_pass_result = dict(result)
             if not read_requests:
                 read_requests = default_read_requests(record, checkpoint)
+            if not read_requests:
+                result["read_tool_verification"] = {
+                    "triggered": False,
+                    "requests": [],
+                    "results": [],
+                    "reason": "No applicable default read-only tool request.",
+                }
+                result.update(
+                    _checkpoint_metadata(
+                        selected_steps=selected_steps,
+                        manifest=manifest,
+                        retrieval=retrieval,
+                        parsed=parsed,
+                    )
+                )
+                return result
             stored_results = _stored_read_tool_results(record)
             tool_results = (
                 stored_results
@@ -267,18 +346,19 @@ class TraceEvaluator:
         *,
         repair_context: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
-        messages, _ = build_trace_messages(
+        retrieval_steps = _sample_steps_for_retrieval(
+            record.steps,
+            limit=self.max_retrieval_trace_steps,
+        )
+        messages = build_retrieval_messages(
             instruction=retrieval_instruction(record, checkpoint),
-            steps=record.steps,
             final_request=retrieval_final_request(
                 record=record,
                 checkpoint=checkpoint,
-                steps=record.steps,
+                steps=retrieval_steps,
                 max_selected_steps=self.max_selected_steps,
                 repair_context=repair_context,
             ),
-            image_step_numbers=set(),
-            max_screenshot_turns=0,
         )
         raw = self.model.complete(messages)
         parsed = parse_json_object(raw)
@@ -319,6 +399,8 @@ def _normalize_standard(parsed: dict[str, Any], *, task: str, goal: str) -> dict
                 "description": str(checkpoint.get("description") or ""),
                 "required": bool(checkpoint.get("required", True)),
                 "evidence_hint": str(checkpoint.get("evidence_hint") or ""),
+                "checkpoint_type": _normalize_checkpoint_type(checkpoint.get("checkpoint_type")),
+                "weight": _normalize_weight(checkpoint.get("weight")),
             }
         )
     if not normalized:
@@ -328,6 +410,8 @@ def _normalize_standard(parsed: dict[str, Any], *, task: str, goal: str) -> dict
                 "description": "The requested task goal is completed.",
                 "required": True,
                 "evidence_hint": "Look for final state evidence in trace screenshots.",
+                "checkpoint_type": "outcome",
+                "weight": 1.0,
             }
         ]
     standard_id = build_standard_id(task, goal)
@@ -340,7 +424,25 @@ def _normalize_standard(parsed: dict[str, Any], *, task: str, goal: str) -> dict
         "task_goal_rewrite": str(parsed.get("task_goal_rewrite") or goal),
         "checkpoints": normalized,
         "success_rule": str(parsed.get("success_rule") or "All required checkpoints must pass."),
+        "review_status": "generated_unreviewed",
+        "reviewed": False,
     }
+
+
+def _validate_checkpoint_review_state(
+    standard: dict[str, Any],
+    *,
+    path: Path,
+    require_reviewed: bool,
+) -> None:
+    if not require_reviewed:
+        return
+    if standard.get("reviewed") is True or standard.get("review_status") == "reviewed":
+        return
+    raise ValueError(
+        "Checkpoint standard has not been reviewed. "
+        f"Set reviewed=true in {path} or rerun without --require_reviewed_checkpoints."
+    )
 
 
 def _normalize_retrieval(parsed: dict[str, Any]) -> dict[str, Any]:
@@ -381,26 +483,36 @@ def _choose_retrieval_for_judge(
 def _with_neighbor_context(
     selected_numbers: list[int],
     steps: list[NormalizedStep],
+    *,
+    max_steps: int,
 ) -> list[int]:
     """Add one-step local context around model-selected evidence steps."""
     available = {step.step for step in steps}
-    expanded: set[int] = set()
+    selected_valid: list[int] = []
+    neighbors: list[int] = []
     for number in selected_numbers:
         if not isinstance(number, int):
             continue
-        for candidate in (number - 1, number, number + 1):
-            if candidate in available:
-                expanded.add(candidate)
-    return sorted(expanded)
+        if number in available and number not in selected_valid:
+            selected_valid.append(number)
+        for candidate in (number - 1, number + 1):
+            if candidate in available and candidate not in selected_valid and candidate not in neighbors:
+                neighbors.append(candidate)
+    budget = max(1, int(max_steps))
+    kept = (selected_valid + neighbors)[:budget]
+    return sorted(kept)
 
 
 def _normalize_checkpoint_result(
     parsed: dict[str, Any],
     checkpoint: dict[str, Any],
 ) -> dict[str, Any]:
+    achieved = bool(parsed.get("achieved", False))
+    score = _clamp_float(parsed.get("score"), default=1.0 if achieved else 0.0)
     return {
         "id": str(parsed.get("id") or checkpoint.get("id") or "cp1"),
-        "achieved": bool(parsed.get("achieved", False)),
+        "achieved": achieved,
+        "score": score,
         "confidence": _clamp_float(parsed.get("confidence"), default=0.0),
         "evidence": str(parsed.get("evidence") or ""),
         "missing_or_conflict": str(parsed.get("missing_or_conflict") or ""),
@@ -424,7 +536,7 @@ def _normalize_read_requests(parsed: dict[str, Any]) -> list[dict[str, Any]]:
             "tool": tool,
             "reason": str(item.get("reason") or ""),
         }
-        for key in ("path", "target", "root", "name"):
+        for key in ("path", "target", "root", "name", "package", "db_path", "query", "limit"):
             if key in item and item.get(key) not in (None, ""):
                 request[key] = str(item.get(key))
         normalized.append(request)
@@ -444,6 +556,8 @@ def _should_run_read_tools(
         return True
     if result.get("achieved") is False and _persistent_checkpoint(record, checkpoint, result):
         return True
+    if result.get("achieved") is True and _global_state_checkpoint(record, checkpoint):
+        return bool(default_read_requests(record, checkpoint))
     return False
 
 
@@ -479,6 +593,33 @@ def _persistent_checkpoint(
         "confirmation",
     )
     return any(marker in text for marker in uncertainty_markers)
+
+
+def _global_state_checkpoint(record: NormalizedRecord, checkpoint: dict[str, Any]) -> bool:
+    text = "\n".join(
+        str(value)
+        for value in (
+            record.task,
+            record.goal,
+            checkpoint.get("description"),
+            checkpoint.get("evidence_hint"),
+            checkpoint.get("checkpoint_type"),
+        )
+    ).lower()
+    global_markers = (
+        "file",
+        "folder",
+        "directory",
+        "note",
+        "save",
+        "move",
+        "delete",
+        "copy",
+        "recipe",
+        "broccoli",
+        "duplicate",
+    )
+    return any(marker in text for marker in global_markers)
 
 
 def _checkpoint_metadata(
@@ -527,11 +668,41 @@ def _stored_read_tool_results(record: NormalizedRecord) -> list[dict[str, Any]]:
             "interpretation",
             "screenshot_path",
             "final_ui",
+            "row_count",
         ):
             if key in item:
                 normalized_item[key] = item[key]
+        if normalized_item.get("tool") == "find_file":
+            _sanitize_stored_find_file_result(normalized_item)
         normalized.append(normalized_item)
     return normalized
+
+
+def _sanitize_stored_find_file_result(item: dict[str, Any]) -> None:
+    raw_matches = item.get("matches")
+    candidate_lines: list[str] = []
+    if isinstance(raw_matches, list):
+        candidate_lines.extend(str(line) for line in raw_matches)
+    candidate_lines.extend(str(item.get("output") or "").splitlines())
+    matches = [
+        line.strip()
+        for line in candidate_lines
+        if _looks_like_android_path_line(line.strip())
+    ]
+    item["matches"] = list(dict.fromkeys(matches))
+    item["found"] = bool(item["matches"])
+    if item["found"]:
+        item["status"] = "ok"
+        item["output"] = "\n".join(item["matches"])
+        item["interpretation"] = "Matching files were found."
+    else:
+        item["status"] = "not_found"
+        item["output"] = ""
+        item["interpretation"] = "No matching files were found."
+
+
+def _looks_like_android_path_line(line: str) -> bool:
+    return line.startswith(("/sdcard/", "/storage/", "/mnt/sdcard/"))
 
 
 def _compact_checkpoint_result_for_metadata(result: dict[str, Any]) -> dict[str, Any]:
@@ -573,18 +744,38 @@ def _aggregate_checkpoint_results(
     checkpoint_results: list[dict[str, Any]],
     standard: dict[str, Any],
 ) -> dict[str, Any]:
-    required_ids = {
-        checkpoint.get("id")
-        for checkpoint in standard.get("checkpoints", [])
-        if checkpoint.get("required", True)
-    }
+    checkpoints = [cp for cp in standard.get("checkpoints", []) if isinstance(cp, dict)]
+    required_ids = {cp.get("id") for cp in checkpoints if cp.get("required", True)}
     by_id = {result.get("id"): result for result in checkpoint_results}
     required_results = [by_id.get(checkpoint_id) for checkpoint_id in required_ids]
-    achieved_required = [
-        result for result in required_results if result and result.get("achieved") is True
+    type_by_id = {str(cp.get("id")): str(cp.get("checkpoint_type") or "supporting") for cp in checkpoints}
+    weight_by_id = {
+        str(cp.get("id")): _effective_weight(
+            _normalize_weight(cp.get("weight")),
+            str(cp.get("checkpoint_type") or "supporting"),
+        )
+        for cp in checkpoints
+    }
+    weighted_total = 0.0
+    weighted_max = 0.0
+    for checkpoint in checkpoints:
+        checkpoint_id = str(checkpoint.get("id"))
+        weight = weight_by_id.get(checkpoint_id, 0.0)
+        result = by_id.get(checkpoint_id)
+        result_score = _clamp_float((result or {}).get("score"), default=0.0)
+        weighted_total += weight * result_score
+        weighted_max += weight
+    normalized_score = (weighted_total / weighted_max) if weighted_max > 0 else 0.0
+    outcome_required = [
+        cp for cp in checkpoints if cp.get("required", True) and cp.get("checkpoint_type") == "outcome"
     ]
-    success = bool(required_results) and len(achieved_required) == len(required_results)
-    score = len(achieved_required) / len(required_results) if required_results else 0.0
+    outcome_gate_passed = all(
+        _clamp_float((by_id.get(str(cp.get("id"))) or {}).get("score"), default=0.0) >= 0.6
+        for cp in outcome_required
+    )
+    predicted_reward = _predicted_reward_from_score(normalized_score, outcome_gate_passed=outcome_gate_passed)
+    success = predicted_reward >= 0.5
+    score = normalized_score
     missing = [
         checkpoint_id
         for checkpoint_id in required_ids
@@ -594,9 +785,11 @@ def _aggregate_checkpoint_results(
         "checkpoint_results": checkpoint_results,
         "success": success,
         "completeness_score": score,
+        "predicted_reward": predicted_reward,
+        "outcome_gate_passed": outcome_gate_passed,
         "insufficient_trace": any(result.get("insufficient_trace") for result in checkpoint_results),
         "rationale": (
-            "All required checkpoints were supported."
+            "Checkpoint scoring indicates the task is sufficiently complete."
             if success
             else f"Missing required checkpoints under selected evidence: {', '.join(sorted(missing))}"
         ),
@@ -613,10 +806,92 @@ def _steps_by_number(steps: list[NormalizedStep], numbers: list[int]) -> list[No
     return selected
 
 
+def _sample_steps_for_retrieval(
+    steps: list[NormalizedStep],
+    *,
+    limit: int,
+) -> list[NormalizedStep]:
+    """Sample long traces for retrieval prompt token control."""
+    if len(steps) <= limit:
+        return steps
+    head = max(2, limit // 4)
+    tail = max(2, limit // 4)
+    middle_budget = max(0, limit - head - tail)
+    sampled = steps[:head]
+    if middle_budget > 0:
+        middle = steps[head : len(steps) - tail]
+        if middle:
+            stride = max(1, len(middle) // middle_budget)
+            sampled.extend(middle[::stride][:middle_budget])
+    sampled.extend(steps[-tail:])
+    deduped: list[NormalizedStep] = []
+    seen: set[int] = set()
+    for step in sampled:
+        if step.step in seen:
+            continue
+        seen.add(step.step)
+        deduped.append(step)
+    return deduped
+
+
 def _agreement_with_reward(eval_success: Any, official_success: Any) -> bool | None:
     if not isinstance(eval_success, bool) or official_success is None:
         return None
     return eval_success is bool(official_success)
+
+
+def _agreement_with_reward_band(predicted_reward: Any, official_reward: Any) -> bool | None:
+    if official_reward is None or predicted_reward is None:
+        return None
+    return _reward_band(predicted_reward) == _reward_band(official_reward)
+
+
+def _reward_band(value: Any) -> float:
+    try:
+        parsed = float(value)
+    except (TypeError, ValueError):
+        return 0.0
+    if parsed >= 0.75:
+        return 1.0
+    if parsed >= 0.25:
+        return 0.5
+    return 0.0
+
+
+def _normalize_checkpoint_type(value: Any) -> str:
+    raw = str(value or "").strip().lower()
+    if raw in {"outcome", "consistency", "supporting"}:
+        return raw
+    return "supporting"
+
+
+def _normalize_weight(value: Any) -> float:
+    try:
+        parsed = float(value)
+    except (TypeError, ValueError):
+        return 0.0
+    return max(0.0, min(1.0, parsed))
+
+
+def _effective_weight(weight: float, checkpoint_type: str) -> float:
+    if weight > 0:
+        return weight
+    defaults = {
+        "outcome": 1.0,
+        "consistency": 0.7,
+        "supporting": 0.4,
+    }
+    return defaults.get(checkpoint_type, 0.4)
+
+
+def _predicted_reward_from_score(score: float, *, outcome_gate_passed: bool) -> float:
+    if not outcome_gate_passed:
+        return 0.0
+    if score >= 0.85:
+        return 1.0
+    if score >= 0.45:
+        return 0.5
+    return 0.0
 
 
 def _clamp_float(value: Any, *, default: float) -> float:
@@ -639,3 +914,13 @@ def _progress(message: str) -> None:
         print(message, flush=True)
     except OSError:
         pass
+
+
+def _is_token_limit_error(exc: Exception) -> bool:
+    text = str(exc).lower()
+    markers = (
+        "exceed max message tokens",
+        "max message tokens",
+        "total tokens of image and text exceed",
+    )
+    return any(marker in text for marker in markers)

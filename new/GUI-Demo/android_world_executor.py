@@ -36,10 +36,80 @@ class AndroidWorldExecutor:
             parsed, screen_size=screen_size, before_state=before_state
         )
         done = json_action.action_type in ("status", "answer")
+        if parsed.action_name == "type" and _needs_clipboard_input(parsed.content or ""):
+            self._execute_clipboard_input(
+                parsed,
+                screen_size=screen_size,
+                before_state=before_state,
+            )
+            if self.transition_pause:
+                time.sleep(self.transition_pause)
+            return json_action, done
         self.env.execute_action(json_action)
         if self.transition_pause:
             time.sleep(self.transition_pause)
         return json_action, done
+
+    def _execute_clipboard_input(
+        self,
+        parsed: ParsedAction,
+        *,
+        screen_size: tuple[int, int],
+        before_state: Any | None = None,
+    ) -> None:
+        """Paste text through Clipper for characters adb input_text mangles."""
+        from android_world.env import adb_utils  # pylint: disable=import-outside-toplevel
+        from android_world.env import json_action as json_action_lib  # pylint: disable=import-outside-toplevel
+
+        text = parsed.content or ""
+        focus_point = _scaled_point(parsed.point, screen_size) if parsed.point is not None else _focused_editable_point(before_state)
+        if focus_point is not None:
+            x, y = focus_point
+            self.env.execute_action(json_action_lib.JSONAction(action_type="click", x=x, y=y))
+            time.sleep(0.5)
+
+        adb_utils.launch_app("clipper", self.env.controller)
+        time.sleep(0.5)
+        adb_utils.issue_generic_request(
+            [
+                "shell",
+                "am",
+                "broadcast",
+                "-a",
+                "clipper.set",
+                "-e",
+                "text",
+                _adb_shell_quote(text),
+            ],
+            self.env.controller,
+        )
+        adb_utils.press_back_button(self.env.controller)
+        time.sleep(0.5)
+
+        if focus_point is not None:
+            x, y = focus_point
+            self.env.execute_action(json_action_lib.JSONAction(action_type="click", x=x, y=y))
+            time.sleep(0.5)
+
+        adb_utils.issue_generic_request(
+            [
+                "shell",
+                "input",
+                "keycombination",
+                "113",
+                "29",
+                "&&",
+                "input",
+                "keyevent",
+                "67",
+            ],
+            self.env.controller,
+        )
+        time.sleep(0.5)
+        adb_utils.issue_generic_request(
+            ["shell", "input", "keyevent", "279"],
+            self.env.controller,
+        )
 
     def to_json_action(
         self,
@@ -59,6 +129,9 @@ class AndroidWorldExecutor:
             x, y = _scaled_point(parsed.point, screen_size)
             return json_action_lib.JSONAction(action_type="long_press", x=x, y=y)
         if name == "type":
+            # Doubao GUI often uses type() to mean "set this field to ...".
+            # AndroidWorld supports clear_text, which is more reliable than
+            # asking the model to manually press backspace on the soft keyboard.
             if parsed.point is not None:
                 x, y = _scaled_point(parsed.point, screen_size)
                 return json_action_lib.JSONAction(
@@ -66,8 +139,13 @@ class AndroidWorldExecutor:
                     x=x,
                     y=y,
                     text=parsed.content or "",
+                    clear_text=bool(parsed.content),
                 )
-            return json_action_lib.JSONAction(action_type="input_text", text=parsed.content or "")
+            return json_action_lib.JSONAction(
+                action_type="input_text",
+                text=parsed.content or "",
+                clear_text=bool(parsed.content),
+            )
         if name == "scroll":
             # AndroidWorld's scroll uses UI-element `index` for anchoring; x/y on
             # JSONAction is ignored. When Doubao gives a point, look up the
@@ -113,6 +191,37 @@ def _scaled_point(point: tuple[float, float] | None, screen_size: tuple[int, int
     x = int(round(point[0] / 1000.0 * width))
     y = int(round(point[1] / 1000.0 * height))
     return max(0, min(width - 1, x)), max(0, min(height - 1, y))
+
+
+def _needs_clipboard_input(text: str) -> bool:
+    return any(char in text for char in ("'", '"', "\\", "`", "|", "&", "<", ">", "\n"))
+
+
+def _adb_shell_quote(text: str) -> str:
+    """Quote one argument for Android's `/system/bin/sh`."""
+    return "'" + text.replace("'", "'\\''") + "'"
+
+
+def _focused_editable_point(state: Any | None) -> tuple[int, int] | None:
+    elements = getattr(state, "ui_elements", None) or []
+    candidates: list[tuple[int, int, int]] = []
+    for element in elements:
+        if not getattr(element, "is_editable", False):
+            continue
+        bbox = getattr(element, "bbox_pixels", None)
+        if bbox is None:
+            continue
+        try:
+            x = int(round((float(bbox.x_min) + float(bbox.x_max)) / 2))
+            y = int(round((float(bbox.y_min) + float(bbox.y_max)) / 2))
+        except Exception:  # pylint: disable=broad-exception-caught
+            continue
+        focused_rank = 0 if getattr(element, "is_focused", False) else 1
+        candidates.append((focused_rank, -y, x))
+    if not candidates:
+        return None
+    focused_rank, neg_y, x = sorted(candidates)[0]
+    return x, -neg_y
 
 
 def _direction(direction: str | None) -> str:

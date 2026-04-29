@@ -1,5 +1,6 @@
 from gui_trace_evaluator.read_tools import default_read_requests
 from gui_trace_evaluator.read_tools import _annotate_find_result, _annotate_stat_result
+from gui_trace_evaluator.read_tools import _is_safe_select_query
 from gui_trace_evaluator.record_adapter import normalize_record
 
 
@@ -20,6 +21,32 @@ def test_default_read_requests_for_file_move_goal():
     assert any(request.get("tool") == "list_dir" and request.get("path") == "/sdcard/Pictures" for request in requests)
     assert any(request.get("tool") == "find_file" and request.get("name") == "sunset.jpg" for request in requests)
     assert any(request.get("tool") == "stat_path" and request.get("path") == "/sdcard/Pictures/sunset.jpg" for request in requests)
+
+
+def test_default_read_requests_for_recipe_goal_uses_broccoli_sqlite():
+    record = normalize_record(
+        {
+            "task": "RecipeDeleteDuplicateRecipes3",
+            "base_goal": "Delete duplicate recipes from Broccoli and leave only one copy of each recipe.",
+            "trace": {"steps": [{"step": 1, "action": "noop"}]},
+        }
+    )
+
+    requests = default_read_requests(record, {"description": "Verify the final recipe database."})
+
+    assert any(
+        request.get("tool") == "query_app_sqlite"
+        and request.get("package") == "com.flauschcode.broccoli"
+        and "FROM recipes" in request.get("query", "")
+        for request in requests
+    )
+
+
+def test_sqlite_tool_accepts_only_read_only_selects():
+    assert _is_safe_select_query("SELECT title FROM recipes")
+    assert not _is_safe_select_query("DELETE FROM recipes")
+    assert not _is_safe_select_query("SELECT title FROM recipes; DROP TABLE recipes")
+    assert not _is_safe_select_query("PRAGMA table_info(recipes)")
 
 
 def test_annotate_stat_result_marks_missing_path_as_structured_absence():

@@ -6,6 +6,7 @@ import argparse
 import concurrent.futures
 import json
 import os
+import itertools
 import subprocess
 import time
 from pathlib import Path
@@ -14,7 +15,13 @@ from typing import Any
 import numpy as np
 
 from action_parser import parse_doubao_response
-from android_world_adapter import create_task, find_adb, load_env, prepare_android_world_imports
+from android_world_adapter import (
+    create_task,
+    ensure_a11y_forwarder_ready,
+    find_adb,
+    load_env,
+    prepare_android_world_imports,
+)
 from android_world_executor import AndroidWorldExecutor
 from doubao_client import DEFAULT_BASE_URL, DEFAULT_EXECUTION_MODEL, DoubaoClient
 from phone_prompt import HistoryTurn, build_step_messages
@@ -91,15 +98,22 @@ def main() -> None:
             before_state=before_state, screen_size=screen_size, label="(step 1 before)"
         )
 
-        for step_index in range(1, args.max_steps + 1):
+        step_indices = (
+            itertools.count(1)
+            if args.max_steps == 0
+            else range(1, args.max_steps + 1)
+        )
+        for step_index in step_indices:
             before_path = screenshot_dir / f"step_{step_index:03d}_before.jpg"
             save_state_screenshot(before_state, before_path)
 
             messages = build_step_messages(
                 goal=goal,
+                task_params=getattr(task, "params", {}) if task is not None else {},
                 screenshot_path=str(before_path),
                 history_turns=turn_history,
                 max_screenshot_history=args.max_screenshot_history,
+                max_text_history_chars=args.max_text_history_chars,
                 current_ui_text="" if args.disable_ui_text else ui_to_text(before_state),
                 language=args.language,
             )
@@ -180,6 +194,7 @@ def main() -> None:
                 )
                 turn_history.append(
                     HistoryTurn(
+                        step=step_index,
                         screenshot_path=str(before_path),
                         assistant_output=response,
                     )
@@ -246,7 +261,10 @@ def main() -> None:
         save_state_screenshot(final_state, final_screenshot_path)
         try:
             reward = task.is_successful(env)
-            success = bool(reward is not None and reward >= 0.5)
+            success = _reward_is_full_success(reward)
+            if success and abort_reason == "agent repeatedly marked complete but done gate failed":
+                agent_done = True
+                abort_reason = None
         except Exception as exc:  # pylint: disable=broad-exception-caught
             abort_reason = f"is_successful failed: {exc}"
             print(abort_reason)
@@ -277,6 +295,7 @@ def main() -> None:
     record = build_record(
         task_name=args.task,
         goal=goal_text,
+        task_params=getattr(task, "params", {}) if task is not None else {},
         seed=args.seed,
         steps=steps,
         reward=reward,
@@ -286,6 +305,7 @@ def main() -> None:
         elapsed_seconds=time.time() - started_at,
         post_execution_evidence=evidence,
         model=args.model,
+        llm_usage=client.usage_summary(),
     )
     output_path = write_records([record], output_dir / "results.json")
     print(f"Record written: {output_path}")
@@ -367,7 +387,14 @@ def _done_gate_passed(
         return False
     finally:
         pool.shutdown(wait=False, cancel_futures=True)
-    return bool(reward is not None and reward >= 0.5)
+    return _reward_is_full_success(reward)
+
+
+def _reward_is_full_success(reward: Any) -> bool:
+    try:
+        return float(reward) >= 1.0
+    except (TypeError, ValueError):
+        return False
 
 
 def _call_with_timeout(func: Any, *, timeout_seconds: float, label: str) -> Any:
@@ -393,16 +420,35 @@ def _initialize_with_recovery(*, args: argparse.Namespace, adb_path: str) -> tup
                 lambda: load_env(
                     console_port=args.console_port,
                     adb_path=adb_path,
-                    perform_emulator_setup=args.perform_emulator_setup,
+                    perform_emulator_setup=False,
                 ),
                 timeout_seconds=args.setup_timeout_seconds,
                 label="load_env",
+            )
+            _call_with_timeout(
+                lambda: ensure_a11y_forwarder_ready(
+                    env=env,
+                    adb_path=adb_path,
+                    console_port=args.console_port,
+                ),
+                timeout_seconds=45.0,
+                label="ensure_a11y_forwarder_ready",
             )
             executor = AndroidWorldExecutor(env, transition_pause=args.transition_pause)
             task = _call_with_timeout(
                 lambda: create_task(args.task, seed=args.seed),
                 timeout_seconds=args.setup_timeout_seconds,
                 label="create_task",
+            )
+            _call_with_timeout(
+                lambda: _setup_task_required_apps(
+                    env=env,
+                    task=task,
+                    adb_path=adb_path,
+                    console_port=args.console_port,
+                ),
+                timeout_seconds=max(args.setup_timeout_seconds, 150.0),
+                label="setup_task_required_apps",
             )
             _call_with_timeout(
                 lambda: env.reset(go_home=True),
@@ -432,25 +478,299 @@ def _initialize_with_recovery(*, args: argparse.Namespace, adb_path: str) -> tup
                     adb_path=adb_path,
                     console_port=args.console_port,
                     wait_seconds=args.recovery_wait_seconds,
+                    boot_timeout_seconds=args.recovery_boot_timeout_seconds,
+                    reconnect_retries=args.recovery_retries,
                 )
     raise RuntimeError(f"setup failed after retries: {last_error}") from last_error
 
 
-def _recover_adb_connection(*, adb_path: str, console_port: int, wait_seconds: float) -> None:
-    """Best-effort ADB recovery for transient env/a11y reset hangs."""
+def _setup_task_required_apps(
+    *,
+    env: Any,
+    task: Any,
+    adb_path: str,
+    console_port: int,
+) -> None:
+    """Install/setup required task apps and verify they are launchable."""
+    prepare_android_world_imports()
+    from android_world.env.setup_device import apps as setup_apps  # pylint: disable=import-outside-toplevel
+    from android_world.env.setup_device import setup as device_setup  # pylint: disable=import-outside-toplevel
+    from android_world.env import adb_utils  # pylint: disable=import-outside-toplevel
+
+    app_names = [str(name) for name in (getattr(task, "app_names", []) or [])]
+    app_classes = []
+    for app_name in app_names:
+        app_class = device_setup.get_app_mapping(app_name)
+        if app_class is not None:
+            app_classes.append(app_class)
+    # GUI-Demo uses clipboard paste as a robust fallback for text containing
+    # shell-sensitive characters such as apostrophes.
+    app_classes.append(setup_apps.ClipperApp)
+    if not app_classes:
+        return
+    deduped_classes = tuple(dict.fromkeys(app_classes))
+    for app_class in deduped_classes:
+        app_label = str(getattr(app_class, "app_name", "unknown"))
+        _ensure_app_ready(
+            env=env,
+            app_class=app_class,
+            app_label=app_label,
+            adb_path=adb_path,
+            console_port=console_port,
+        )
+
+    # Run a lightweight end-to-end health check after app setup.
     serial = f"emulator-{console_port}"
-    cmds = [
-        [adb_path, "kill-server"],
-        [adb_path, "start-server"],
-        [adb_path, "-s", serial, "wait-for-device"],
-    ]
-    for cmd in cmds:
+    if not _adb_shell_ok(adb_path=adb_path, serial=serial):
+        raise RuntimeError("preflight failed: adb shell is not healthy after app setup")
+    try:
+        _safe_get_state(env, wait_to_stabilize=False, timeout_seconds=12.0)
+    except Exception as exc:  # pylint: disable=broad-exception-caught
+        raise RuntimeError(f"preflight failed: env.get_state unhealthy: {exc}") from exc
+
+    # Optional launchability check for mapped app names.
+    for app_name in app_names:
+        activity = adb_utils.get_adb_activity(app_name)
+        if not activity:
+            continue
+        package = str(activity).split("/", maxsplit=1)[0]
+        if not _adb_package_installed(adb_path=adb_path, serial=serial, package=package):
+            raise RuntimeError(f"preflight failed: package missing after setup: {package}")
+
+
+def _ensure_app_ready(
+    *,
+    env: Any,
+    app_class: Any,
+    app_label: str,
+    adb_path: str,
+    console_port: int,
+) -> None:
+    """Retry install/setup for one app with recovery gates."""
+    prepare_android_world_imports()
+    from android_world.env.setup_device import setup as device_setup  # pylint: disable=import-outside-toplevel
+    from android_world.env import adb_utils  # pylint: disable=import-outside-toplevel
+
+    serial = f"emulator-{console_port}"
+    max_attempts = 3
+    last_error: Exception | None = None
+    for attempt in range(1, max_attempts + 1):
         try:
-            subprocess.run(cmd, check=False, timeout=20, capture_output=True, text=True)
+            device_setup.maybe_install_app(app_class, env)
+            device_setup.setup_app(app_class, env)
+            if app_label.lower() == "vlc":
+                _ensure_vlc_runtime_ready(adb_path=adb_path, serial=serial)
+            activity = adb_utils.get_adb_activity(app_label)
+            if activity:
+                package = str(activity).split("/", maxsplit=1)[0]
+                if not _adb_package_installed(adb_path=adb_path, serial=serial, package=package):
+                    raise RuntimeError(f"package not installed: {package}")
+            return
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            last_error = exc
+            if attempt < max_attempts:
+                _recover_adb_connection(
+                    adb_path=adb_path,
+                    console_port=console_port,
+                    wait_seconds=2.0,
+                    boot_timeout_seconds=90.0,
+                    reconnect_retries=1,
+                )
+    raise RuntimeError(f"app setup failed for {app_label}: {last_error}") from last_error
+
+
+def _ensure_vlc_runtime_ready(*, adb_path: str, serial: str) -> None:
+    """Best-effort VLC onboarding/permission setup outside AndroidWorld internals."""
+    package = "org.videolan.vlc"
+    commands = [
+        ["shell", "pm", "clear", package],
+        ["shell", "appops", "set", package, "MANAGE_EXTERNAL_STORAGE", "allow"],
+        ["shell", "appops", "set", package, "LEGACY_STORAGE", "allow"],
+        ["shell", "appops", "set", package, "READ_EXTERNAL_STORAGE", "allow"],
+        ["shell", "appops", "set", package, "WRITE_EXTERNAL_STORAGE", "allow"],
+        ["shell", "pm", "grant", package, "android.permission.READ_EXTERNAL_STORAGE"],
+        ["shell", "pm", "grant", package, "android.permission.WRITE_EXTERNAL_STORAGE"],
+        ["shell", "mkdir", "-p", "/sdcard/VLCVideos"],
+        ["shell", "am", "force-stop", package],
+        ["shell", "am", "start", "-n", f"{package}/.StartActivity"],
+    ]
+    for cmd in commands:
+        try:
+            subprocess.run(
+                [adb_path, "-s", serial, *cmd],
+                check=False,
+                timeout=20,
+                capture_output=True,
+                text=True,
+            )
         except Exception:
             pass
+    time.sleep(2.0)
+    # VLC's first-run flow may show: welcome SKIP -> in-app notification OK ->
+    # Android notification permission Allow. The taps are idempotent enough for
+    # our controlled AVD and prevent the app from staying on a loading overlay.
+    onboarding_taps = [
+        ("640", "2210"),  # SKIP on welcome screen.
+        ("955", "2215"),  # OK on VLC notification explanation sheet.
+        ("540", "1305"),  # Allow on Android notification permission dialog.
+    ]
+    for x, y in onboarding_taps:
+        try:
+            subprocess.run(
+                [adb_path, "-s", serial, "shell", "input", "tap", x, y],
+                check=False,
+                timeout=10,
+                capture_output=True,
+                text=True,
+            )
+        except Exception:
+            pass
+        time.sleep(1.0)
+    try:
+        subprocess.run(
+            [adb_path, "-s", serial, "shell", "am", "force-stop", package],
+            check=False,
+            timeout=10,
+            capture_output=True,
+            text=True,
+        )
+    except Exception:
+        pass
+
+
+def _adb_shell_ok(*, adb_path: str, serial: str) -> bool:
+    try:
+        proc = subprocess.run(
+            [adb_path, "-s", serial, "shell", "echo", "ok"],
+            check=False,
+            timeout=10,
+            capture_output=True,
+            text=True,
+        )
+    except Exception:  # pylint: disable=broad-exception-caught
+        return False
+    return proc.returncode == 0 and "ok" in (proc.stdout or "").lower()
+
+
+def _adb_package_installed(*, adb_path: str, serial: str, package: str) -> bool:
+    try:
+        proc = subprocess.run(
+            [adb_path, "-s", serial, "shell", "pm", "list", "packages", package],
+            check=False,
+            timeout=8,
+            capture_output=True,
+            text=True,
+        )
+    except Exception:  # pylint: disable=broad-exception-caught
+        return False
+    text = (proc.stdout or "").strip()
+    return proc.returncode == 0 and package in text
+
+
+def _recover_adb_connection(
+    *,
+    adb_path: str,
+    console_port: int,
+    wait_seconds: float,
+    boot_timeout_seconds: float = 90.0,
+    reconnect_retries: int = 2,
+) -> None:
+    """Best-effort ADB recovery for transient env/a11y reset hangs."""
+    serial = f"emulator-{console_port}"
+    for attempt in range(1, reconnect_retries + 1):
+        cmds = [
+            [adb_path, "kill-server"],
+            [adb_path, "start-server"],
+            [adb_path, "reconnect", "offline"],
+            [adb_path, "-s", serial, "reconnect"],
+            [adb_path, "-s", serial, "wait-for-device"],
+        ]
+        for cmd in cmds:
+            try:
+                subprocess.run(cmd, check=False, timeout=25, capture_output=True, text=True)
+            except Exception:
+                pass
+
+        if _adb_device_ready(
+            adb_path=adb_path,
+            serial=serial,
+            boot_timeout_seconds=boot_timeout_seconds,
+        ):
+            if wait_seconds > 0:
+                time.sleep(wait_seconds)
+            return
+
+        try:
+            subprocess.run(
+                [adb_path, "-s", serial, "reboot"],
+                check=False,
+                timeout=20,
+                capture_output=True,
+                text=True,
+            )
+        except Exception:
+            pass
+
+        if _adb_device_ready(
+            adb_path=adb_path,
+            serial=serial,
+            boot_timeout_seconds=boot_timeout_seconds,
+        ):
+            if wait_seconds > 0:
+                time.sleep(wait_seconds)
+            return
+
+        if attempt < reconnect_retries and wait_seconds > 0:
+            time.sleep(wait_seconds)
+
     if wait_seconds > 0:
         time.sleep(wait_seconds)
+
+
+def _adb_device_ready(*, adb_path: str, serial: str, boot_timeout_seconds: float) -> bool:
+    """Check device online state and boot completion."""
+    state = _run_adb_capture(
+        adb_path=adb_path,
+        serial=serial,
+        args=["get-state"],
+        timeout=15,
+    ).strip()
+    if state != "device":
+        return False
+    deadline = time.time() + max(5.0, boot_timeout_seconds)
+    while time.time() < deadline:
+        boot = _run_adb_capture(
+            adb_path=adb_path,
+            serial=serial,
+            args=["shell", "getprop", "sys.boot_completed"],
+            timeout=15,
+        ).strip()
+        if boot == "1":
+            return True
+        time.sleep(2.0)
+    return False
+
+
+def _run_adb_capture(
+    *,
+    adb_path: str,
+    serial: str,
+    args: list[str],
+    timeout: float,
+) -> str:
+    """Run adb command and return stdout; swallow transient failures."""
+    cmd = [adb_path, "-s", serial, *args]
+    try:
+        proc = subprocess.run(
+            cmd,
+            check=False,
+            timeout=timeout,
+            capture_output=True,
+            text=True,
+        )
+    except Exception:
+        return ""
+    return (proc.stdout or "").strip()
 
 
 def _log_screen_alignment_once(
@@ -480,7 +800,12 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--task", default="FilesDeleteFile")
     parser.add_argument("--seed", type=int, default=30)
-    parser.add_argument("--max_steps", type=int, default=300)
+    parser.add_argument(
+        "--max_steps",
+        type=int,
+        default=300,
+        help="Maximum action steps. Use 0 to keep running until done or abort.",
+    )
     parser.add_argument("--output_dir", default="results/gui_demo_android_world")
     parser.add_argument("--console_port", type=int, default=5554)
     parser.add_argument("--adb_path", default=None)
@@ -519,6 +844,18 @@ def parse_args() -> argparse.Namespace:
         help="Sleep after ADB recovery before next setup attempt.",
     )
     parser.add_argument(
+        "--recovery_boot_timeout_seconds",
+        type=float,
+        default=90.0,
+        help="Timeout for waiting Android boot completion during ADB recovery.",
+    )
+    parser.add_argument(
+        "--recovery_retries",
+        type=int,
+        default=2,
+        help="How many reconnect+reboot recovery rounds before next setup retry.",
+    )
+    parser.add_argument(
         "--action_timeout_seconds",
         type=float,
         default=45.0,
@@ -551,6 +888,12 @@ def parse_args() -> argparse.Namespace:
             "Sliding window size for (screenshot, assistant) history turns attached "
             "to the Doubao chat. Matches the official Volc GUI demo default of 5."
         ),
+    )
+    parser.add_argument(
+        "--max_text_history_chars",
+        type=int,
+        default=6000,
+        help="Character budget for older text-only Thought/Action history.",
     )
     parser.add_argument(
         "--disable_ui_text",

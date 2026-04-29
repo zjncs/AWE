@@ -15,6 +15,17 @@ from gui_trace_evaluator.record_adapter import NormalizedStep
 IMAGE_RESIZE_SCALE = 0.5
 IMAGE_JPEG_QUALITY = 85
 DEFAULT_MAX_SCREENSHOT_TURNS = 5
+DEFAULT_UI_MAX_LINES = 120
+DEFAULT_UI_MAX_CHARS = 6000
+
+
+def configure_image_encoding(*, resize_scale: float | None = None, jpeg_quality: int | None = None) -> None:
+    """Configure screenshot compression for later message construction."""
+    global IMAGE_RESIZE_SCALE, IMAGE_JPEG_QUALITY
+    if resize_scale is not None:
+        IMAGE_RESIZE_SCALE = max(0.1, min(1.0, float(resize_scale)))
+    if jpeg_quality is not None:
+        IMAGE_JPEG_QUALITY = max(30, min(95, int(jpeg_quality)))
 
 
 PHONE_USE_DOUBAO_TEMPLATE = """You are a GUI agent. You are given a task and your action history, with screenshots.
@@ -57,6 +68,7 @@ def build_trace_messages(
     image_step_numbers: set[int] | None = None,
     max_screenshot_turns: int = DEFAULT_MAX_SCREENSHOT_TURNS,
     language: str = "Chinese",
+    include_ui_text: bool = True,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     """Build official-style messages and an image manifest.
 
@@ -93,11 +105,33 @@ def build_trace_messages(
             )
             if step.evidence_screenshot_kind == "before":
                 messages.append(_step_screenshot_message(step))
-        messages.append({"role": "assistant", "content": step_as_assistant_message(step)})
+        messages.append(
+            {
+                "role": "assistant",
+                "content": step_as_assistant_message(step, include_ui_text=include_ui_text),
+            }
+        )
         if step.step in image_step_set and step.evidence_screenshot_kind == "after":
             messages.append(_step_screenshot_message(step))
     messages.append({"role": "user", "content": final_request})
     return messages, manifest
+
+
+def build_retrieval_messages(
+    *,
+    instruction: str,
+    final_request: str,
+    language: str = "Chinese",
+) -> list[dict[str, Any]]:
+    """Build a lightweight retrieval prompt.
+
+    Retrieval selects candidate evidence steps. It intentionally does not attach
+    screenshots or full UI tables; those belong to the checkpoint judge pass.
+    """
+    return [
+        {"role": "user", "content": build_system_prompt(instruction=instruction, language=language)},
+        {"role": "user", "content": final_request},
+    ]
 
 
 def _select_evenly_spaced_steps(steps: list[NormalizedStep], *, limit: int) -> list[NormalizedStep]:
@@ -134,23 +168,31 @@ def _step_screenshot_message(step: NormalizedStep) -> dict[str, Any]:
     }
 
 
-def step_as_assistant_message(step: NormalizedStep) -> str:
+def step_as_assistant_message(step: NormalizedStep, *, include_ui_text: bool = True) -> str:
     """Render one trace step as official-style Thought/Action history."""
     thought = step.thinking or step.summary or "No explicit thought was recorded."
     action = step.action or "unknown_action()"
     lines = [f"Thought: {thought}", f"Action: {action}"]
     if step.summary:
         lines.append(f"Observation Summary: {step.summary}")
-    before_ui = _compact_ui_text(step.before_ui)
-    after_ui = _compact_ui_text(step.after_ui)
-    if before_ui:
-        lines.append(f"UI Text Before:\n{before_ui}")
-    if after_ui:
-        lines.append(f"UI Text After:\n{after_ui}")
+    if step.action_target_ui:
+        lines.append(f"Action Target UI:\n{step.action_target_ui}")
+    if include_ui_text:
+        before_ui = _compact_ui_text(step.before_ui)
+        after_ui = _compact_ui_text(step.after_ui)
+        if before_ui:
+            lines.append(f"UI Text Before:\n{before_ui}")
+        if after_ui:
+            lines.append(f"UI Text After:\n{after_ui}")
     return "\n".join(lines)
 
 
-def _compact_ui_text(value: str, *, max_lines: int = 200, max_chars: int = 15000) -> str:
+def _compact_ui_text(
+    value: str,
+    *,
+    max_lines: int = DEFAULT_UI_MAX_LINES,
+    max_chars: int = DEFAULT_UI_MAX_CHARS,
+) -> str:
     text = (value or "").strip()
     if not text:
         return ""

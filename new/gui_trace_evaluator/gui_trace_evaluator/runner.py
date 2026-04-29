@@ -8,7 +8,7 @@ import os
 from pathlib import Path
 from typing import Any
 
-from gui_trace_evaluator.evaluator import TraceEvaluator
+from gui_trace_evaluator.evaluator import TraceEvaluator, build_standard_id
 from gui_trace_evaluator.models import ArkChatModel, OpenAICompatibleChatModel
 from gui_trace_evaluator.read_tools import ReadToolConfig
 from gui_trace_evaluator.record_adapter import load_records, normalize_record
@@ -60,10 +60,14 @@ def evaluate_records_file(
         checkpoint_dir=model_args.checkpoint_dir,
         image_root=model_args.image_root,
         regenerate_checkpoints=model_args.regenerate_checkpoints,
+        require_reviewed_checkpoints=model_args.require_reviewed_checkpoints,
         max_selected_steps=model_args.max_selected_steps,
         max_screenshot_turns=model_args.max_screenshot_turns,
+        max_retrieval_trace_steps=model_args.max_retrieval_trace_steps,
         retrieval_min_confidence=model_args.retrieval_min_confidence,
         fallback_confidence_threshold=model_args.fallback_confidence_threshold,
+        image_resize_scale=model_args.image_resize_scale,
+        image_jpeg_quality=model_args.image_jpeg_quality,
         read_tool_config=ReadToolConfig(
             enabled=not model_args.disable_read_tools,
             adb_path=model_args.adb_path,
@@ -71,7 +75,13 @@ def evaluate_records_file(
             timeout_seconds=model_args.read_tool_timeout_seconds,
         ),
     )
-    evaluations = evaluator.evaluate_records(records, base_dir=records_path.parent)
+    evaluations = _evaluate_with_optional_resume(
+        evaluator=evaluator,
+        records=records,
+        records_path=records_path,
+        output_path=output_path,
+        resume=model_args.resume,
+    )
     stats = compute_batch_statistics(evaluations)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -102,6 +112,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max_records", type=int, default=None)
     parser.add_argument("--dry_run", action="store_true")
     parser.add_argument("--regenerate_checkpoints", action="store_true")
+    parser.add_argument("--require_reviewed_checkpoints", action="store_true")
     parser.add_argument("--provider", choices=["ark", "openai"], default="openai")
     parser.add_argument("--model", required=False, default="doubao-seed-1-8-251228")
     parser.add_argument("--base_url", default="https://ark.cn-beijing.volces.com/api/v3")
@@ -111,15 +122,74 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max_tokens", type=int, default=2000)
     parser.add_argument("--timeout_seconds", type=int, default=180)
     parser.add_argument("--extra_body_json", default=None)
-    parser.add_argument("--max_selected_steps", type=int, default=30)
-    parser.add_argument("--max_screenshot_turns", type=int, default=10)
+    parser.add_argument("--max_selected_steps", type=int, default=12)
+    parser.add_argument("--max_screenshot_turns", type=int, default=5)
+    parser.add_argument("--max_retrieval_trace_steps", type=int, default=40)
     parser.add_argument("--retrieval_min_confidence", type=float, default=0.55)
     parser.add_argument("--fallback_confidence_threshold", type=float, default=0.7)
+    parser.add_argument("--image_resize_scale", type=float, default=0.5)
+    parser.add_argument("--image_jpeg_quality", type=int, default=85)
+    parser.add_argument("--resume", action="store_true")
     parser.add_argument("--disable_read_tools", action="store_true")
     parser.add_argument("--adb_path", default=None)
     parser.add_argument("--adb_serial", default=None)
     parser.add_argument("--read_tool_timeout_seconds", type=int, default=10)
     return parser.parse_args()
+
+
+def _evaluate_with_optional_resume(
+    *,
+    evaluator: TraceEvaluator,
+    records: list[dict[str, Any]],
+    records_path: Path,
+    output_path: Path,
+    resume: bool,
+) -> list[dict[str, Any]]:
+    if not resume or not output_path.exists():
+        return evaluator.evaluate_records(records, base_dir=records_path.parent)
+
+    existing_payload = json.loads(output_path.read_text(encoding="utf-8"))
+    existing_items = existing_payload.get("evaluations", [])
+    existing_by_key = {
+        _evaluation_key(item): item
+        for item in existing_items
+        if isinstance(item, dict)
+    }
+    evaluations_by_key: dict[str, dict[str, Any]] = dict(existing_by_key)
+    pending = [
+        record
+        for record in records
+        if _record_key(record, base_dir=records_path.parent) not in existing_by_key
+    ]
+    if pending:
+        for item in evaluator.evaluate_records(pending, base_dir=records_path.parent):
+            evaluations_by_key[_evaluation_key(item)] = item
+    return [
+        evaluations_by_key.get(_record_key(record, base_dir=records_path.parent))
+        or evaluator.evaluate_record(record, base_dir=records_path.parent)
+        for record in records
+    ]
+
+
+def _record_key(record_data: dict[str, Any], *, base_dir: Path) -> str:
+    record = normalize_record(record_data, base_dir=base_dir)
+    return "|".join(
+        [
+            record.task,
+            build_standard_id(record.task, record.goal),
+            str(record.raw.get("seed", "")),
+        ]
+    )
+
+
+def _evaluation_key(evaluation: dict[str, Any]) -> str:
+    return "|".join(
+        [
+            str(evaluation.get("task", "")),
+            str(evaluation.get("standard_id", "")),
+            str(evaluation.get("seed", "")),
+        ]
+    )
 
 
 def _build_model(args: argparse.Namespace, api_key: str):
@@ -131,6 +201,7 @@ def _build_model(args: argparse.Namespace, api_key: str):
             temperature=args.temperature,
             max_tokens=args.max_tokens,
             timeout_seconds=args.timeout_seconds,
+            extra_body=json.loads(args.extra_body_json) if args.extra_body_json else None,
         )
     return OpenAICompatibleChatModel(
         model_name=args.model,

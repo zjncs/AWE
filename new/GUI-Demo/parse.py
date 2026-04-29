@@ -1,6 +1,8 @@
 import pyautogui
 import time
 import pyperclip
+import ast
+import re
 from copy import deepcopy
 
 # Key name mapping
@@ -22,6 +24,20 @@ def convert_point_to_coordinates(point_str):
     """Convert point marker to coordinates"""
     # Implement specific conversion logic here as needed
     return point_str
+
+
+def _literal_box(value):
+    """Parse coordinate tuples/lists without executing model-provided code."""
+    if isinstance(value, (tuple, list)):
+        return value
+    text = str(value)
+    point = re.search(
+        r"<(?:start_)?point>\s*(-?\d+(?:\.\d+)?)\s+(-?\d+(?:\.\d+)?)\s*</(?:start_)?point>",
+        text,
+    )
+    if point:
+        return (float(point.group(1)), float(point.group(2)))
+    return ast.literal_eval(text)
 
 def execute_pyautogui_action(responses,
                             image_height: int,
@@ -95,8 +111,9 @@ def execute_pyautogui_action(responses,
         for key_name, value in old_action_inputs.items():
             new_key_name = KEY_MAPPING.get(key_name, key_name)
             action_inputs[new_key_name] = value
-            if "<point>" in value or "<start_point>" in value:
-                value = eval(convert_point_to_coordinates(value))
+            value_text = str(value)
+            if "<point>" in value_text or "<start_point>" in value_text:
+                value = _literal_box(convert_point_to_coordinates(value))
                 action_inputs[new_key_name] = value
         
         # Execute corresponding operations based on action type
@@ -205,7 +222,7 @@ def execute_pyautogui_action(responses,
                 # Parse start box coordinates
                 try:
                     if isinstance(start_box, str):
-                        start_box = eval(start_box)
+                        start_box = _literal_box(start_box)
                 except Exception as e:
                     raise ValueError(f"Start box format error: {start_box}. Error: {e}")
                 
@@ -226,7 +243,7 @@ def execute_pyautogui_action(responses,
                 # Parse end box coordinates
                 try:
                     if isinstance(end_box, str):
-                        end_box = eval(end_box)
+                        end_box = _literal_box(end_box)
                 except Exception as e:
                     raise ValueError(f"End box format error: {end_box}. Error: {e}")
                 
@@ -256,7 +273,7 @@ def execute_pyautogui_action(responses,
             if start_box:
                 try:
                     if isinstance(start_box, str):
-                        start_box = eval(start_box)
+                        start_box = _literal_box(start_box)
                 except Exception as e:
                     raise ValueError(f"Start box format error: {start_box}. Error: {e}")
                 
@@ -301,7 +318,7 @@ def execute_pyautogui_action(responses,
             if start_box:
                 try:
                     if isinstance(start_box, str):
-                        start_box = eval(start_box)
+                        start_box = _literal_box(start_box)
                 except Exception as e:
                     raise ValueError(f"Start box format error: {start_box}. Error: {e}")
                 

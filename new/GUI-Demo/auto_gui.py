@@ -38,7 +38,7 @@ MODEL_NAME = "doubao-seed-1-6-vision-250815"
 TEMPERATURE = 0.0
 
 # Screen Configuration
-DEFAULT_SCREENSHOT_DIR = "/Users/bytedance/demo/"
+DEFAULT_SCREENSHOT_DIR = str(Path.cwd() / "results" / "auto_gui_screenshots")
 SCREENSHOT_FORMAT = "png"
 
 # Coordinate Configuration
