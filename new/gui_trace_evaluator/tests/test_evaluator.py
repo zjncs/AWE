@@ -302,3 +302,48 @@ def test_evaluator_runs_read_tools_when_judge_requests_fallback(tmp_path: Path):
     assert cp["read_tool_verification"]["triggered"] is True
     assert cp["read_tool_verification"]["requests"][0]["tool"] == "list_dir"
     assert tool_runner.requests
+
+
+def test_stored_final_snapshot_does_not_suppress_requested_read_tools(tmp_path: Path):
+    image = tmp_path / "step_001_after.jpg"
+    Image.new("RGB", (10, 10), "white").save(image)
+    record = {
+        "task": "FilesMoveFile",
+        "goal": "Move demo.txt from Alarms to Pictures.",
+        "success": True,
+        "post_execution_evidence": [
+            {
+                "type": "final_state_snapshot",
+                "tool": "final_state_snapshot",
+                "status": "ok",
+                "request": {"tool": "final_state_snapshot"},
+                "output": "Final UI text.",
+            }
+        ],
+        "trace": {
+            "steps": [
+                {
+                    "step": 1,
+                    "thinking": "Need to move the file.",
+                    "action": "click(point='<point>100 100</point>')",
+                    "summary": "Moved demo.txt.",
+                    "after_screenshot_path": str(image),
+                }
+            ]
+        },
+    }
+
+    tool_runner = FakeReadToolRunner()
+    evaluator = TraceEvaluator(
+        ToolCallingModel(),
+        checkpoint_dir=tmp_path / "cache",
+        read_tool_runner=tool_runner,
+    )
+    result = evaluator.evaluate_record(record)
+
+    cp = result["checkpoint_results"][0]
+    verification = cp["read_tool_verification"]
+    assert cp["achieved"] is True
+    assert tool_runner.requests
+    assert verification["source"] == "record_post_execution_evidence+live_read_tools"
+    assert [item["tool"] for item in verification["results"]] == ["final_state_snapshot", "list_dir"]

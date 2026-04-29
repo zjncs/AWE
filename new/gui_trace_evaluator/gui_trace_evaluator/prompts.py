@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 from typing import Any
 
 from gui_trace_evaluator.record_adapter import NormalizedRecord, NormalizedStep, step_to_prompt_dict
@@ -184,6 +185,7 @@ Return both achieved and score:
 
 Task: {record.task}
 Goal: {record.goal}
+{_record_reference_context(record)}
 {ANDROID_WORLD_CONTEXT}
 Checkpoint: {json.dumps(checkpoint, ensure_ascii=False, indent=2)}
 Selected steps: {[step.step for step in selected_steps]}
@@ -203,6 +205,53 @@ Respond with JSON only:
   "read_requests": []
 }}
 """
+
+
+def _record_reference_context(record: NormalizedRecord) -> str:
+    """Return bounded AndroidWorld task parameters as optional judge evidence."""
+    raw_params = (
+        record.raw.get("task_params")
+        or record.raw.get("task_params_used")
+        or record.raw.get("params")
+    )
+    if not isinstance(raw_params, dict):
+        return ""
+    reference: dict[str, Any] = {}
+    row_objects = raw_params.get("row_objects")
+    if isinstance(row_objects, list) and row_objects:
+        reference["target_row_objects"] = [_trim_text(str(item), max_chars=900) for item in row_objects[:20]]
+    noise_row_objects = raw_params.get("noise_row_objects")
+    if isinstance(noise_row_objects, list) and noise_row_objects:
+        reference["non_target_row_objects_summary"] = [
+            _summarize_row_object(str(item)) for item in noise_row_objects[:80]
+        ]
+        if len(noise_row_objects) > 80:
+            reference["non_target_row_objects_truncated"] = len(noise_row_objects) - 80
+    for key in ("target_file", "target_filename", "phone_number", "contact_name", "text", "message"):
+        value = raw_params.get(key)
+        if value not in (None, "", []):
+            reference[key] = _trim_text(str(value), max_chars=900)
+    if not reference:
+        return ""
+    return (
+        "AndroidWorld task reference data. Use this as task setup/target data, not as a success label:\n"
+        f"{json.dumps(reference, ensure_ascii=False, indent=2)}\n"
+    )
+
+
+def _summarize_row_object(value: str) -> dict[str, str]:
+    summary: dict[str, str] = {}
+    for source_key, output_key in (
+        ("title", "title"),
+        ("preparationTime", "preparation_time"),
+        ("description", "description"),
+    ):
+        match = re.search(rf"{source_key}='([^']*)'", value)
+        if match:
+            summary[output_key] = _trim_text(match.group(1), max_chars=180)
+    if not summary:
+        summary["raw"] = _trim_text(value, max_chars=240)
+    return summary
 
 
 def _compact_read_tool_results(read_tool_results: list[dict[str, Any]] | None) -> list[dict[str, Any]]:
@@ -228,6 +277,7 @@ def _compact_read_tool_results(read_tool_results: list[dict[str, Any]] | None) -
             "returncode",
             "row_count",
             "screenshot_path",
+            "error",
         ):
             if key in item:
                 compact[key] = item.get(key)

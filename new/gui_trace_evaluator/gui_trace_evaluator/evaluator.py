@@ -261,11 +261,13 @@ class TraceEvaluator:
                 )
                 return result
             stored_results = _stored_read_tool_results(record)
-            tool_results = (
-                stored_results
-                if stored_results
-                else self.read_tool_runner.run_requests(record, checkpoint, read_requests)
+            live_requests = _requests_not_satisfied_by_stored(read_requests, stored_results)
+            live_results = (
+                self.read_tool_runner.run_requests(record, checkpoint, live_requests)
+                if live_requests
+                else []
             )
+            tool_results = stored_results + live_results
             second_result, manifest, second_parsed = self._judge_checkpoint(
                 record=record,
                 checkpoint=checkpoint,
@@ -280,7 +282,7 @@ class TraceEvaluator:
                 "triggered": True,
                 "requests": read_requests,
                 "results": tool_results,
-                "source": "record_post_execution_evidence" if stored_results else "live_read_tools",
+                "source": _read_tool_result_source(stored_results, live_results),
                 "first_pass_result": _compact_checkpoint_result_for_metadata(first_pass_result),
             }
         else:
@@ -676,6 +678,42 @@ def _stored_read_tool_results(record: NormalizedRecord) -> list[dict[str, Any]]:
             _sanitize_stored_find_file_result(normalized_item)
         normalized.append(normalized_item)
     return normalized
+
+
+def _requests_not_satisfied_by_stored(
+    requests: list[dict[str, Any]],
+    stored_results: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    return [
+        request
+        for request in requests
+        if not any(_stored_result_satisfies_request(stored, request) for stored in stored_results)
+    ]
+
+
+def _stored_result_satisfies_request(stored: dict[str, Any], request: dict[str, Any]) -> bool:
+    if stored.get("status") not in ("ok", "not_found", "command_error"):
+        return False
+    if str(stored.get("tool") or "") != str(request.get("tool") or ""):
+        return False
+    stored_request = stored.get("request")
+    if not isinstance(stored_request, dict):
+        return False
+    for key in ("path", "target", "root", "name", "package", "db_path", "query", "limit"):
+        if key in request and str(stored_request.get(key) or "") != str(request.get(key) or ""):
+            return False
+    return True
+
+
+def _read_tool_result_source(
+    stored_results: list[dict[str, Any]],
+    live_results: list[dict[str, Any]],
+) -> str:
+    if stored_results and live_results:
+        return "record_post_execution_evidence+live_read_tools"
+    if stored_results:
+        return "record_post_execution_evidence"
+    return "live_read_tools"
 
 
 def _sanitize_stored_find_file_result(item: dict[str, Any]) -> None:
